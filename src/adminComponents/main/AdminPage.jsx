@@ -89,53 +89,7 @@ class AdminPage extends Component {
           </nav>
           <Router>
             <div className="sidenav admin-navbar">
-              <ul className="nav">
-                <li className="nav-item text-center">
-                  <NavLink
-                    className="tab"
-                    to="/AdminUser"
-                    activeStyle={activeTabStyle}
-                  >
-                    הוספת משתמש חדש
-                  </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                  <NavLink
-                    className="tab"
-                    to="/UpdateUser"
-                    activeStyle={activeTabStyle}
-                  >
-                    עדכון פרטי משתמש
-                  </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                  <NavLink
-                    className="tab"
-                    to="/DeleteUser"
-                    activeStyle={activeTabStyle}
-                  >
-                    מחיקת משתמש
-                  </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                  <NavLink
-                    className="tab"
-                    to="/LinkUsers"
-                    activeStyle={activeTabStyle}
-                  >
-                    קישור חונך לחניך
-                  </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                  <NavLink
-                    className="tab"
-                    to="/UsersTable"
-                    activeStyle={activeTabStyle}
-                  >
-                    רשימת חונכים/ חניכים
-                  </NavLink>
-                </li>
-              </ul>
+              {this.addUser(activeTabStyle)}
             </div>{" "}
             {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
@@ -160,6 +114,60 @@ class AdminPage extends Component {
         </div>
       </div>
     );
+  }
+
+
+  addUser(activeTabStyle)
+  {
+    return(
+        <ul className="nav">
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/AdminUser"
+                activeStyle={activeTabStyle}
+            >
+              הוספת משתמש חדש
+            </NavLink>
+          </li>
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/UpdateUser"
+                activeStyle={activeTabStyle}
+            >
+              עדכון פרטי משתמש
+            </NavLink>
+          </li>
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/DeleteUser"
+                activeStyle={activeTabStyle}
+            >
+              מחיקת משתמש
+            </NavLink>
+          </li>
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/LinkUsers"
+                activeStyle={activeTabStyle}
+            >
+              קישור חונך לחניך
+            </NavLink>
+          </li>
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/UsersTable"
+                activeStyle={activeTabStyle}
+            >
+              רשימת חונכים/ חניכים
+            </NavLink>
+          </li>
+        </ul>
+    )
   }
 }
 
