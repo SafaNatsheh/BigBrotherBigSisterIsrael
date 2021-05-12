@@ -257,7 +257,6 @@ class App extends Component {
       var mateDoc;
       if (typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") {
         alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
-        firebase.auth().signOut();
       }
       else {
         this.getLinkedUser();
