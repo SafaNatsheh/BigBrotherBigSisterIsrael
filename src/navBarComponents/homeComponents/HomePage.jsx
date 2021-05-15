@@ -22,6 +22,9 @@ export class HomePage extends React.Component {
   }
 
   formatDate = (date) => { // formatting date to [DD/MM/YYYY]
+    if (isNaN(date.getMonth())) {
+      return null;
+    }
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
   }
 
