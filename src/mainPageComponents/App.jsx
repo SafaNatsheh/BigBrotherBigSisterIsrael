@@ -257,7 +257,8 @@ class App extends Component {
       var mateDoc;
       if (typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") {
         alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
-        firebase.auth().signOut();
+        this.setState({ loadingLinkedUser: false });
+        this.setState({linkedUserDetails : {fName: "אין", lName: "חונך/חניך" , type: "" , area: "" , birthDate: ""}});
       }
       else {
         this.getLinkedUser();
@@ -266,7 +267,8 @@ class App extends Component {
           .then((doc) => {
             if (!doc.exists || doc.data().link_user === "") {
               alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
-              firebase.auth().signOut();
+              this.setState({ loadingLinkedUser: false });
+              this.setState({linkedUserDetails : {fName: "אין", lName: "חונך/חניך" , type: "" , area: "" , birthDate: ""}});
             }
             else {
               this.setState({ isMounted: true });

@@ -202,8 +202,7 @@ class AdminUser extends Component {
               <option >חונך</option>
               <option >חניך</option>
               <option >אדמין</option>
-              <option >רכז</option>
-              <option >מדריך</option>
+
             </select>
           </div>
         </div>

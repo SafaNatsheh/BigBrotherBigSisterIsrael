@@ -2,4 +2,5 @@
 .DS_Store
 .idea/workspace.xml
 node_modules/.cache/eslint-loader/8706440c1aef3417e435a52b0d0267cc7b3f0299.json.gz
-node_modules/**.js
+node_modules/*.js
+
