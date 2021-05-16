@@ -201,6 +201,8 @@ class AdminUser extends Component {
               <option id="ff" disabled value=""> הכנס סוג משתמש</option>
               <option >חונך</option>
               <option >חניך</option>
+              <option >מדריך</option>
+              <option >רכז</option>
               <option >אדמין</option>
 
             </select>
