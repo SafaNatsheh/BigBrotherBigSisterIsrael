@@ -64,7 +64,7 @@ class RakazUser extends Component {
             return;
         this.usersRef.get()
             .then(querySnap => querySnap.forEach(doc => {
-                if (doc.data().id === this.state.id) {
+                if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
                     alert("כבר קיים משתמש במערכת עם מספר תעודת זהות זהה.");
                     throw Error(500);
                 }
