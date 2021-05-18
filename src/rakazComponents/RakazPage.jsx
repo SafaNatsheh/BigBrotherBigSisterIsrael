@@ -51,7 +51,7 @@ class RakazPage extends Component {
         var logOutConfirm = window.confirm("האם אתה בטוח שברצונך להתנתק מהמערכת?");
         if (!logOutConfirm)
             return;
-        this.props.exitRacaz();
+        this.props.exitRakaz();
         firebase.auth().signOut()
             .then(() => {
                 console.log("Successful sign-out")
@@ -96,7 +96,7 @@ class RakazPage extends Component {
                         {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
                         <Switch>
-                            { <Route path="/RacazUser">
+                            { <Route path="/RakazUser">
                                 <RakazUser />
                             </Route> }
                             <Route path="/UpdateUser">
@@ -129,7 +129,7 @@ class RakazPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/RacazUser"
+                        to="/RakazUser"
                         activeStyle={activeTabStyle}
                     >
                         הוספת משתמש חדש

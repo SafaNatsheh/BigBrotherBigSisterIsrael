@@ -153,7 +153,7 @@ class Meetings extends Component {
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
                 let selected_list = "";
                 var checked_list = $('.people_check:checked');
-                checked_list.forEach(function(item){
+                checked_list.forEach(function lst (item) {
                     if(selected_list!=="")selected_list += ",";
                     selected_list += $(this).parent().attr('person_id');
                 });

@@ -51,7 +51,7 @@ class InstructorPage extends Component {
         var logOutConfirm = window.confirm("האם אתה בטוח שברצונך להתנתק מהמערכת?");
         if (!logOutConfirm)
             return;
-        this.props.exitRacaz();
+        this.props.exitInstructor();
         firebase.auth().signOut()
             .then(() => {
                 console.log("Successful sign-out")
@@ -129,7 +129,7 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/RacazUser"
+                        to="/RakazUser"
                         activeStyle={activeTabStyle}
                     >
                         הוספת משתמש חדש
