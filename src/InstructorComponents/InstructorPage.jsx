@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 
 import UpdateUser from "../adminComponents/partial/UpdateUser"
-import DeleteUser from "../adminComponents/partial/DeleteUser";
-import UsersTable from "../adminComponents/partial/UsersTable"
-import LinkUsers from "../adminComponents/partial/LinkUsers";
+
 import Meetings from "../rakazComponents/Meetings";
 import firebase from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
@@ -15,7 +13,7 @@ import {
     NavLink,
 } from "react-router-dom";
 import "./InstructorPage.css";
-import RakazUser from "../rakazComponents/RakazUser";
+
 
 class InstructorPage extends Component {
     constructor(props) {
@@ -96,21 +94,11 @@ class InstructorPage extends Component {
                         {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
                         <Switch>
-                            { <Route path="/RakazUser">
-                                <RakazUser />
-                            </Route> }
+                           
                             <Route path="/UpdateUser">
                                 <UpdateUser />
                             </Route>
-                            <Route path="/DeleteUser">
-                                <DeleteUser />
-                            </Route>
-                            <Route path="/UsersTable">
-                                <UsersTable />
-                            </Route>{" "}
-                            <Route path="/LinkUsers">
-                                <LinkUsers />
-                            </Route>
+                            
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
@@ -126,15 +114,7 @@ class InstructorPage extends Component {
     {
         return(
             <ul className="nav">
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/RacazUser"
-                        activeStyle={activeTabStyle}
-                    >
-                        הוספת משתמש חדש
-                    </NavLink>
-                </li>
+               
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
@@ -144,33 +124,8 @@ class InstructorPage extends Component {
                         עדכון פרטי משתמש
                     </NavLink>
                 </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/DeleteUser"
-                        activeStyle={activeTabStyle}
-                    >
-                        מחיקת משתמש
-                    </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/LinkUsers"
-                        activeStyle={activeTabStyle}
-                    >
-                        קישור חונך לחניך
-                    </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/UsersTable"
-                        activeStyle={activeTabStyle}
-                    >
-                        רשימת חונכים/ חניכים
-                    </NavLink>
-                </li>
+             
+               
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
