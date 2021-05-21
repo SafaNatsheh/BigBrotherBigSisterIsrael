@@ -1,20 +1,43 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import Loader from 'react-loader-spinner'
 import "./UsersTable.css";
 import firebase from "../../config/Firebase"
 import NoLinkedUsers from "./NoLinkedUsers";
 
 class UsersTable extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             usersArr: [],
             linkedUserArr: [],
             noLinkedUsers: [],
-            noLink: false
+            noLink: false,
+            checkedList: [],
+            id: "",
+            type: "",
+            searchTerm: ""
         }
         this.usersRef = firebase.firestore().collection('Users');
+        this.uid = firebase.auth().currentUser.uid;
+        this.usersRef.doc(this.uid).get()
+            .then((doc) => {
+                this.setState({ id: doc.data().id });
+                this.setState({ type: doc.data().type });
+            })
+            .catch((e) => console.log(e.name));
+        this.people = [];
+        firebase.firestore().collection('Users').get().then((querySnapshot) => {
+            querySnapshot.docs.map((doc) => {
+                this.people.push({
+                    id: doc.data().id,
+                    name: doc.data().fName + " " + doc.data().lName,
+                    type:  doc.data().type,
+                    email: doc.data().email
+                });
+                return null;
+            });
+        });
+
     }
 
     componentDidMount() {
@@ -61,109 +84,109 @@ class UsersTable extends Component {
             })
             .catch((e) => console.log(e.name));
     }
+    handleSubmit = (event) => {
+        event.preventDefault();
 
-    renderLinked = (index, dataType) => {
-        if (typeof (this.state.linkedUserArr[index]) !== 'undefined' && this.state.linkedUserArr[index] !== null) {
-            if (dataType === "name")
-                return (
-                    <td className="align-middle">{this.state.linkedUserArr[index].fName + " " + this.state.linkedUserArr[index].lName}</td>
-                );
-            else if (dataType === "id")
-                return (
-                    <td className="align-middle">{this.state.linkedUserArr[index].id}</td>
-                );
-            else if (dataType === "email")
-                return (
-                    <td className="align-middle">{this.state.linkedUserArr[index].email}</td>
-                );
-            else
-                return (
-                    <td className="align-middle">{this.state.linkedUserArr[index].phone}</td>
-                );
+        if(this.state.type === "אדמין"||this.state.type === "רכז")
+        {
+            var con = window.confirm("האם אתה בטוח שברצונך למחוק את המשתמשים?" )
+            if (con){
+                for(let i =0;i<this.state.checkedList.length;i++)
+                {
+                    firebase.firestore().collection('Users').get().then((querySnapshot) => {
+                        querySnapshot.docs.map((doc) => {
+                            if(doc.data().id === this.state.checkedList[i])
+                            {
+                                doc.ref.delete()
 
+                            }
+                        });
+                    })
+                }
+            }
         }
         else
-            return null;
-    }
+        {
+            alert("אין לך הרשאה לעשות זה");
+        }
 
-    renderTableLine = () => {
 
-        return (this.state.usersArr.map((data, index) =>
-            <tr key={"row" + index} className="h5 table-cols">
-                <td className="align-middle">{data.fName + " " + data.lName}</td>
-                <td className="align-middle">{data.id}</td>
-                <td className="align-middle">{data.email}</td>
-                <td className="align-middle">{data.phone}</td>
-                {this.renderLinked(index, "name")}
-                {this.renderLinked(index, "id")}
-                {this.renderLinked(index, "email")}
-                {this.renderLinked(index, "phone")}
-            </tr >
-        ));
-    }
 
-    renderNoLink = () => {
-        return (this.state.noLinkedUsers.map((data, index) =>
-            <tr key={"row" + index} className="h4 table-cols">
-                <td className="align-middle">{data.name}</td>
-                <td className="align-middle">{data.role}</td>
-                <td className="align-middle">{data.id}</td>
-                <td className="align-middle">{data.email}</td>
-                <td className="align-middle">{data.phone}</td>
 
-            </tr >
-        ));
-    }
-
-    closeNoLink = () => {
-        this.setState({ noLink: false })
-    }
-
-    showNoLinkedUsers = () => {
-        this.setState({ noLink: true })
-    }
-
-    noLinkAppearance = () => {
-        if (this.state.noLink)
-            return (<NoLinkedUsers parentCallback={this.closeNoLink} renderNoLink={this.renderNoLink} />)
-        return null;
-    }
-
-    renderTable = () => {
-        if (typeof (this.state.linkedUserArr[0]) === 'undefined')
-            return (<Loader className="user-table-indicator" type="Bars" height="400px" width="400px"></Loader>);
-        else
-            return (
-                <div className="table-div">
-                    <table className="table table-striped table-dark w-75 table-responsive users-table" >
-                        <thead>
-                            <tr><th colSpan="8" className="h1 table-title">טבלת חונך / חניך</th></tr>
-                            <tr className="h2 table-cols">
-                                <th className="align-middle">שם החונך</th>
-                                <th className="align-middle">ת"ז</th>
-                                <th className="align-middle">אימייל</th>
-                                <th className="align-middle">טלפון</th>
-                                <th className="align-middle">שם החניך</th>
-                                <th className="align-middle">ת"ז</th>
-                                <th className="align-middle">אימייל</th>
-                                <th className="align-middle">טלפון</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderTableLine()}
-                        </tbody>
-                    </table>
-                    <button className="btn btn-success show-no-link-btn" onClick={this.showNoLinkedUsers}>הצג משתמשים ללא חונך/חניך</button>
-                    {this.noLinkAppearance()}
-                </div>
-            );
     }
 
     render() {
+        console.log(this.state.id);
         return (
-            this.renderTable()
+            <div>
+                <br />
+
+
+                <input
+                    type="text"
+                    placeholder="search"
+                    value={this.state.searchTerm}
+                    onChange={(e) => this.setState({ searchTerm: e.target.value })}
+                />
+                <div className="form-group">
+                    <label
+                        className="fLabels"
+                        style={{ float: "right" }}
+                        htmlFor="description"
+                    >
+                        {/* <!-description--> */}
+                        רשימת המשתמשים
+                    </label>
+                    <table className="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ת.ז</th>
+                            <th>שם</th>
+                            <th>דוא"ל</th>
+                            <th>סוג משתמש</th>
+                            <th>בחר</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.renderTable()}
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
+                <button
+                    className="btn btn-success setup-meeting-btn"
+                    style={{ float: "right", marginRight: "700px" }}
+                    onClick={this.handleSubmit}
+                >
+                    מחק את המשתמשים!{" "}
+                </button>
+            </div>
         );
     }
+    renderTable() {
+        if (this.state.type === "אדמין")
+        {
+            return (this.people
+                .filter(person => person.id.indexOf(this.state.searchTerm)>-1)
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                )))
+        }
+        else if(this.state.type === "רכז")
+        {
+            return (this.people
+                .filter(person => person.type !== "אדמין")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                )))
+        }
+    }
+
+
+
 }
 
 export default UsersTable;
