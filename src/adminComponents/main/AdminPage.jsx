@@ -5,7 +5,7 @@ import DeleteUser from "../partial/DeleteUser";
 import UsersTable from "../partial/UsersTable"
 import LinkUsers from "../partial/LinkUsers";
 import firebase from "../../config/Firebase";
-import Meetings from "../..rakazComponents/Meetings";
+import Meetings from "../../rakazComponents/Meetings";
 import logo from '../../static_pictures/big_brothers_big_sisters.png';
 
 import {
@@ -111,8 +111,8 @@ class AdminPage extends Component {
                 <LinkUsers />
               </Route>{" "}
               <Route path="/Meetings">
-                <Mettings />
-              </Route>{" "}
+                <Meetings />
+             </Route>{" "}
             </Switch>{" "}
           </Router>{" "}
         </div>
@@ -173,7 +173,7 @@ class AdminPage extends Component {
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
-                to="/Mettings"
+                to="/Meetings"
                 activeStyle={activeTabStyle}
             >
               קביעת פגשים

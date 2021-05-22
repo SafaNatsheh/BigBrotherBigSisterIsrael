@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./Meetings.css";
+
+
 import firebase from "../config/Firebase"
 import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
 import $ from "jquery"
 class Meetings extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -12,6 +15,7 @@ class Meetings extends Component {
             time: "",
             place: "",
             description: "",
+            filterFn : { fn: items => { return items; } },
             loadingFromFirebase: true,
             lastMeetingVisible: null,
             loadedAll: false,
@@ -19,6 +23,7 @@ class Meetings extends Component {
             loadingPastMeetings: false,
             scheduled: false
         };
+        this.filterFn = { fn: items => { return items; } };
         this.newDocId = "";
         this.people = [];
         this.myMeetingsRef = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).collection('Meetings');
@@ -40,6 +45,7 @@ class Meetings extends Component {
             });
         });
     }
+
 
     getMeetings = () => {
         var newMeetingObj;
@@ -153,7 +159,7 @@ class Meetings extends Component {
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
                 let selected_list = "";
                 var checked_list = $('.people_check:checked');
-                checked_list.forEach(function(item){
+                 checked_list.forEach(function(item){
                     if(selected_list!=="")selected_list += ",";
                     selected_list += $(this).parent().attr('person_id');
                 });
@@ -206,7 +212,39 @@ class Meetings extends Component {
         return 0;
     }
 
+    
+    handleSearch = e => {
+        let target = e.target;
+        console.log("target " + target.value)
+        // this.setState({
+        //     filterFn: {
+        //         fn: items => {
+        //             console.log("items " + items)
+        //             if (target.value === "")
+        //             alert("AAA")
+        //                // return items;
+        //             else
+        //                 return items.filter(x => x.person_id.includes(target.value))
+        //         }
+        //     }
+           
+        // })
+
+        
+        if(target.value === "") 
+            return this.people
+        else
+        {
+            return this.people.includes(target.value)
+        }
+
+    }
+    
+    
     render() {
+        
+    
+        
 
         return (
             <div className="main-background" >
@@ -292,25 +330,36 @@ class Meetings extends Component {
                             style={{ float: "right" }}
                             htmlFor="description"
                         >
-                            {/* <!-description--> */}
-                            משתתפים
+                         
+                            
                         </label>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered"  >
+                           <h6>משתתפים</h6>
+                            <input type="text" placeholder="Enter ID" onChange={this.handleSearch}>
+                           
+
+                            </input>
+                        <div className ='container__table'>
                             <thead>
+                            
                             <tr>
                                 <td>ת.ז</td>
                                 <td>שם</td>
                                 <td>סוג משתמש</td>
                                 <td>בחר</td>
+                                
                             </tr>
                             </thead>
-                            <tbody>
-                            {this.people.map((person, index) => (
+                            <tbody onchange={this.handleSearch}>
+                            
+                            {this.people.map((person) => (
                                 <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                                    <td person_id={person.id}><input type='checkbox' class='people_check'/></td></tr>
+                                    <td person_id={person.email}><input type='checkbox' class='people_check'/></td></tr>
                             ))}
+                           
                             </tbody>
-                        </table>
+                            </div>
+                        </table> 
                     </div>
                     <div className="form-group">
                         <input
