@@ -4,7 +4,7 @@ import "./Meetings.css";
 
 import firebase from "../config/Firebase"
 import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
-import $ from "jquery"
+
 class Meetings extends Component {
     
     constructor(props) {
@@ -13,7 +13,9 @@ class Meetings extends Component {
             meetings: [],
             date: "",
             time: "",
+            checkList :[],
             place: "",
+            search: "",
             description: "",
             filterFn : { fn: items => { return items; } },
             loadingFromFirebase: true,
@@ -23,12 +25,13 @@ class Meetings extends Component {
             loadingPastMeetings: false,
             scheduled: false
         };
-        this.filterFn = { fn: items => { return items; } };
+        
         this.newDocId = "";
         this.people = [];
         this.myMeetingsRef = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).collection('Meetings');
         firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
             .then((doc) => {
+                this.type = doc.data().type;
                 this.linkUser = doc.data().link_user;
                 this.mateMeetingsRef = firebase.firestore().collection('Users').doc(this.linkUser).collection('Meetings');
             })
@@ -157,20 +160,16 @@ class Meetings extends Component {
                 var nextDate = (new Date(Date.parse(this.state.date) + (7 * 24 * 60 * 60 * 1000) * i));
                 dates.push(nextDate.getFullYear() + "-" + (nextDate.getMonth() + 1) + "-" + nextDate.getDate());
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
-                let selected_list = "";
-                var checked_list = $('.people_check:checked');
-                 checked_list.forEach(function(item){
-                    if(selected_list!=="")selected_list += ",";
-                    selected_list += $(this).parent().attr('person_id');
-                });
+                
                 newMeetings.push({
                     date: dates[i],
-                    send_list: selected_list,
+                    send_list: this.state.checkList,
                     timeStamp: time_stamp,
                     place: this.state.place,
                     description: this.state.description
                 })
                 newMeetingObj.push({});
+                console.log(this.state.checkList);
                 this.myMeetingsRef.add(newMeetings[i])
                     .then((docRef) => {
                         this.newDocId = docRef.id;
@@ -203,7 +202,7 @@ class Meetings extends Component {
             }
         }
     }
-
+   
     sortFunc = (a, b) => {
         if (a.timeStamp > b.timeStamp)
             return -1;
@@ -211,35 +210,53 @@ class Meetings extends Component {
             return 1;
         return 0;
     }
-
     
-    handleSearch = e => {
-        let target = e.target;
-        console.log("target " + target.value)
-        // this.setState({
-        //     filterFn: {
-        //         fn: items => {
-        //             console.log("items " + items)
-        //             if (target.value === "")
-        //             alert("AAA")
-        //                // return items;
-        //             else
-        //                 return items.filter(x => x.person_id.includes(target.value))
-        //         }
-        //     }
-           
-        // })
+    maketable(){
 
-        
-        if(target.value === "") 
-            return this.people
-        else
+        if (this.type === "רכז")
         {
-            return this.people.includes(target.value)
+            return (this.people
+                .filter(person => person.id.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                )))
         }
+       else if (this.type === "מדריך")
+       {
+           return (this.people
+               .filter(person => person.id.indexOf(this.state.search)>-1)
+               .filter(person => person.type !== "אדמין")
+               .filter(person => person.type !== "רכז")
+               .map((person) => (
+                   <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                       <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=>this.state.checkList.push(person)}/></td></tr>
+               )))
+       }
+       else if (this.type === "חונך")
+       {
+           return (this.people
+               .filter(person => person.id.indexOf(this.state.search)>-1)
+               .filter(person => person.type !== "אדמין")
+               .filter(person => person.type !== "רכז")
+               .filter(person => person.type !== "מדריך")
+               .filter(person => person.type !== "חונך")
+               .map((person) => (
+                   <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                       <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
+               )))
+       }
+      else 
 
+ return (this.people
+                .filter(person => person.id.indexOf(this.state.search)>-1)
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                )))
     }
-    
+
     
     render() {
         
@@ -335,10 +352,12 @@ class Meetings extends Component {
                         </label>
                         <table class="table table-bordered"  >
                            <h6>משתתפים</h6>
-                            <input type="text" placeholder="Enter ID" onChange={this.handleSearch}>
-                           
-
-                            </input>
+                            
+                            <input
+                    type="text"
+                    placeholder="search ID"
+                    onChange={(e) => this.setState({ search: e.target.value })}
+                     />
                         <div className ='container__table'>
                             <thead>
                             
@@ -350,12 +369,10 @@ class Meetings extends Component {
                                 
                             </tr>
                             </thead>
-                            <tbody onchange={this.handleSearch}>
+                            <tbody >
                             
-                            {this.people.map((person) => (
-                                <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                                    <td person_id={person.email}><input type='checkbox' class='people_check'/></td></tr>
-                            ))}
+                            {this.maketable()} 
+                            
                            
                             </tbody>
                             </div>
