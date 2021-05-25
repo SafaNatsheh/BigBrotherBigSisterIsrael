@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import "./Meeting.css";
+import "../../rakazComponents/Meetings.css";
 import "./MeetingList.css";
 import Loader from 'react-loader-spinner'
+import {db} from "../../config/Firebase"
 
 class MeetingList extends Component {
     formatDate = (timeStamp) => { // formatting date to [DD/MM/YYYY]
@@ -34,13 +35,23 @@ class MeetingList extends Component {
         ));
     }
 
-    deleteMeeting = (data) => {
+    deleteMeeting = async (data) => {
         var tempArr = [];
         var con = window.confirm("האם אתה בטוח שברצונך למחוק פגישה זו?");
         if (!con)
             return;
+        
+        
+       var t = await this.props.myUser.doc(data).get()
+       
+       t.data().send_list.forEach(async user=>{
+           await  db.collection('Users').doc(user.uid).collection('Meetings').doc(t.id).delete()
+       
+
+       })
+
         this.props.myUser.doc(data).delete()
-            .then(() => this.props.linkUser.doc(data).delete())
+            // .then(() => this.props.linkUser.forEach.doc(data).delete())
             .then(() => console.log("Meeting " + data + " has successfully deleted from DB"))
             .catch(() => console.log("Error in deleting meeting from DB"))
             .then(() => {

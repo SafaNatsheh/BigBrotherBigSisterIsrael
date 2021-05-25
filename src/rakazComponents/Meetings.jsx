@@ -6,7 +6,7 @@ import firebase from "../config/Firebase"
 import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
 
 class Meetings extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,22 +25,24 @@ class Meetings extends Component {
             loadingPastMeetings: false,
             scheduled: false
         };
-        
+
         this.newDocId = "";
         this.people = [];
         this.myMeetingsRef = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).collection('Meetings');
         firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
             .then((doc) => {
                 this.type = doc.data().type;
-                this.linkUser = doc.data().link_user;
-                this.mateMeetingsRef = firebase.firestore().collection('Users').doc(this.linkUser).collection('Meetings');
+                // this.linkUser = doc.data().link_user;
+                // this.mateMeetingsRef = firebase.firestore().collection('Users').doc(this.linkUser).collection('Meetings');
             })
             .catch((e) => console.log(e.name))
         firebase.firestore().collection('Users').get().then((querySnapshot) => {
             querySnapshot.docs.map((doc) => {
 
                 this.people.push({
+                    uid:doc.id,
                     id: doc.data().id,
+                    email: doc.data().email,
                     name: doc.data().fName + " " + doc.data().lName,
                     type:  doc.data().type
                 });
@@ -131,7 +133,7 @@ class Meetings extends Component {
         />
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         var isSure;
         if (!this.state.scheduled) {
@@ -160,7 +162,7 @@ class Meetings extends Component {
                 var nextDate = (new Date(Date.parse(this.state.date) + (7 * 24 * 60 * 60 * 1000) * i));
                 dates.push(nextDate.getFullYear() + "-" + (nextDate.getMonth() + 1) + "-" + nextDate.getDate());
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
-                
+
                 newMeetings.push({
                     date: dates[i],
                     send_list: this.state.checkList,
@@ -169,13 +171,11 @@ class Meetings extends Component {
                     description: this.state.description
                 })
                 newMeetingObj.push({});
-                console.log(this.state.checkList);
-                this.myMeetingsRef.add(newMeetings[i])
-                    .then((docRef) => {
+               let docRef= await this.myMeetingsRef.add(newMeetings[i])
                         this.newDocId = docRef.id;
-                        this.mateMeetingsRef.doc(docRef.id).set(newMeetings[i]);
-                    })
-                    .then(() => {
+                       // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
+
+
                         if (!this.state.scheduled && this.state.date !== "") {
                             alert(
                                 "נקבעה פגישה בתאריך: " +
@@ -192,17 +192,21 @@ class Meetings extends Component {
                             );
                         Object.assign(newMeetingObj[i], newMeetings[i]);
                         newMeetingObj[i].doc_id = this.newDocId;
+                        this.state.checkList.forEach(async user=>{
+                            await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set(newMeetings[i]);
+
+                        })
+                        newMeetingObj[i].doc_id = this.newDocId;
                         const d = [].concat(this.state.meetings).concat(newMeetingObj[i]).sort((a, b) => this.sortFunc(a, b));
                         this.setState({
                             meetings: [...d],
                             date: "", time: "", place: "", description: "", scheduled: false
                         });
-                    })
-                    .catch((e) => console.log(e.name));
+
             }
         }
     }
-   
+
     sortFunc = (a, b) => {
         if (a.timeStamp > b.timeStamp)
             return -1;
@@ -210,7 +214,7 @@ class Meetings extends Component {
             return 1;
         return 0;
     }
-    
+
     maketable(){
 
         if (this.type === "רכז")
@@ -220,48 +224,56 @@ class Meetings extends Component {
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>{
+                            this.state.checkList.push(person)}}/></td></tr>
                 )))
         }
-       else if (this.type === "מדריך")
-       {
-           return (this.people
-               .filter(person => person.id.indexOf(this.state.search)>-1)
-               .filter(person => person.type !== "אדמין")
-               .filter(person => person.type !== "רכז")
-               .map((person) => (
-                   <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                       <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=>this.state.checkList.push(person)}/></td></tr>
-               )))
-       }
-       else if (this.type === "חונך")
-       {
-           return (this.people
-               .filter(person => person.id.indexOf(this.state.search)>-1)
-               .filter(person => person.type !== "אדמין")
-               .filter(person => person.type !== "רכז")
-               .filter(person => person.type !== "מדריך")
-               .filter(person => person.type !== "חונך")
-               .map((person) => (
-                   <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                       <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
-               )))
-       }
-      else 
-
- return (this.people
+        else if (this.type === "מדריך")
+        {
+            return (this.people
                 .filter(person => person.id.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .filter(person => person.type !== "רכז")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                )))
+        }
+        else if (this.type === "חונך")
+        {
+            return (this.people
+                .filter(person => person.id.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .filter(person => person.type !== "רכז")
+                .filter(person => person.type !== "מדריך")
+                .filter(person => person.type !== "חונך")
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
                 )))
+        }
+        else
+
+            return (this.people
+                .filter(person => person.id.indexOf(this.state.search)>-1)
+                .map((person,key) => (
+                    <tr key={key}>
+                        <td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>
+                        {
+                            this.state.checkList.push(person)
+
+                        }
+                        
+                        }/></td></tr>
+                        )))
     }
 
-    
+
     render() {
-        
-    
-        
+
+
+
 
         return (
             <div className="main-background" >
@@ -347,36 +359,36 @@ class Meetings extends Component {
                             style={{ float: "right" }}
                             htmlFor="description"
                         >
-                         
-                            
+
+
                         </label>
-                        <table class="table table-bordered"  >
-                           <h6>משתתפים</h6>
-                            
+                        <table className="table table-bordered"  >
+                            <h6>משתתפים</h6>
+
                             <input
-                    type="text"
-                    placeholder="search ID"
-                    onChange={(e) => this.setState({ search: e.target.value })}
-                     />
-                        <div className ='container__table'>
-                            <thead>
-                            
-                            <tr>
-                                <td>ת.ז</td>
-                                <td>שם</td>
-                                <td>סוג משתמש</td>
-                                <td>בחר</td>
-                                
-                            </tr>
-                            </thead>
-                            <tbody >
-                            
-                            {this.maketable()} 
-                            
-                           
-                            </tbody>
+                                type="text"
+                                placeholder="search ID"
+                                onChange={(e) => this.setState({ search: e.target.value })}
+                            />
+                            <div className ='container__table'>
+                                <thead>
+
+                                <tr>
+                                    <td>ת.ז</td>
+                                    <td>שם</td>
+                                    <td>סוג משתמש</td>
+                                    <td>בחר</td>
+
+                                </tr>
+                                </thead>
+                                <tbody >
+
+                                {this.maketable()}
+
+
+                                </tbody>
                             </div>
-                        </table> 
+                        </table>
                     </div>
                     <div className="form-group">
                         <input

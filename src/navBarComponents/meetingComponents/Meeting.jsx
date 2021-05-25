@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./Meeting.css";
+import "./Meetings.css";
 import firebase from "../../config/Firebase"
 import MeetingList from "./MeetingList"
 
