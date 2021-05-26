@@ -26,6 +26,10 @@ class LinkUsers extends Component {
                 alert("המשתמש אינו " + type);
                 throw Error(500);
             }
+            if (doc.data().link_user != null && doc.data().link_user != "") {
+                alert("המשתמש כבר מחובר");
+                throw Error(500);
+            }
             if (type === "חניך")
                 this.setState({ studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName })
             else if (type === "חונך")
