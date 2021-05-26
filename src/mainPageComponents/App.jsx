@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Meeting from "../navBarComponents/meetingComponents/Meeting";
+import Meetings from "../rakazComponents/Meetings";
 import WallPost from "../navBarComponents/wallComponents/wall/WallPost";
 import Profile from "../navBarComponents/wallComponents/profile/Profile";
 import HomePage from "../navBarComponents/homeComponents/HomePage";
@@ -401,8 +401,8 @@ class App extends Component {
             {this.routeToVideo()}
             {this.routeToMeeting()}
           </Route>{" "}
-          <Route path="/Meeting">
-            <Meeting />
+          <Route path="/Meetings">
+            <Meetings />
             {this.routeToVideo()}
           </Route>{" "}
           <Redirect push to="/Home" ></Redirect>
@@ -479,7 +479,7 @@ class App extends Component {
                 <li className="nav-item">
                   <NavLink
                     className="tab"
-                    to="/Meeting"
+                    to="/Meetings"
                     activeStyle={activeTabStyle}
                     onClick={(event) => this.checkIfVideo(event)}
                   >

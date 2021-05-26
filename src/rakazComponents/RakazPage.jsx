@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
 import UpdateUser from "../adminComponents/partial/UpdateUser"
-import DeleteUser from "../adminComponents/partial/DeleteUser";
-import UsersTable from "../adminComponents/partial/UsersTable"
-import LinkUsers from "../adminComponents/partial/LinkUsers";
 import Meetings from "./Meetings";
 import firebase from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
@@ -102,15 +99,7 @@ class RakazPage extends Component {
                             <Route path="/UpdateUser">
                                 <UpdateUser />
                             </Route>
-                            <Route path="/DeleteUser">
-                                <DeleteUser />
-                            </Route>
-                            <Route path="/UsersTable">
-                                <UsersTable />
-                            </Route>{" "}
-                            <Route path="/LinkUsers">
-                                <LinkUsers />
-                            </Route>
+                            
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
@@ -144,33 +133,7 @@ class RakazPage extends Component {
                         עדכון פרטי משתמש
                     </NavLink>
                 </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/DeleteUser"
-                        activeStyle={activeTabStyle}
-                    >
-                        מחיקת משתמש
-                    </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/LinkUsers"
-                        activeStyle={activeTabStyle}
-                    >
-                        קישור חונך לחניך
-                    </NavLink>
-                </li>
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/UsersTable"
-                        activeStyle={activeTabStyle}
-                    >
-                        רשימת חונכים/ חניכים
-                    </NavLink>
-                </li>
+               
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
