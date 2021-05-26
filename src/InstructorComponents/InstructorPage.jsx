@@ -107,6 +107,7 @@ class InstructorPage extends Component {
                 </div>
             </div>
         );
+
     }
 
 

@@ -24,6 +24,7 @@ class Meetings extends Component {
             futureLength: 0,
             loadingPastMeetings: false,
             scheduled: false
+
         };
 
         this.newDocId = "";
