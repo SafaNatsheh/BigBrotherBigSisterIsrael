@@ -1,0 +1,156 @@
+.page {
+    position: absolute;
+    background-color: white;
+    padding-bottom: 155px;
+    height: 620px; 
+    width: 1536px;
+    overflow: hidden;
+  
+}
+
+
+
+.homepage-main {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    width: 660px;
+    min-width: 550px;
+    max-width: 830px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    float: right;
+    padding-right: 240px;
+
+}
+
+.homepage-background-right {
+    background-color: rgb(49, 141, 49);
+    width: 280px;
+    min-width: 250px;
+    max-width: 300px;
+    height: 425px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 30px;
+}
+
+.homepage-background-left {
+    background-color: rgb(206, 57, 57);
+    width: 280px;
+    min-width: 250px;
+    max-width: 300px;
+    height: 425px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 30px;
+}
+
+.join-video{
+    float: left;
+    width: 200px;
+    bottom: 0px;
+    left: 0px;
+    height: 50px;
+    border-radius: 20px;
+}
+.homepage-right {
+    background-color: #776078;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    height: 400px;
+    justify-content: space-evenly;
+    border-radius: 30px;
+    
+}
+
+.homepage-left {
+    background-color: #776078;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    height: 400px;
+    justify-content: space-evenly;
+    border-radius: 30px;
+}
+
+.homepage-profile-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 70%;
+    
+}
+
+
+.profile-upload-btn{
+    position: absolute;
+    left: 1088px;
+    top:455px;
+    float: left; 
+    
+}
+
+.profile-delete-btn{
+    position: absolute;
+    left: 1088px;
+    top:502px;
+    float: left;
+ 
+}
+
+.homepage-profile-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: white;
+}
+
+.homepage-profile-picture {
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+    background-color: white;
+    border: solid 1.5px black;
+    height:75%;
+    object-fit: cover;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.homepage-profile-footer {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1em;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 30%;
+    border-top: 1px solid gray;
+    width: 90%;
+    
+}
+
+.homepage-profile-type-m-s {
+    color: white;
+}
+
+.header-list{
+    text-align: center;
+}
+
+.homepage-profile-city {
+    color: white;
+}
+
+.homepage-profile-birthday {
+    color: white;
+}
