@@ -75,12 +75,13 @@ export class Home extends React.Component {
          this.setState({ lname: doc.data().lName })
          this.setState({ type: doc.data().type })
          this.setState({ area: doc.data().area })
-         
-    
+
+
          this.setState({ birthdate: doc.data().birthDate })
-         this.myProfilePicturesRef.getDownloadURL()
-         .then(url => this.setState({ profilePicture: url }))
-         
+
+          this.myProfilePicturesRef.getDownloadURL().catch(function(error) {})
+              .then(url => this.setState({profilePicture: url}))
+
       })
       
       .catch((e) => console.log(e.name));
@@ -89,7 +90,13 @@ export class Home extends React.Component {
   componentDidMount() {
     this.setVideoButton();
     this.getNextMeeting();
-    this.setState({ profilePicture: this.myProfilePicturesRef });
+    if (this.profilePicture !== undefined) {
+      this.setState({profilePicture: this.myProfilePicturesRef});
+    }
+    else
+    {
+      this.setState({profilePicture: ""});
+    }
     this.getNewPostAlert();
   }
 

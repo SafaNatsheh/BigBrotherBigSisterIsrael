@@ -27,7 +27,7 @@ class AdminUser extends Component {
         this.usersRef.doc(user.uid).get().then(doc => {
           if (!doc.exists && this.state.addOnce) {
             this.setState({ addOnce: false });
-            var newUser = {
+            let newUser = {
               fName: this.state.firstName,
               lName: this.state.lastName,
               id: this.state.id,
