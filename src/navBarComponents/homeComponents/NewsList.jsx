@@ -49,7 +49,7 @@ export class NewsList extends React.Component {
                     <h2>
                         <span
                             className="badge badge-secondary w-50 bg-danger text-white friend-disconnected">
-                            {this.props.linked_name} לא מחובר/ת
+                            {/* {this.props.linked_name} לא מחובר/ת */}
                             </span>
                     </h2>
                     <h5>

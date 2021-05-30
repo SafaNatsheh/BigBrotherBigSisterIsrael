@@ -6,6 +6,7 @@ import UsersTable from "../partial/UsersTable"
 import LinkUsers from "../partial/LinkUsers";
 import firebase from "../../config/Firebase";
 import Meetings from "../../rakazComponents/Meetings";
+import Home from "../../rakazComponents/Home";
 import logo from '../../static_pictures/big_brothers_big_sisters.png';
 
 import {
@@ -95,6 +96,9 @@ class AdminPage extends Component {
             {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
             <Switch>
+            <Route path="/Home">
+                <Home />
+                </Route>
               <Route path="/AdminUser">
                 <AdminUser />
               </Route>
@@ -125,6 +129,17 @@ class AdminPage extends Component {
   {
     return(
         <ul className="nav">
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/Home"
+                activeStyle={activeTabStyle}
+            >
+              <div className= "bait">
+              דף הבית 
+              </div>
+            </NavLink>
+          </li>
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
