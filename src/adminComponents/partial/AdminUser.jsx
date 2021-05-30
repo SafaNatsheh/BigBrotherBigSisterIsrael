@@ -16,6 +16,7 @@ class AdminUser extends Component {
       area: "",
       birthDate: "",
       type: "",
+      first: "",
       addOnce: true
     };
   }
@@ -34,6 +35,7 @@ class AdminUser extends Component {
               phone: this.state.phone,
               area: this.state.area,
               type: this.state.type,
+              first: "true",
               birthDate: this.state.birthDate
             }
             if (this.state.address !== "")
