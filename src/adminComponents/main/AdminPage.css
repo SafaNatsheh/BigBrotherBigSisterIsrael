@@ -9,7 +9,9 @@
     padding: 6px 0;
     float: right;
 }
-
+.bait{
+    padding-right: 50px;
+}
 .MainLogoAdmin {
     float: right;
     margin: 8px;

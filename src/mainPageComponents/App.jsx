@@ -380,7 +380,7 @@ class App extends Component {
             </div>{" "}
             {this.routeToVideo()}
           </Route>{" "}
-          <Route path="/Home">
+          <Route path="/HomePage">
             <HomePage
               myDetails={this.state.userDetails}
               linkedDetails={this.state.linkedUserDetails}
@@ -405,7 +405,7 @@ class App extends Component {
             <Meetings />
             {this.routeToVideo()}
           </Route>{" "}
-          <Redirect push to="/Home" ></Redirect>
+          <Redirect push to="/HomePage" ></Redirect>
         </Switch>
       );
   }
@@ -450,7 +450,7 @@ class App extends Component {
                 <li className="nav-item ">
                   <NavLink
                     className="tab"
-                    to="/Home"
+                    to="/HomePage"
                     activeStyle={activeTabStyle}
                     onClick={(event) => this.checkIfVideo(event)}
                   >
