@@ -97,6 +97,10 @@ class UsersTable extends Component {
                         querySnapshot.docs.map((doc) => {
                             if(doc.data().id === this.state.checkedList[i])
                             {
+                                if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")
+                                {
+                                    this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
+                                }
                                 doc.ref.delete()
 
                             }
