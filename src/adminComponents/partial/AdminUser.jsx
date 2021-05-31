@@ -201,11 +201,11 @@ class AdminUser extends Component {
               value={this.state.type}
               onChange={(e) => this.setState({ type: e.target.value })}>
               <option id="ff" disabled value=""> הכנס סוג משתמש</option>
+              <option >אדמין</option>
+              <option >רכז</option>
+              <option >מדריך</option>
               <option >חונך</option>
               <option >חניך</option>
-              <option >מדריך</option>
-              <option >רכז</option>
-              <option >אדמין</option>
 
             </select>
           </div>
