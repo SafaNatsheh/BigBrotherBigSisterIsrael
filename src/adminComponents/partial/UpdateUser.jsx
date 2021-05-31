@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
+import { ContactlessOutlined } from "@material-ui/icons";
 
 class UpdateUser extends Component {
     constructor(props) {
@@ -19,6 +20,11 @@ class UpdateUser extends Component {
             docId: ""
         };
         this.usersRef = firebase.firestore().collection('Users');
+        firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
+        .then((doc) => {
+            this.type = doc.data().type;
+        })
+        .catch((e) => console.log(e.name))
     }
 
     getUserByEmailOrId(event) {
@@ -93,9 +99,35 @@ class UpdateUser extends Component {
 
     UpdateUser = (event) => {
         event.preventDefault();
+        if(this.type === "רכז" && this.state.type === "אדמין"){
+            alert("אין לך הרשאות לעדכן ");
+            this.setState({
+                firstName: "", lastName: "", id: "",
+                email: "", phone: "", address: "", area: "",
+                birthDate: "", type: "",
+                transferEnable: false
+            })
+
+            return;
+        }
+        if(this.type === "מדריך" && (this.state.type === "אדמין"|| this.state.type === "רכז")){
+            alert("אין לך הרשאות לעדכן ");
+            this.setState({
+                firstName: "", lastName: "", id: "",
+                email: "", phone: "", address: "", area: "",
+                birthDate: "", type: "",
+                transferEnable: false
+            })
+
+            return;
+        }
         var con = window.confirm("האם אתה בטוח שברצונך לעדכן משתמש זה?")
         if (!con)
             return;
+            console.log(this.type);
+            console.log(this.state.type);
+            
+            
         var newUser = {
             fName: this.state.firstName,
             lName: this.state.lastName,
@@ -117,6 +149,7 @@ class UpdateUser extends Component {
                 })
             })
             .catch((e) => console.log(e.name + " נוצרה בעיה בעדכון פרטי המשתמש."));
+        
     }
 
     render() {
