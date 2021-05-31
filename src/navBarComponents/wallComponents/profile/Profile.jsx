@@ -9,6 +9,9 @@ export class Profile extends React.Component {
   }
 
   formatDate = (date) => {
+    if (isNaN(date)) {
+      return null;
+    }
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
   }
 

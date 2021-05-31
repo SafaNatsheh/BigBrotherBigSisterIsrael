@@ -16,6 +16,7 @@ class AdminUser extends Component {
       area: "",
       birthDate: "",
       type: "",
+      first: "",
       addOnce: true
     };
   }
@@ -26,7 +27,7 @@ class AdminUser extends Component {
         this.usersRef.doc(user.uid).get().then(doc => {
           if (!doc.exists && this.state.addOnce) {
             this.setState({ addOnce: false });
-            var newUser = {
+            let newUser = {
               fName: this.state.firstName,
               lName: this.state.lastName,
               id: this.state.id,
@@ -34,6 +35,7 @@ class AdminUser extends Component {
               phone: this.state.phone,
               area: this.state.area,
               type: this.state.type,
+              first: "true",
               birthDate: this.state.birthDate
             }
             if (this.state.address !== "")
@@ -64,7 +66,7 @@ class AdminUser extends Component {
       return;
     this.usersRef.get()
       .then(querySnap => querySnap.forEach(doc => {
-        if (doc.data().id === this.state.id) {
+        if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
           alert("כבר קיים משתמש במערכת עם מספר תעודת זהות זהה.");
           throw Error(500);
         }
@@ -199,11 +201,11 @@ class AdminUser extends Component {
               value={this.state.type}
               onChange={(e) => this.setState({ type: e.target.value })}>
               <option id="ff" disabled value=""> הכנס סוג משתמש</option>
+              <option >אדמין</option>
+              <option >רכז</option>
+              <option >מדריך</option>
               <option >חונך</option>
               <option >חניך</option>
-              <option >מדריך</option>
-              <option >רכז</option>
-              <option >אדמין</option>
 
             </select>
           </div>

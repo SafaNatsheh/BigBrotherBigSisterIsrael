@@ -64,7 +64,7 @@ class RakazUser extends Component {
             return;
         this.usersRef.get()
             .then(querySnap => querySnap.forEach(doc => {
-                if (doc.data().id === this.state.id) {
+                if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
                     alert("כבר קיים משתמש במערכת עם מספר תעודת זהות זהה.");
                     throw Error(500);
                 }
@@ -199,11 +199,11 @@ class RakazUser extends Component {
                             value={this.state.type}
                             onChange={(e) => this.setState({ type: e.target.value })}>
                             <option id="ff" disabled value=""> הכנס סוג משתמש</option>
-                            <option >חונך</option>
-                            <option >חניך</option>
-
                             <option >רכז</option>
                             <option >מדריך</option>
+
+                            <option >חונך</option>
+                            <option >חניך</option>
                         </select>
                     </div>
                 </div>
