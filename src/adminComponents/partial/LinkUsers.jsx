@@ -26,7 +26,7 @@ class LinkUsers extends Component {
                 alert("המשתמש אינו " + type);
                 throw Error(500);
             }
-            if (doc.data().link_user != null && doc.data().link_user != "") {
+            if (doc.data().link_user != null && doc.data().link_user !== "") {
                 alert("המשתמש כבר מחובר");
                 throw Error(500);
             }
