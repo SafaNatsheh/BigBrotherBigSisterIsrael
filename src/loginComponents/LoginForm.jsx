@@ -127,7 +127,7 @@ class LoginForm extends React.Component {
               <br />
               <button
                 type="button"
-                className="badge badge-light forget-pwd"
+                className="forget-pwd"
                 onClick={this.resetPwd}
               >
                 שכחתי את הסיסמא

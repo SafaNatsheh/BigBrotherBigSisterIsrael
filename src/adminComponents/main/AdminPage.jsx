@@ -89,14 +89,18 @@ class AdminPage extends Component {
             <h2 className="admin-title">ברוך הבא למסך האדמין, {this.state.user_name}</h2>
             <button className="btn btn-danger log-out-admin" onClick={this.logoutAdmin}>התנתק</button>
           </nav>
+
           <Router>
             <div className="sidenav admin-navbar">
               {this.addUser(activeTabStyle)}
             </div>{" "}
+
+
             {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
+
             <Switch>
-            <Route path="/Home">
+                <Route path="/Home">
                 <Home />
                 </Route>
               <Route path="/AdminUser">
@@ -117,6 +121,10 @@ class AdminPage extends Component {
               <Route path="/Meetings">
                 <Meetings />
              </Route>{" "}
+
+              <Route path="/">
+              <Home />
+              </Route>
             </Switch>{" "}
           </Router>{" "}
         </div>
@@ -130,6 +138,7 @@ class AdminPage extends Component {
     return(
         <ul className="nav">
           <li className="nav-item text-center">
+
             <NavLink
                 className="tab"
                 to="/Home"

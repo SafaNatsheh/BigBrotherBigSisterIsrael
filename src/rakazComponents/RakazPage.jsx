@@ -105,6 +105,9 @@ class RakazPage extends Component {
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/">
+                                <Home />
+                            </Route>
                         </Switch>{" "}
                     </Router>{" "}
                 </div>
