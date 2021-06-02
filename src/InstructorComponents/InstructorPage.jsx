@@ -84,7 +84,7 @@ class InstructorPage extends Component {
                                 className="MainLogoAdmin"
                             />
                         </a>
-                        <h2 className="admin-title">ברוך הבא למסך במדריך, {this.state.user_name}</h2>
+                        <h2 className="admin-title">ברוך הבא למסך המדריך, {this.state.user_name}</h2>
                         <button className="btn btn-danger log-out-admin" onClick={this.logoutAdmin}>התנתק</button>
                     </nav>
                     <Router>
@@ -104,6 +104,9 @@ class InstructorPage extends Component {
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/">
+                                <Home />
+                            </Route>
                         </Switch>{" "}
                     </Router>{" "}
                 </div>
