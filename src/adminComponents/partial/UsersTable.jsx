@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import Loader from 'react-loader-spinner'
 import "./UsersTable.css";
 import firebase from "../../config/Firebase"
@@ -94,7 +94,7 @@ class UsersTable extends Component {
                 for(let i =0;i<this.state.checkedList.length;i++)
                 {
                     firebase.firestore().collection('Users').get().then((querySnapshot) => {
-                        querySnapshot.docs.map((doc) => {
+                        querySnapshot.docs.forEach(doc => {
                             if(doc.data().id === this.state.checkedList[i])
                             {
                                 if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")

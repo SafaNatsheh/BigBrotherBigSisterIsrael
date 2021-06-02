@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
-import { ContactlessOutlined } from "@material-ui/icons";
+
 
 class UpdateUser extends Component {
     constructor(props) {
