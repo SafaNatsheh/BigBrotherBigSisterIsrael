@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import UpdateUser from "../adminComponents/partial/UpdateUser"
-
+import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
 import firebase from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
@@ -98,7 +98,9 @@ class InstructorPage extends Component {
                             <Route path="/UpdateUser">
                                 <UpdateUser />
                             </Route>
-                            
+                            <Route path="/Home">
+                                <Home />
+                            </Route>
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
@@ -115,7 +117,17 @@ class InstructorPage extends Component {
     {
         return(
             <ul className="nav">
-               
+                <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/Home"
+                activeStyle={activeTabStyle}
+            >
+              <div className= "bait">
+              דף הבית 
+              </div>
+            </NavLink>
+          </li>
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"

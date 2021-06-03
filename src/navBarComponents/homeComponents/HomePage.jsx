@@ -128,7 +128,7 @@ export class HomePage extends React.Component {
               </div>
             </div>
           </div>
-          <div className="homepage-background-left">
+          {/* <div className="homepage-background-left">
             <div className="homepage-left">
               <div className="homepage-profile-top">
                 <div className="homepage-profile-name">
@@ -148,16 +148,16 @@ export class HomePage extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <button className="btn btn-success profile-upload-btn" onClick={this.uploadProfilePicture}>שנה תמונת פרופיל</button>
         <button className="btn btn-danger profile-delete-btn" onClick={this.deleteProfilePicture}>הסר תמונת פרופיל</button>
         <NewsList
-          linked_name={this.props.linkedDetails.fName}
+          // linked_name={this.props.linkedDetails.fName}
           connectToVideo={this.connectToVideo}
           vidButtonHide={this.state.vidButtonHide}
-          otherUserConnection={this.props.otherUserConnection}
-          otherUserLastOnline={this.props.otherUserLastOnline}
+          // otherUserConnection={this.props.otherUserConnection}
+          // otherUserLastOnline={this.props.otherUserLastOnline}
           next_meeting={this.props.next_meeting}
           loadingNextMeeting={this.props.loadingNextMeeting}
           routeToWall={this.props.routeToWall}
