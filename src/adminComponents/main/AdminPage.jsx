@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AdminUser from "../partial/AdminUser";
 import UpdateUser from "../partial/UpdateUser"
-import DeleteUser from "../partial/DeleteUser";
 import UsersTable from "../partial/UsersTable"
 import LinkUsers from "../partial/LinkUsers";
 import firebase from "../../config/Firebase";
@@ -109,9 +108,6 @@ class AdminPage extends Component {
               <Route path="/UpdateUser">
                 <UpdateUser />
               </Route>
-              <Route path="/DeleteUser">
-                <DeleteUser />
-              </Route>
               <Route path="/UsersTable">
                 <UsersTable />
               </Route>{" "}
@@ -167,15 +163,7 @@ class AdminPage extends Component {
               עדכון פרטי משתמש
             </NavLink>
           </li>
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/DeleteUser"
-                activeStyle={activeTabStyle}
-            >
-              מחיקת משתמש
-            </NavLink>
-          </li>
+          
           <li className="nav-item text-center">
             <NavLink
                 className="tab"

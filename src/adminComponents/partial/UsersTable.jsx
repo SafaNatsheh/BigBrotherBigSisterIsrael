@@ -120,28 +120,31 @@ class UsersTable extends Component {
     }
 
     render() {
-        console.log(this.state.id);
+        
         return (
-            <div>
+            <div className="form-group">
                 <br />
 
+                <h3>רשימת המשתמשים</h3>
 
                 <input
                     type="text"
                     placeholder="search"
                     value={this.state.searchTerm}
                     onChange={(e) => this.setState({ searchTerm: e.target.value })}
+                    // style={{ marginRight: "450px" ,position:"realtive" ,marginInline:"500px"}}
                 />
-                <div className="form-group">
+
+                <div className="table-t" >
                     <label
                         className="fLabels"
                         style={{ float: "right" }}
                         htmlFor="description"
                     >
-                        {/* <!-description--> */}
-                        רשימת המשתמשים
                     </label>
+                    
                     <table className="table table-bordered">
+                        
                         <thead>
                         <tr>
                             <th>ת.ז</th>
@@ -151,20 +154,27 @@ class UsersTable extends Component {
                             <th>בחר</th>
                         </tr>
                         </thead>
+                      
                         <tbody>
+                        
                         {this.renderTable()}
                         </tbody>
+                       
                     </table>
                 </div>
-
+                <div className="button">
                 <br />
                 <button
-                    className="btn btn-success setup-meeting-btn"
-                    style={{ float: "right", marginRight: "700px" }}
+                    className="button-de"
+                    style={{ float: "right", marginRight: "700px" , color:" #4caf50"  }}
                     onClick={this.handleSubmit}
                 >
-                    מחק את המשתמשים!{" "}
+                    <div className="button-text">
+                    מחק את המשתמשים!
+                    </div>
+                    {" "}
                 </button>
+                </div>
             </div>
         );
     }

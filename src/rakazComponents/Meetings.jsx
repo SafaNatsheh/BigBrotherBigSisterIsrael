@@ -355,6 +355,7 @@ class Meetings extends Component {
                         />
                     </div>
                     <div className="form-group">
+                 
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -363,14 +364,16 @@ class Meetings extends Component {
 
 
                         </label>
-                        <table className="table table-bordered"  >
-                            <h6>משתתפים</h6>
-
-                            <input
+                        <h6>משתתפים</h6>
+                        <input
                                 type="text"
                                 placeholder="search ID"
                                 onChange={(e) => this.setState({ search: e.target.value })}
                             />
+                        <table className="table table-bordered"  >
+                            
+
+                           
                             <div className ='container__table'>
                                 <thead>
 
