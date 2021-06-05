@@ -24,21 +24,21 @@ class AppIndex extends Component {
 
         else if (type === "רכז" || this.state.isRakaz){
 
-
             this.setState({...this.state, isRakaz: true});
         }
         else if (type === "מדריך" || this.state.isRakaz){
 
-
             this.setState({...this.state,  isInstructor: true});
         }
-        else
-            if (alrt.data().first === "true") {
-            alert("המשתמש חייב להצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות");
-            alrt.ref.update({ first: "b" })
-        }
 
-            this.setState({...this.state, isAdmin: false, isRakaz: false ,  isInstructor: false });
+        else {
+            if (alrt.data().first === "true") {
+                alert("המשתמש חייב להצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות");
+               alrt.ref.update({first: "b"})
+            }
+
+            this.setState({...this.state, isAdmin: false, isRakaz: false, isInstructor: false});
+        }
     }
 
     exitAdmin = () => {
@@ -64,9 +64,11 @@ class AppIndex extends Component {
                     if (doc.exists) {
                         userType = doc.data().type;
                         alrt = doc;
+                        console.log("iln ")
                     }
                         else {
                         userType = "";
+                        console.log("in ")
                     }
                 })
                 .then(() => {
@@ -86,7 +88,6 @@ class AppIndex extends Component {
 
     renderContent() {
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
-
             return (<App/>)
         }
         if (this.state.isLoggedIn && this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
