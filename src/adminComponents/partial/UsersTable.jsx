@@ -15,7 +15,8 @@ class UsersTable extends Component {
             checkedList: [],
             id: "",
             type: "",
-            searchTerm: ""
+            searchTerm: "",
+            people:[]
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -25,64 +26,22 @@ class UsersTable extends Component {
                 this.setState({ type: doc.data().type });
             })
             .catch((e) => console.log(e.name));
-        this.people = [];
-        firebase.firestore().collection('Users').get().then((querySnapshot) => {
-            querySnapshot.docs.map((doc) => {
-                this.people.push({
-                    id: doc.data().id,
-                    name: doc.data().fName + " " + doc.data().lName,
-                    type:  doc.data().type,
-                    email: doc.data().email
-                });
-                return null;
-            });
-        });
+
 
     }
 
     componentDidMount() {
-        var linkedUserId;
         this.usersRef
-            .where('type', "==", "חונך")
-            .orderBy('fName', 'asc')
-            .orderBy('lName', 'asc')
             .get()
             .then(queryShot => {
                 queryShot.forEach(
                     (doc) => {
-                        linkedUserId = doc.data().link_user;
-                        if (typeof (linkedUserId) !== 'undefined' && linkedUserId !== "") {
-                            this.setState({ usersArr: [...this.state.usersArr, doc.data()] })
-                            this.usersRef.doc(linkedUserId).get()
-                                .then(linkedDoc => this.setState({ linkedUserArr: [...this.state.linkedUserArr, linkedDoc.data()] }))
-                        }
+                            this.setState({ people: [...this.state.people, doc.data()] })
                     }
                 )
             })
             .catch((e) => console.log(e.name));
-        this.usersRef
-            .orderBy('type', 'desc')
-            .orderBy('fName', 'asc')
-            .orderBy('lName', 'asc')
-            .get()
-            .then(queryShot => {
-                queryShot.forEach(
-                    (doc) => {
-                        linkedUserId = doc.data().link_user;
-                        if ((typeof (doc.data().link_user) === 'undefined' || doc.data().link_user === "") &&
-                            (doc.data().type === "חונך" || doc.data().type === "חניך")) {
-                            var newUser = {
-                                name: doc.data().fName + " " + doc.data().lName,
-                                role: doc.data().type,
-                                id: doc.data().id,
-                                email: doc.data().email,
-                                phone: doc.data().phone
-                            };
-                            this.setState({ noLinkedUsers: [...this.state.noLinkedUsers, newUser] })
-                        }
-                    })
-            })
-            .catch((e) => console.log(e.name));
+
     }
     handleSubmit = (event) => {
         event.preventDefault();
@@ -171,7 +130,7 @@ class UsersTable extends Component {
     renderTable() {
         if (this.state.type === "אדמין")
         {
-            return (this.people
+            return (this.state.people
                 .filter(person => person.id.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>
@@ -180,7 +139,7 @@ class UsersTable extends Component {
         }
         else if(this.state.type === "רכז")
         {
-            return (this.people
+            return (this.state.people
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>

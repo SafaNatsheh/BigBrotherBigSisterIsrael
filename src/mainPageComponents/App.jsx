@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
+import Chat from "../Chat/Chat"
 import WallPost from "../navBarComponents/wallComponents/wall/WallPost";
 import Profile from "../navBarComponents/wallComponents/profile/Profile";
 import HomePage from "../navBarComponents/homeComponents/HomePage";
@@ -405,6 +406,9 @@ class App extends Component {
             <Meetings />
             {this.routeToVideo()}
           </Route>{" "}
+          <Route path="/Chat">
+            <Chat />
+          </Route>{" "}
           <Redirect push to="/HomePage" ></Redirect>
         </Switch>
       );
@@ -484,6 +488,16 @@ class App extends Component {
                     onClick={(event) => this.checkIfVideo(event)}
                   >
                     קביעת פגישה{" "}
+                  </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item">
+                  <NavLink
+                      className="tab"
+                      to="/Chat"
+                      activeStyle={activeTabStyle}
+
+                  >
+                    Chat{" "}
                   </NavLink>{" "}
                 </li>{" "}
               </ul>{" "}
