@@ -11,11 +11,24 @@ class LinkUsers extends Component {
             studentName: "",
             mentorName: "",
             studentRef: "",
-            mentorRef: ""
+            mentorRef: "",
+            people:[]
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
+    componentDidMount() {
+        this.usersRef
+            .get()
+            .then(queryShot => {
+                queryShot.forEach(
+                    (doc) => {
+                        this.setState({ people: [...this.state.people, doc.data()] })
+                    }
+                )
+            })
+            .catch((e) => console.log(e.name));
 
+    }
     isValid = (querySnapshot, type) => {
         if (querySnapshot.empty) {
             alert("ה" + type + " לא קיים במערכת")
@@ -106,6 +119,20 @@ class LinkUsers extends Component {
                             title="שם פרטי"
                             onChange={(e) => this.setState({ studentId: e.target.value })}
                         />
+                        <br/>
+                        <table className="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ת.ז</th>
+                                <th>שם</th>
+                                <th>דוא"ל</th>
+                                <th>בחר</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.renderFirstTable()}
+                            </tbody>
+                        </table>
                     </div>
                     <div className="form-group col-md-6">
                         <label className="last-link-input-btn" htmlFor="inputLinkLastName">תעודת זהות חונך</label>
@@ -118,6 +145,20 @@ class LinkUsers extends Component {
                             placeholder="תעודת זהות חונך"
                             onChange={(e) => this.setState({ mentorId: e.target.value })}
                         />
+                        <br/>
+                        <table className="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ת.ז</th>
+                                <th>שם</th>
+                                <th>דוא"ל</th>
+                                <th>בחר</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.renderSecondTable()}
+                            </tbody>
+                        </table>
                         <button type="submit" className="btn btn-primary link-users-btn">
                             הוסף קישור
                          </button>
@@ -125,6 +166,22 @@ class LinkUsers extends Component {
                 </div>
             </form>
         );
+    }
+    renderFirstTable (){
+        return (this.state.people
+            .filter(person => person.type ==="חניך")
+            .map((person) => (
+                <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td>
+                    <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+            )))
+    }
+    renderSecondTable (){
+        return (this.state.people
+            .filter(person => person.type ==="חונך")
+            .map((person) => (
+                <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td>
+                    <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+            )))
     }
 
 }
