@@ -12,25 +12,12 @@ class LinkUsers extends Component {
             mentorName: "",
             studentRef: "",
             mentorRef: "",
-<<<<<<< Updated upstream
-            people:[]
-=======
-            search: ""
->>>>>>> Stashed changes
+            teachsrch: "",
+            people:[],
+            chekstat: "",
+            lnkstat: "0"
         }
         this.usersRef = firebase.firestore().collection('Users');
-        this.people = [];
-        firebase.firestore().collection('Users').get().then((querySnapshot) => {
-            querySnapshot.docs.map((doc) => {
-                this.people.push({
-                    id: doc.data().id,
-                    name: doc.data().fName + " " + doc.data().lName,
-                    type:  doc.data().type,
-                    email: doc.data().email
-                });
-                return null;
-            });
-        });
     }
     componentDidMount() {
         this.usersRef
@@ -100,11 +87,11 @@ class LinkUsers extends Component {
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    if (curr === studentId)
-                        doc.ref.update({ link_user: mentorRef })
-                    else if (curr === mentorId)
-                        doc.ref.update({ link_user: studentRef })
-                }
+                        if (curr === studentId)
+                            doc.ref.update({ link_user: mentorRef })
+                        else if (curr === mentorId)
+                            doc.ref.update({ link_user: studentRef })
+                    }
                 );
             }).catch((e) => console.log(e.name));
     }
@@ -114,164 +101,45 @@ class LinkUsers extends Component {
         this.verifyUsers();
     }
 
-    componentDidMount() {
-
-        var linkedUserId;
-        this.usersRef
-            .where('type', "==", "חונך")
-            .orderBy('fName', 'asc')
-            .orderBy('lName', 'asc')
-            .get()
-            .then(queryShot => {
-                queryShot.forEach(
-                    (doc) => {
-                        linkedUserId = doc.data().link_user;
-                        if (typeof (linkedUserId) !== 'undefined' && linkedUserId !== "") {
-                            this.setState({ usersArr: [...this.state.usersArr, doc.data()] })
-                            this.usersRef.doc(linkedUserId).get()
-                                .then(linkedDoc => this.setState({ linkedUserArr: [...this.state.linkedUserArr, linkedDoc.data()] }))
-                        }
-                    }
-                )
-            })
-            .catch((e) => console.log(e.name));
-        this.usersRef
-            .orderBy('type', 'desc')
-            .orderBy('fName', 'asc')
-            .orderBy('lName', 'asc')
-            .get()
-            .then(queryShot => {
-                queryShot.forEach(
-                    (doc) => {
-                        linkedUserId = doc.data().link_user;
-                        if ((typeof (doc.data().link_user) === 'undefined' || doc.data().link_user === "") &&
-                            (doc.data().type === "חונך" || doc.data().type === "חניך")) {
-                            var newUser = {
-                                name: doc.data().fName + " " + doc.data().lName,
-
-                                id: doc.data().id,
-
-                            };
-                            this.setState({ noLinkedUsers: [...this.state.noLinkedUsers, newUser] })
-                        }
-                    })
-            })
-            .catch((e) => console.log(e.name));
-    }
-
-    maketable(){
-
-        if (this.type === "רכז")
-        {
-            return (this.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .filter(person => person.type !== "אדמין")
-                .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
-                )))
-        }
-        else if (this.type === "מדריך")
-        {
-            return (this.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .filter(person => person.type !== "אדמין")
-                .filter(person => person.type !== "רכז")
-                .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'/></td></tr>
-                )))
-        }
-        else if (this.type === "חונך")
-        {
-            return (this.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .filter(person => person.type !== "אדמין")
-                .filter(person => person.type !== "רכז")
-                .filter(person => person.type !== "מדריך")
-                .filter(person => person.type !== "חונך")
-                .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
-                )))
-        }
-        else
-
-            if (this.mounted === 0) {
-
-            }
-
-            return (this.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .map((person) => (
-                    <tr >
-                        <td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
-                )))
-    }
-
     render() {
         return (
             <form className="ad-user-form" onSubmit={this.addLink}>
-
-                <div className="form-group">
-                    <label
-                        className="fLabels"
-                        style={{ float: "right" }}
-                        htmlFor="description"
-                    >
-
-
-                    </label>
-                    <table className="table table-bordered"  >
-                        <h6>משתתפים</h6>
-
-                        <input
-                            type="text"
-                            placeholder="search name"
-                            onChange={(e) => this.setState({ search: e.target.value })}
-                        />
-                        <div className ='container__table'>
-                            <thead>
-
-                            <tr>
-                                <td>ת.ז</td>
-                                <td>שם</td>
-                                <td>סוג משתמש</td>
-                                <td>בחר</td>
-
-                            </tr>
-                            </thead>
-                            <tbody >
-
-                            {this.maketable()}
-
-
-                            </tbody>
-                        </div>
-                    </table>
-                </div>
-
                 <header className="title">
                     <h1 className="add-user-h">
                         <u> קישור חניך לחונך</u>
                     </h1>
                 </header>
-<<<<<<< Updated upstream
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חניך</label>
+
                         <input
                             required
-                            type="number"
+                            type="text"
                             className="form-control"
                             id="inputLinkFirstName"
-                            value={this.state.studentId}
+                            value={this.state.teachsrch}
                             placeholder="תעודת זהות חניך"
                             title="שם פרטי"
-                            onChange={(e) => this.setState({ studentId: e.target.value })}
+                            onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
+                        <h5>
+                            ללא קישור
+                            <input type='checkbox' className='people_check' onChange={(e)=> {
+                                if (this.state.lnkstat === "0"){
+                                    this.setState({ lnkstat: "1" });
+                                }
+                                else {
+                                    this.setState({ lnkstat: "0" });
+                                }
+
+                                this.render();
+                            }
+                        } />
+                        </h5>
+
                         <br/>
+                        <div className ='container__table'>
                         <table className="table table-bordered">
                             <thead>
                             <tr>
@@ -285,19 +153,16 @@ class LinkUsers extends Component {
                             {this.renderFirstTable()}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                     <div className="form-group col-md-6">
-                        <label className="last-link-input-btn" htmlFor="inputLinkLastName">תעודת זהות חונך</label>
-                        <input
-                            required
-                            type="number"
-                            className="form-control"
-                            id="inputLinkLastName"
-                            value={this.state.mentorId}
-                            placeholder="תעודת זהות חונך"
-                            onChange={(e) => this.setState({ mentorId: e.target.value })}
-                        />
+
                         <br/>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
                         <table className="table table-bordered">
                             <thead>
                             <tr>
@@ -311,30 +176,62 @@ class LinkUsers extends Component {
                             {this.renderSecondTable()}
                             </tbody>
                         </table>
-=======
 
->>>>>>> Stashed changes
                         <button type="submit" className="btn btn-primary link-users-btn">
-                            הוסף קישור
-                         </button>
-
-
+                            בצע פעולות
+                        </button>
+                    </div>
+                </div>
             </form>
         );
     }
     renderFirstTable (){
+        if (this.state.lnkstat === "1") {
+
+            return (this.state.people
+                .filter(person => person.type ==="חונך" && person.first !== "true" && person.link_user == null || person.link_user === "").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
+                .map((person) => (
+
+                    <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=> {
+                            if (this.state.mentorId === "") {
+                                this.setState({mentorId: person.id});
+                            }
+                            else {
+                                this.setState({mentorId: ""});
+                            }
+                        }
+                        } />
+                        </td>
+                    </tr>
+                )))
+        }
         return (this.state.people
-            .filter(person => person.type ==="חניך")
+            .filter(person => person.type ==="חונך" && person.first !== "true").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
             .map((person) => (
-                <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td>
-                    <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+
+                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                    <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(e)=> {
+                        if (this.state.mentorId === "") {
+                            this.setState({mentorId: person.id});
+                        }
+                        else {
+                            this.setState({mentorId: ""});
+                        }
+                    }
+                    } />
+                    </td>
+                </tr>
             )))
     }
     renderSecondTable (){
+        if (this.state.mentorId === "") {
+            return null;
+        }
         return (this.state.people
-            .filter(person => person.type ==="חונך")
+            .filter(person => person.type === "חניך" && person.first !== "true")
             .map((person) => (
-                <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td>
+                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
                     <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
             )))
     }
