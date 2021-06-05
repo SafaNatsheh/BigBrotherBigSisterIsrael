@@ -1,0 +1,65 @@
+.conversation{
+    width: 75%;
+    height: 100%;
+
+}
+.conversationHeader{
+    height: 35px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}.message{
+    position: relative;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    background-color: white;
+    margin-bottom: 30px;
+    float: left;
+ }
+ .messageName{
+     position: absolute;
+     white-space: nowrap;
+     right: 0px;
+     top: -15px;
+     font-weight: 800;
+     font-size: xx-small;
+ }
+ .timestamp{
+     margin-left: 10px;
+     font-size: xx-small;
+ }
+ .conversationFooter{
+
+     justify-content: space-between;
+     align-items: center;
+     height: 57px;
+     border-top: 1px solid lightgray;
+     background-color: lightgray;
+ }
+ .conversationFooter >form{
+     flex: 1;
+     width: 100%;
+
+
+ }
+.conversationFooter>form >input{
+    width: 100%;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+}
+.conversationFooter> form> button{
+    display: none;
+}
+ .conversationBody{
+    flex: 1;
+    height: 85%;
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    background-repeat: repeat;
+    background-position: center;
+    padding: 30px;
+    overflow-y: scroll;
+}
