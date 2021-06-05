@@ -12,9 +12,25 @@ class LinkUsers extends Component {
             mentorName: "",
             studentRef: "",
             mentorRef: "",
+<<<<<<< Updated upstream
             people:[]
+=======
+            search: ""
+>>>>>>> Stashed changes
         }
         this.usersRef = firebase.firestore().collection('Users');
+        this.people = [];
+        firebase.firestore().collection('Users').get().then((querySnapshot) => {
+            querySnapshot.docs.map((doc) => {
+                this.people.push({
+                    id: doc.data().id,
+                    name: doc.data().fName + " " + doc.data().lName,
+                    type:  doc.data().type,
+                    email: doc.data().email
+                });
+                return null;
+            });
+        });
     }
     componentDidMount() {
         this.usersRef
@@ -98,14 +114,150 @@ class LinkUsers extends Component {
         this.verifyUsers();
     }
 
+    componentDidMount() {
+
+        var linkedUserId;
+        this.usersRef
+            .where('type', "==", "חונך")
+            .orderBy('fName', 'asc')
+            .orderBy('lName', 'asc')
+            .get()
+            .then(queryShot => {
+                queryShot.forEach(
+                    (doc) => {
+                        linkedUserId = doc.data().link_user;
+                        if (typeof (linkedUserId) !== 'undefined' && linkedUserId !== "") {
+                            this.setState({ usersArr: [...this.state.usersArr, doc.data()] })
+                            this.usersRef.doc(linkedUserId).get()
+                                .then(linkedDoc => this.setState({ linkedUserArr: [...this.state.linkedUserArr, linkedDoc.data()] }))
+                        }
+                    }
+                )
+            })
+            .catch((e) => console.log(e.name));
+        this.usersRef
+            .orderBy('type', 'desc')
+            .orderBy('fName', 'asc')
+            .orderBy('lName', 'asc')
+            .get()
+            .then(queryShot => {
+                queryShot.forEach(
+                    (doc) => {
+                        linkedUserId = doc.data().link_user;
+                        if ((typeof (doc.data().link_user) === 'undefined' || doc.data().link_user === "") &&
+                            (doc.data().type === "חונך" || doc.data().type === "חניך")) {
+                            var newUser = {
+                                name: doc.data().fName + " " + doc.data().lName,
+
+                                id: doc.data().id,
+
+                            };
+                            this.setState({ noLinkedUsers: [...this.state.noLinkedUsers, newUser] })
+                        }
+                    })
+            })
+            .catch((e) => console.log(e.name));
+    }
+
+    maketable(){
+
+        if (this.type === "רכז")
+        {
+            return (this.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+                )))
+        }
+        else if (this.type === "מדריך")
+        {
+            return (this.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .filter(person => person.type !== "רכז")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'/></td></tr>
+                )))
+        }
+        else if (this.type === "חונך")
+        {
+            return (this.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .filter(person => person.type !== "אדמין")
+                .filter(person => person.type !== "רכז")
+                .filter(person => person.type !== "מדריך")
+                .filter(person => person.type !== "חונך")
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+                )))
+        }
+        else
+
+            if (this.mounted === 0) {
+
+            }
+
+            return (this.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .map((person) => (
+                    <tr >
+                        <td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+                )))
+    }
+
     render() {
         return (
             <form className="ad-user-form" onSubmit={this.addLink}>
+
+                <div className="form-group">
+                    <label
+                        className="fLabels"
+                        style={{ float: "right" }}
+                        htmlFor="description"
+                    >
+
+
+                    </label>
+                    <table className="table table-bordered"  >
+                        <h6>משתתפים</h6>
+
+                        <input
+                            type="text"
+                            placeholder="search name"
+                            onChange={(e) => this.setState({ search: e.target.value })}
+                        />
+                        <div className ='container__table'>
+                            <thead>
+
+                            <tr>
+                                <td>ת.ז</td>
+                                <td>שם</td>
+                                <td>סוג משתמש</td>
+                                <td>בחר</td>
+
+                            </tr>
+                            </thead>
+                            <tbody >
+
+                            {this.maketable()}
+
+
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
+
                 <header className="title">
                     <h1 className="add-user-h">
                         <u> קישור חניך לחונך</u>
                     </h1>
                 </header>
+<<<<<<< Updated upstream
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חניך</label>
@@ -159,11 +311,14 @@ class LinkUsers extends Component {
                             {this.renderSecondTable()}
                             </tbody>
                         </table>
+=======
+
+>>>>>>> Stashed changes
                         <button type="submit" className="btn btn-primary link-users-btn">
                             הוסף קישור
                          </button>
-                    </div>
-                </div>
+
+
             </form>
         );
     }
