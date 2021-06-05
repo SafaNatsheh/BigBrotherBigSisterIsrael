@@ -18,17 +18,26 @@ class AppIndex extends Component {
         this.usersRef = firebase.firestore().collection('Users');
     }
 
-    determineIfAdmin = (type) => {
+    determineIfAdmin = (type , alrt) => {
         if (type === "אדמין" || this.state.isAdmin)
             this.setState({ isAdmin: true });
 
         else if (type === "רכז" || this.state.isRakaz){
+
+
             this.setState({...this.state, isRakaz: true});
         }
         else if (type === "מדריך" || this.state.isRakaz){
+
+
             this.setState({...this.state,  isInstructor: true});
         }
         else
+            if (alrt.data().first === "true") {
+            alert("המשתמש חייב להצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות");
+            alrt.ref.update({ first: "b" })
+        }
+
             this.setState({...this.state, isAdmin: false, isRakaz: false ,  isInstructor: false });
     }
 
@@ -48,16 +57,20 @@ class AppIndex extends Component {
         if (user) {
             // User is signed in.
             var userType;
+            var alrt;
             var userUid = user.uid;
             this.usersRef.doc(userUid).get()
                 .then(doc => {
-                    if (doc.exists)
+                    if (doc.exists) {
                         userType = doc.data().type;
-                    else
+                        alrt = doc;
+                    }
+                        else {
                         userType = "";
+                    }
                 })
                 .then(() => {
-                    this.determineIfAdmin(userType);
+                    this.determineIfAdmin(userType , alrt);
                 })
                 .then(() => this.setState({ isLoggedIn: true }))
                 .catch((e) => console.log(e.name));
@@ -72,15 +85,22 @@ class AppIndex extends Component {
     }
 
     renderContent() {
-        if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor)
-            return (<App />)
-        if (this.state.isLoggedIn && this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor)
-            return (<AdminPage exitAdmin={this.exitAdmin} />)
-        if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor)
-            return (<RakazPage exitRakaz={this.exitRakaz} />)
-        if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor)
-            return (<InstructorPage exitInstructor={this.exitInstructor} />)
+        if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
+
+            return (<App/>)
+        }
+        if (this.state.isLoggedIn && this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
+            return (<AdminPage exitAdmin={this.exitAdmin}/>)
+        }
+        if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor) {
+            return (<RakazPage exitRakaz={this.exitRakaz}/>)
+        }
+        if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
+
+            return (<InstructorPage exitInstructor={this.exitInstructor}/>)
+        }
         else
+
             return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} />)
     }
 
