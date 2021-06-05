@@ -36,7 +36,7 @@ class UsersTable extends Component {
             .then(queryShot => {
                 queryShot.forEach(
                     (doc) => {
-                            this.setState({ people: [...this.state.people, doc.data()] })
+                        this.setState({ people: [...this.state.people, doc.data()] })
                     }
                 )
             })
@@ -79,12 +79,12 @@ class UsersTable extends Component {
     }
 
     render() {
-        
+
         return (
             <div className="form-group">
                 <br />
 
-                <h3>רשימת המשתמשים</h3>
+                <h3>רשימת משתמשים</h3>
 
                 <input
                     type="text"
@@ -101,39 +101,40 @@ class UsersTable extends Component {
                         htmlFor="description"
                     >
                     </label>
-                    
+
                     <table className="table table-bordered">
-                        
+
                         <thead>
                         <tr>
-                            <th>ת.ז</th>
                             <th>שם</th>
+                            <th>ת.ז</th>
                             <th>דוא"ל</th>
                             <th>סוג משתמש</th>
                             <th>בחר</th>
                         </tr>
                         </thead>
-                      
+
                         <tbody>
-                        
+
                         {this.renderTable()}
                         </tbody>
-                       
+
                     </table>
                 </div>
                 <div className="button">
-                <br />
-                <button
-                    className="button-de"
-                    style={{ float: "right", marginRight: "700px" , color:" #4caf50"  }}
-                    onClick={this.handleSubmit}
-                >
-                    <div className="button-text">
-                    מחק את המשתמשים!
-                    </div>
-                    {" "}
-                </button>
+                    <br />
+                    <button
+                        className="button-de"
+                        style={{ float: "right", marginRight: "700px" , color:"#dc3545"  }}
+                        onClick={this.handleSubmit}
+                    >
+                        <div className="button-text">
+                            מחק המשתמשים
+                        </div>
+                        {" "}
+                    </button>
                 </div>
+
             </div>
         );
     }
@@ -141,9 +142,9 @@ class UsersTable extends Component {
         if (this.state.type === "אדמין")
         {
             return (this.state.people
-                .filter(person => person.id.indexOf(this.state.searchTerm)>-1)
+                .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>
+                    <tr><td>{person.fName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
@@ -152,7 +153,7 @@ class UsersTable extends Component {
             return (this.state.people
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.email}</td><td>{person.type}</td>
+                    <tr><td>{person.fName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
