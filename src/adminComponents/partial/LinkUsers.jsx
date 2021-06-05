@@ -11,11 +11,27 @@ class LinkUsers extends Component {
             studentName: "",
             mentorName: "",
             studentRef: "",
-            mentorRef: ""
+            mentorRef: "",
+            teachsrch: "",
+            people:[],
+            chekstat: "",
+            lnkstat: "0"
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
+    componentDidMount() {
+        this.usersRef
+            .get()
+            .then(queryShot => {
+                queryShot.forEach(
+                    (doc) => {
+                        this.setState({ people: [...this.state.people, doc.data()] })
+                    }
+                )
+            })
+            .catch((e) => console.log(e.name));
 
+    }
     isValid = (querySnapshot, type) => {
         if (querySnapshot.empty) {
             alert("ה" + type + " לא קיים במערכת")
@@ -71,11 +87,11 @@ class LinkUsers extends Component {
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    if (curr === studentId)
-                        doc.ref.update({ link_user: mentorRef })
-                    else if (curr === mentorId)
-                        doc.ref.update({ link_user: studentRef })
-                }
+                        if (curr === studentId)
+                            doc.ref.update({ link_user: mentorRef })
+                        else if (curr === mentorId)
+                            doc.ref.update({ link_user: studentRef })
+                    }
                 );
             }).catch((e) => console.log(e.name));
     }
@@ -96,35 +112,128 @@ class LinkUsers extends Component {
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חניך</label>
+
                         <input
                             required
-                            type="number"
+                            type="text"
                             className="form-control"
                             id="inputLinkFirstName"
-                            value={this.state.studentId}
+                            value={this.state.teachsrch}
                             placeholder="תעודת זהות חניך"
                             title="שם פרטי"
-                            onChange={(e) => this.setState({ studentId: e.target.value })}
+                            onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
+                        <h5>
+                            ללא קישור
+                            <input type='checkbox' className='people_check' onChange={(e)=> {
+                                if (this.state.lnkstat === "0"){
+                                    this.setState({ lnkstat: "1" });
+                                }
+                                else {
+                                    this.setState({ lnkstat: "0" });
+                                }
+
+                                this.render();
+                            }
+                        } />
+                        </h5>
+
+                        <br/>
+                        <div className ='container__table'>
+                        <table className="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ת.ז</th>
+                                <th>שם</th>
+                                <th>דוא"ל</th>
+                                <th>בחר</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.renderFirstTable()}
+                            </tbody>
+                        </table>
+                        </div>
                     </div>
                     <div className="form-group col-md-6">
-                        <label className="last-link-input-btn" htmlFor="inputLinkLastName">תעודת זהות חונך</label>
-                        <input
-                            required
-                            type="number"
-                            className="form-control"
-                            id="inputLinkLastName"
-                            value={this.state.mentorId}
-                            placeholder="תעודת זהות חונך"
-                            onChange={(e) => this.setState({ mentorId: e.target.value })}
-                        />
+
+                        <br/>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
+                        <table className="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ת.ז</th>
+                                <th>שם</th>
+                                <th>דוא"ל</th>
+                                <th>בחר</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.renderSecondTable()}
+                            </tbody>
+                        </table>
+
                         <button type="submit" className="btn btn-primary link-users-btn">
-                            הוסף קישור
-                         </button>
+                            בצע פעולות
+                        </button>
                     </div>
                 </div>
             </form>
         );
+    }
+    renderFirstTable (){
+        if (this.state.lnkstat === "1") {
+
+            return (this.state.people
+                .filter(person => person.type ==="חונך" && person.first !== "true" && person.link_user == null || person.link_user === "").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
+                .map((person) => (
+
+                    <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=> {
+                            if (this.state.mentorId === "") {
+                                this.setState({mentorId: person.id});
+                            }
+                            else {
+                                this.setState({mentorId: ""});
+                            }
+                        }
+                        } />
+                        </td>
+                    </tr>
+                )))
+        }
+        return (this.state.people
+            .filter(person => person.type ==="חונך" && person.first !== "true").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
+            .map((person) => (
+
+                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                    <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(e)=> {
+                        if (this.state.mentorId === "") {
+                            this.setState({mentorId: person.id});
+                        }
+                        else {
+                            this.setState({mentorId: ""});
+                        }
+                    }
+                    } />
+                    </td>
+                </tr>
+            )))
+    }
+    renderSecondTable (){
+        if (this.state.mentorId === "") {
+            return null;
+        }
+        return (this.state.people
+            .filter(person => person.type === "חניך" && person.first !== "true")
+            .map((person) => (
+                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                    <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
+            )))
     }
 
 }
