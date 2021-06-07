@@ -144,7 +144,7 @@ class UsersTable extends Component {
             return (this.state.people
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
-                    <tr><td>{person.fName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                    <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
@@ -153,7 +153,7 @@ class UsersTable extends Component {
             return (this.state.people
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
-                    <tr><td>{person.fName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                    <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
