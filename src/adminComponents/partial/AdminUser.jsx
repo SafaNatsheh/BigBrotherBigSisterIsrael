@@ -66,6 +66,14 @@ class AdminUser extends Component {
     var con = window.confirm("האם אתה בטוח שברצונך להוסיף משתמש זה?")
     if (!con)
       return;
+    if (this.state.id.length !== 9) {
+        alert("מספר תז לא תקין");
+        return;
+    }
+    if (this.state.phone.length !== 10 || this.state.phone.substring(0, 2) !== "05") {
+        alert("מספר טלפון לא תקין");
+        return;
+    }
     this.usersRef.get()
       .then(querySnap => querySnap.forEach(doc => {
         if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
