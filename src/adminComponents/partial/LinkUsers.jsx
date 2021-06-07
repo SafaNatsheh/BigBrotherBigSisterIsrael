@@ -210,7 +210,7 @@ class LinkUsers extends Component {
             .filter(person => person.type ==="חונך" && person.first !== "true").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
             .map((person) => (
 
-                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                     <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(e)=> {
                         if (this.state.mentorId === "") {
                             this.setState({mentorId: person.id});
@@ -231,7 +231,7 @@ class LinkUsers extends Component {
         return (this.state.people
             .filter(person => person.type === "חניך" && person.first !== "true")
             .map((person) => (
-                <tr><td>{person.id}</td><td>{person.fName}</td><td>{person.email}</td>
+                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                     <td person_id={person.id}><input type='checkbox' className='people_check' /></td></tr>
             )))
     }
