@@ -68,7 +68,7 @@ class AdminUser extends Component {
         alert("מספר תז לא תקין");
         return;
     }
-    if (this.state.phone.length !== 10 && this.state.phone.substring(0, 2) !== "05") {
+    if (this.state.phone.length !== 10 || this.state.phone.substring(0, 2) !== "05") {
         alert("מספר טלפון לא תקין");
         return;
     }
