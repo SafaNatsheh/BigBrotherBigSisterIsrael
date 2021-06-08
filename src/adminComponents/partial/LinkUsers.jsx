@@ -162,7 +162,7 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
                         <br></br>
-
+                        <div className ='container__table1'>
                         <table className="table table-bordered">
                             <thead>
                             <tr>
@@ -176,10 +176,15 @@ class LinkUsers extends Component {
                             {this.renderSecondTable()}
                             </tbody>
                         </table>
+                        </div>
 
-                        <button type="submit" className="btn btn-primary link-users-btn">
+                        <button type="submit" className="btn btn-primary link-users-btn"
+                        style={{   marginTop:"300px"  }}
+                        >
+                        
                             בצע פעולות
                         </button>
+                        
                     </div>
                 </div>
             </form>

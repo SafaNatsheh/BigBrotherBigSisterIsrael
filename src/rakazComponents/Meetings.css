@@ -57,3 +57,33 @@ button {
     text-align: right;
     width: 500px;
 }
+.container__table thead th {
+    position: sticky;
+    top: 0px;
+  }
+.container__table td , .container__table th{
+    background-color: #4caf50;
+    border-collapse: collapse;
+   
+}
+.container__table td ,.container__table tbody{
+    background-color:#935fa3 ;
+    color: #ffff;
+   
+  
+}
+.container__table{
+    position: absolute;
+    overflow-y:auto;
+
+}
+.meeting-thi{
+  
+    margin-top: 250px !important;
+}
+.container__table{
+    position: absolute;
+    height: 550px;
+
+
+}

@@ -379,10 +379,10 @@ class Meetings extends Component {
                                 <thead>
 
                                 <tr>
-                                    <td>שם</td>
-                                    <td>ת.ז</td>
-                                    <td>סוג משתמש</td>
-                                    <td>בחר</td>
+                                    <th>שם</th>
+                                    <th>ת.ז</th>
+                                    <th>סוג משתמש</th>
+                                    <th>בחר</th>
 
                                 </tr>
                                 </thead>
@@ -400,16 +400,20 @@ class Meetings extends Component {
                             type="checkbox"
                             className="form-check-input w-25"
                             id="scheduledMeeting"
+                            style={{ float: "right" , marginTop:"258px" , marginRight:"500px" }}
+
                             checked={this.state.scheduled}
                             onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
                         />
+                        <div className = "meeting-thi">
                         <label
                             className="form-check-label check-meeting-lbl w-75"
-                            style={{ float: "right" }}
+                            style={{ float: "right"  }}
                             htmlFor="description"
                         >
                             פגישות קבועות - לשלושת החודשים הקרובים
                         </label>
+                        </div>
                     </div>
                     <br />
                     <button

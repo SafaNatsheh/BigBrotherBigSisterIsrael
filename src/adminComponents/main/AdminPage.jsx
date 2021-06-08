@@ -179,7 +179,7 @@ class AdminPage extends Component {
                 to="/UsersTable"
                 activeStyle={activeTabStyle}
             >
-              רשימת חונכים/ חניכים
+                         רשימת משתמשים
             </NavLink>
           </li>
           <li className="nav-item text-center">

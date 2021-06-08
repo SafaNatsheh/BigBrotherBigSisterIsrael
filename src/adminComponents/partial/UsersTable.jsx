@@ -84,14 +84,14 @@ class UsersTable extends Component {
             <div className="form-group">
                 <br />
 
-                <h3>רשימת משתמשים</h3>
+              
 
                 <input
                     type="text"
                     placeholder="search"
                     value={this.state.searchTerm}
                     onChange={(e) => this.setState({ searchTerm: e.target.value })}
-                    // style={{ marginRight: "450px" ,position:"realtive" ,marginInline:"500px"}}
+                    style={{ marginRight: "225px" ,display:"block" }}
                 />
 
                 <div className="table-t" >
@@ -125,7 +125,7 @@ class UsersTable extends Component {
                     <br />
                     <button
                         className="button-de"
-                        style={{ float: "right", marginRight: "700px" , color:"#dc3545"  }}
+                        style={{ float: "right", marginRight: "780px" ,marginTop:"0px", color:"#dc3545"  }}
                         onClick={this.handleSubmit}
                     >
                         <div className="button-text">
