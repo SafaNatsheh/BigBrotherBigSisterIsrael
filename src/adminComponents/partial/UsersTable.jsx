@@ -16,7 +16,8 @@ class UsersTable extends Component {
             id: "",
             type: "",
             searchTerm: "",
-            people:[]
+            people:[],
+            pathToStorage:"profile_pictures/"
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -45,6 +46,7 @@ class UsersTable extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
+        let str='profile_pictures/';
 
         if(this.state.type === "אדמין"||this.state.type === "רכז")
         {
@@ -61,6 +63,8 @@ class UsersTable extends Component {
                                     this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                                 }
                                 doc.ref.delete()
+                                var desertRef = firebase.storage().ref(str+doc.id);
+                                desertRef.delete()
 
                             }
                         });
@@ -79,7 +83,7 @@ class UsersTable extends Component {
     }
 
     render() {
-        console.log(this.state.id);
+
         return (
             <div>
                 <br />
@@ -128,6 +132,7 @@ class UsersTable extends Component {
         );
     }
     renderTable() {
+
         if (this.state.type === "אדמין")
         {
             return (this.state.people
