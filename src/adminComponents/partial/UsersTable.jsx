@@ -60,7 +60,7 @@ class UsersTable extends Component {
                                 {
                                     this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                                 }
-                                doc.ref.delete()
+                                doc.ref.delete();
 
                             }
                         });
