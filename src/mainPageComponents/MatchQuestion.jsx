@@ -16,13 +16,13 @@ class matchQuestion extends Component {
             sevQues: "",
             eigQues: "",
             ninQues: "",
-            checkBox: false
 
         };
     }
 
     render() {
         return (
+            <form className="add-user-form" onSubmit={this.submit}>
             <div className="questions">
 
                 <div >
@@ -179,12 +179,15 @@ class matchQuestion extends Component {
                 </div>
                 <br/>
                 <div >
-                    <input type="checkbox" className="people_check"/>
+                    <input type="checkbox" id="myCheck" className="people_check"/>
                    <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות</h6>
                 </div>
 
             </div>
-
+                <button type="submit" className="btn btn-success add-new-user-btn">
+                  שלח
+                </button>
+            </form>
 
         );
     }

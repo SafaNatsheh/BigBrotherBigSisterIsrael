@@ -101,7 +101,17 @@ class AppIndex extends Component {
             return (<AdminPage exitAdmin={this.exitAdmin}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor) {
-            //this.state.isfirst.ref.update({first: "acpt"})
+            var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
+            if (con) {
+                this.state.isfirst.ref.update({first: "acpt"});
+                return (<RakazPage exitRakaz={this.exitRakaz}/>)
+            }
+            else {
+                alert("אתה צריך לאשר");
+                this.setState({isLoggedIn: false});
+                return;
+            }
+
             return (<RakazPage exitRakaz={this.exitRakaz}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
