@@ -274,14 +274,19 @@ class Meeting extends Component {
               checked={this.state.scheduled}
               onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
             />
+            
+          </div>
+          
             <label
               className="form-check-label check-meeting-lbl w-75"
-              style={{ float: "right" }}
+              style={{ float: "right"  }}
               htmlFor="description"
             >
+              <div className = "meeting-thi">
               פגישות קבועות - לשלושת החודשים הקרובים
+              </div>
             </label>
-          </div>
+            
           <br />
           <button
             className="btn btn-success setup-meeting-btn"
@@ -292,6 +297,7 @@ class Meeting extends Component {
         </form>
         {this.getTable()}
       </div >
+      
     );
   }
 }

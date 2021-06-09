@@ -251,17 +251,35 @@ class UpdateUser extends Component {
                         />
                     </div>
                 </div>
+                <div className="form-row">
                 <div className="form-group">
-                    <label htmlFor="inputAddress2">כתובת מגורים</label>
+                    <label htmlFor="inputAddress">כתובת מגורים</label>
                     <input
                         disabled={!this.state.transferEnable}
                         type="text"
                         className="form-control"
-                        id="inputAddress2"
+                        id="inputAddress"
                         value={this.state.address}
                         placeholder="כתובת מגורים"
                         onChange={(e) => this.setState({ address: e.target.value })}
                     />
+                </div>
+
+                <div className="form-group col-md-6">
+                    <label htmlFor="inputState">מין</label>
+                    <select
+                        required
+                        disabled={!this.state.transferEnable}
+                        id="inputState"
+                        className="form-control"
+                        value={this.state.gender}
+                        onChange={(e) => this.setState({ gender: e.target.value })}>
+                        <option id="ff" disabled value="">בחר המין</option>
+                        <option >זכר</option>
+                        <option >נקבה</option>
+
+                    </select>
+                </div>
                 </div>
                 <div className="form-row">
 

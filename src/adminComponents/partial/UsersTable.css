@@ -8,16 +8,18 @@
     border:5px solid #776078;
     border-radius: 10px;
     table-layout: fixed;
-
-
-
 }
+.table-t thead th {
+    position: sticky;
+    top: 0px;
+  }
 .table-t td , .table-t th{
-    background-color: rgb(76, 175, 80);
+    background-color: #4caf50;
     border-collapse: collapse;
-
-
-
+   
+}
+.search-t{
+    margin-right: 200px;
 }
 .button-de{
     /*background-color: rgb(76, 175, 80);*/
@@ -34,13 +36,17 @@
     border-radius: 12px;
     cursor: pointer;
 }
+
 .table-t td ,.table-t tbody{
-    background-color: #784594;
+    background-color:#935fa3 ;
     color: #ffff;
+   
+  
 }
 .table-t{
     position: absolute;
     margin-right:220px;
+    overflow-y:auto;
 
 }
 .button{
@@ -58,7 +64,7 @@
 .table-t{
     position: absolute;
     height: 550px;
-    overflow-y: scroll;
+ 
 
 }
 .show-no-link-btn{
