@@ -37,7 +37,6 @@
 
 #submit-login {
     font-weight: bold;
-    border-color: black;
     right: 39.5%;
     margin: auto;
     margin-top: 15px;
@@ -50,7 +49,7 @@
 
 .forget-pwd {
     position: relative;
-    right: 37%;
+    right: 35%;
 }
 
 @media only screen and (max-width: 400px) {

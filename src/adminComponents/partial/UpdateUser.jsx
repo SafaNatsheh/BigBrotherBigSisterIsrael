@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
 
+
 class UpdateUser extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +20,11 @@ class UpdateUser extends Component {
             docId: ""
         };
         this.usersRef = firebase.firestore().collection('Users');
+        firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
+        .then((doc) => {
+            this.type = doc.data().type;
+        })
+        .catch((e) => console.log(e.name))
     }
 
     getUserByEmailOrId(event) {
@@ -31,6 +37,7 @@ class UpdateUser extends Component {
             alert("אנא מלא רק אחד מהשדות: אימייל או תעודת זהות");
             return;
         }
+
         if (this.state.email !== "") {
             this.usersRef
                 .where('email', "==", this.state.email)
@@ -93,9 +100,41 @@ class UpdateUser extends Component {
 
     UpdateUser = (event) => {
         event.preventDefault();
+
+        if (this.state.phone.length !== 10 || this.state.phone.substring(0, 2) !== "05") {
+            alert("מספר טלפון לא תקין");
+            return;
+        }
+
+        if(this.type === "רכז" && this.state.type === "אדמין"){
+            alert("אין לך הרשאות לעדכן ");
+            this.setState({
+                firstName: "", lastName: "", id: "",
+                email: "", phone: "", address: "", area: "",
+                birthDate: "", type: "",
+                transferEnable: false
+            })
+
+            return;
+        }
+        if(this.type === "מדריך" && (this.state.type === "אדמין"|| this.state.type === "רכז")){
+            alert("אין לך הרשאות לעדכן ");
+            this.setState({
+                firstName: "", lastName: "", id: "",
+                email: "", phone: "", address: "", area: "",
+                birthDate: "", type: "",
+                transferEnable: false
+            })
+
+            return;
+        }
         var con = window.confirm("האם אתה בטוח שברצונך לעדכן משתמש זה?")
         if (!con)
             return;
+            console.log(this.type);
+            console.log(this.state.type);
+            
+            
         var newUser = {
             fName: this.state.firstName,
             lName: this.state.lastName,
@@ -117,6 +156,7 @@ class UpdateUser extends Component {
                 })
             })
             .catch((e) => console.log(e.name + " נוצרה בעיה בעדכון פרטי המשתמש."));
+        
     }
 
     render() {
@@ -211,17 +251,35 @@ class UpdateUser extends Component {
                         />
                     </div>
                 </div>
+                <div className="form-row">
                 <div className="form-group">
-                    <label htmlFor="inputAddress2">כתובת מגורים</label>
+                    <label htmlFor="inputAddress">כתובת מגורים</label>
                     <input
                         disabled={!this.state.transferEnable}
                         type="text"
                         className="form-control"
-                        id="inputAddress2"
+                        id="inputAddress"
                         value={this.state.address}
                         placeholder="כתובת מגורים"
                         onChange={(e) => this.setState({ address: e.target.value })}
                     />
+                </div>
+
+                <div className="form-group col-md-6">
+                    <label htmlFor="inputState">מין</label>
+                    <select
+                        required
+                        disabled={!this.state.transferEnable}
+                        id="inputState"
+                        className="form-control"
+                        value={this.state.gender}
+                        onChange={(e) => this.setState({ gender: e.target.value })}>
+                        <option id="ff" disabled value="">בחר המין</option>
+                        <option >זכר</option>
+                        <option >נקבה</option>
+
+                    </select>
+                </div>
                 </div>
                 <div className="form-row">
 
@@ -248,10 +306,11 @@ class UpdateUser extends Component {
                             value={this.state.type}
                             onChange={(e) => this.setState({ type: e.target.value })}>
                             <option id="ff" disabled value=""> הכנס סוג משתמש</option>
+                            <option >אדמין</option>
+                            <option >רכז</option>
+                            <option >מדריך</option>
                             <option >חונך</option>
                             <option >חניך</option>
-                            <option >מנהל</option>
-                            <option >אדמין</option>
 
                         </select>
                     </div>

@@ -17,6 +17,7 @@ class Meetings extends Component {
             place: "",
             search: "",
             description: "",
+            people:[],
             filterFn : { fn: items => { return items; } },
             loadingFromFirebase: true,
             lastMeetingVisible: null,
@@ -28,7 +29,7 @@ class Meetings extends Component {
         };
 
         this.newDocId = "";
-        this.people = [];
+
         this.myMeetingsRef = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).collection('Meetings');
         firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
             .then((doc) => {
@@ -40,7 +41,7 @@ class Meetings extends Component {
         firebase.firestore().collection('Users').get().then((querySnapshot) => {
             querySnapshot.docs.map((doc) => {
 
-                this.people.push({
+                this.state.people.push({
                     uid:doc.id,
                     id: doc.data().id,
                     email: doc.data().email,
@@ -172,37 +173,37 @@ class Meetings extends Component {
                     description: this.state.description
                 })
                 newMeetingObj.push({});
-               let docRef= await this.myMeetingsRef.add(newMeetings[i])
-                        this.newDocId = docRef.id;
-                       // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
+                let docRef= await this.myMeetingsRef.add(newMeetings[i])
+                this.newDocId = docRef.id;
+                // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
 
-                        if (!this.state.scheduled && this.state.date !== "") {
-                            alert(
-                                "נקבעה פגישה בתאריך: " +
-                                this.state.date +
-                                "\nבשעה: " +
-                                this.state.time +
-                                "\nבמיקום: " +
-                                this.state.place
-                            );
-                        }
-                        else if (i === 0)
-                            alert(
-                                "נקבעו 13 פגישות קבועות לשלושת החודשים הקרובים."
-                            );
-                        Object.assign(newMeetingObj[i], newMeetings[i]);
-                        newMeetingObj[i].doc_id = this.newDocId;
-                        this.state.checkList.forEach(async user=>{
-                            await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set(newMeetings[i]);
+                if (!this.state.scheduled && this.state.date !== "") {
+                    alert(
+                        "נקבעה פגישה בתאריך: " +
+                        this.state.date +
+                        "\nבשעה: " +
+                        this.state.time +
+                        "\nבמיקום: " +
+                        this.state.place
+                    );
+                }
+                else if (i === 0)
+                    alert(
+                        "נקבעו 13 פגישות קבועות לשלושת החודשים הקרובים."
+                    );
+                Object.assign(newMeetingObj[i], newMeetings[i]);
+                newMeetingObj[i].doc_id = this.newDocId;
+                this.state.checkList.forEach(async user=>{
+                    await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set(newMeetings[i]);
 
-                        })
-                        newMeetingObj[i].doc_id = this.newDocId;
-                        const d = [].concat(this.state.meetings).concat(newMeetingObj[i]).sort((a, b) => this.sortFunc(a, b));
-                        this.setState({
-                            meetings: [...d],
-                            date: "", time: "", place: "", description: "", scheduled: false
-                        });
+                })
+                newMeetingObj[i].doc_id = this.newDocId;
+                const d = [].concat(this.state.meetings).concat(newMeetingObj[i]).sort((a, b) => this.sortFunc(a, b));
+                this.setState({
+                    meetings: [...d],
+                    date: "", time: "", place: "", description: "", scheduled: false
+                });
 
             }
         }
@@ -220,54 +221,54 @@ class Meetings extends Component {
 
         if (this.type === "רכז")
         {
-            return (this.people
-                .filter(person => person.id.indexOf(this.state.search)>-1)
+            return (this.state.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>{
                             this.state.checkList.push(person)}}/></td></tr>
                 )))
         }
         else if (this.type === "מדריך")
         {
-            return (this.people
-                .filter(person => person.id.indexOf(this.state.search)>-1)
+            return (this.state.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
                 .filter(person => person.type !== "אדמין")
                 .filter(person => person.type !== "רכז")
                 .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=>this.state.checkList.push(person)}/></td></tr>
                 )))
         }
         else if (this.type === "חונך")
         {
-            return (this.people
-                .filter(person => person.id.indexOf(this.state.search)>-1)
+            return (this.state.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
                 .filter(person => person.type !== "אדמין")
                 .filter(person => person.type !== "רכז")
                 .filter(person => person.type !== "מדריך")
                 .filter(person => person.type !== "חונך")
                 .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
                 )))
         }
         else
 
-            return (this.people
-                .filter(person => person.id.indexOf(this.state.search)>-1)
+            return (this.state.people
+                .filter(person => person.name.indexOf(this.state.search)>-1)
                 .map((person,key) => (
                     <tr key={key}>
-                        <td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
+                        <td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>
                         {
                             this.state.checkList.push(person)
 
                         }
-                        
+
                         }/></td></tr>
-                        )))
+                )))
     }
 
 
@@ -280,8 +281,8 @@ class Meetings extends Component {
             <div className="main-background" >
                 <form className="meeting-form" onSubmit={this.handleSubmit}>
                     <br />
-                    <div className="form-group">
-                        <h1 className="meeting-title"><u>קביעת פגישה</u></h1>
+                    <div className="form-1">
+                        
 
                         <label
                             className="fLabels"
@@ -299,8 +300,9 @@ class Meetings extends Component {
                             value={this.state.date}
                             required
                         />
+                    
                     </div>
-                    <div className="form-group">
+                        <div className = 'time'>
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -317,8 +319,9 @@ class Meetings extends Component {
                             value={this.state.time}
                             required
                         />
-                    </div>
-                    <div className="form-group">
+                       
+                       </div>
+                    <div className="place">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -336,7 +339,7 @@ class Meetings extends Component {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="descrip">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -355,6 +358,7 @@ class Meetings extends Component {
                         />
                     </div>
                     <div className="form-group">
+                                 <div className= "table-w">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -363,22 +367,25 @@ class Meetings extends Component {
 
 
                         </label>
+                        <h6>משתתפים</h6>
+                        <input
+                            type="text"
+                            placeholder="search"
+                            onChange={(e) => this.setState({ search: e.target.value })}
+                        />
+                        </div>
                         <table className="table table-bordered"  >
-                            <h6>משתתפים</h6>
 
-                            <input
-                                type="text"
-                                placeholder="search ID"
-                                onChange={(e) => this.setState({ search: e.target.value })}
-                            />
+
+
                             <div className ='container__table'>
                                 <thead>
 
                                 <tr>
-                                    <td>ת.ז</td>
-                                    <td>שם</td>
-                                    <td>סוג משתמש</td>
-                                    <td>בחר</td>
+                                    <th>שם</th>
+                                    <th>ת.ז</th>
+                                    <th>סוג משתמש</th>
+                                    <th>בחר</th>
 
                                 </tr>
                                 </thead>
@@ -396,16 +403,20 @@ class Meetings extends Component {
                             type="checkbox"
                             className="form-check-input w-25"
                             id="scheduledMeeting"
+                            style={{ float: "right" , marginTop:"258px" , marginRight:"40px" }}
+
                             checked={this.state.scheduled}
                             onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
                         />
+                        <div className = "meeting-thi">
                         <label
                             className="form-check-label check-meeting-lbl w-75"
-                            style={{ float: "right" }}
+                            style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}
                             htmlFor="description"
                         >
                             פגישות קבועות - לשלושת החודשים הקרובים
                         </label>
+                        </div>
                     </div>
                     <br />
                     <button

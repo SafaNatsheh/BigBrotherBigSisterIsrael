@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AdminUser from "../partial/AdminUser";
 import UpdateUser from "../partial/UpdateUser"
-import DeleteUser from "../partial/DeleteUser";
 import UsersTable from "../partial/UsersTable"
 import LinkUsers from "../partial/LinkUsers";
 import firebase from "../../config/Firebase";
@@ -89,14 +88,18 @@ class AdminPage extends Component {
             <h2 className="admin-title">ברוך הבא למסך האדמין, {this.state.user_name}</h2>
             <button className="btn btn-danger log-out-admin" onClick={this.logoutAdmin}>התנתק</button>
           </nav>
+
           <Router>
             <div className="sidenav admin-navbar">
               {this.addUser(activeTabStyle)}
             </div>{" "}
+
+
             {/* A <Switch> looks through its children <Route>s and
                                                     renders the first one that matches the current URL. */}{" "}
+
             <Switch>
-            <Route path="/Home">
+                <Route path="/Home">
                 <Home />
                 </Route>
               <Route path="/AdminUser">
@@ -104,9 +107,6 @@ class AdminPage extends Component {
               </Route>
               <Route path="/UpdateUser">
                 <UpdateUser />
-              </Route>
-              <Route path="/DeleteUser">
-                <DeleteUser />
               </Route>
               <Route path="/UsersTable">
                 <UsersTable />
@@ -117,6 +117,10 @@ class AdminPage extends Component {
               <Route path="/Meetings">
                 <Meetings />
              </Route>{" "}
+
+              <Route path="/">
+              <Home />
+              </Route>
             </Switch>{" "}
           </Router>{" "}
         </div>
@@ -130,6 +134,7 @@ class AdminPage extends Component {
     return(
         <ul className="nav">
           <li className="nav-item text-center">
+
             <NavLink
                 className="tab"
                 to="/Home"
@@ -158,15 +163,7 @@ class AdminPage extends Component {
               עדכון פרטי משתמש
             </NavLink>
           </li>
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/DeleteUser"
-                activeStyle={activeTabStyle}
-            >
-              מחיקת משתמש
-            </NavLink>
-          </li>
+          
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
@@ -182,7 +179,7 @@ class AdminPage extends Component {
                 to="/UsersTable"
                 activeStyle={activeTabStyle}
             >
-              רשימת חונכים/ חניכים
+                         רשימת משתמשים
             </NavLink>
           </li>
           <li className="nav-item text-center">

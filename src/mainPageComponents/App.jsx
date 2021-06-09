@@ -25,11 +25,13 @@ class App extends Component {
     this.state = {
       userDetails: {
         fName: "",
-        lName: ""
+        lName: "",
+        type: ""
       },
       linkedUserDetails: {
         fName: "",
-        lName: ""
+        lName: "",
+        type: ""
       },
       isMounted: false,
       loadingUser: true,
@@ -256,20 +258,30 @@ class App extends Component {
   componentDidUpdate(prevProp, prevState) {
     if (this.state.userDetails.email !== prevState.userDetails.email) {
       var mateDoc;
-      if (typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") {
-        alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
+      if ((typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") && this.state.userDetails.type === "חניך") {
+        alert("למשתמש זה אין חונך. אנא פנה למנהל המערכת עם הודעה זו.");
         this.setState({ loadingLinkedUser: false });
-        this.setState({linkedUserDetails : {fName: "אין", lName: "חונך/חניך" , type: "" , area: "" , birthDate: ""}});
+        this.setState({linkedUserDetails : {fName: "אין", lName: "חונך" , type: "" , area: "" , birthDate: ""}});
+      }
+      else if ((typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") && this.state.userDetails.type === "חונך") {
+        alert("למשתמש זה אין חניך. אנא פנה למנהל המערכת עם הודעה זו.");
+        this.setState({ loadingLinkedUser: false });
+        this.setState({linkedUserDetails : {fName: "אין", lName: "חניך" , type: "" , area: "" , birthDate: ""}});
       }
       else {
         this.getLinkedUser();
         mateDoc = firebase.firestore().collection('Users').doc(this.state.userDetails.link_user);
         mateDoc.get()
           .then((doc) => {
-            if (!doc.exists || doc.data().link_user === "") {
-              alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
+            if ((!doc.exists || doc.data().link_user === "") && this.state.linkedUserDetails.type === "חניך") {
+              alert("למשתמש זה אין חונך. אנא פנה למנהל המערכת עם הודעה זו.");
               this.setState({ loadingLinkedUser: false });
-              this.setState({linkedUserDetails : {fName: "אין", lName: "חונך/חניך" , type: "" , area: "" , birthDate: ""}});
+              this.setState({linkedUserDetails : {fName: "אין", lName: "חונך" , type: "" , area: "" , birthDate: ""}});
+            }
+            else if ((!doc.exists || doc.data().link_user === "") && this.state.linkedUserDetails.type === "חונך") {
+              alert("למשתמש זה אין חניך. אנא פנה למנהל המערכת עם הודעה זו.");
+              this.setState({ loadingLinkedUser: false });
+              this.setState({linkedUserDetails : {fName: "אין", lName: "חניך" , type: "" , area: "" , birthDate: ""}});
             }
             else {
               this.setState({ isMounted: true });

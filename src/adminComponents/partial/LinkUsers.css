@@ -4,11 +4,37 @@
     top:35px;
     width:200px;
 }
-
+.container__table1 thead th {
+    position: sticky;
+    top: 0px;
+  }
+.container__table1 td , .container__table1 th{
+    background-color: #4caf50;
+    border-collapse: collapse;
+   
+}
+.container__table1 td ,.container__table1 tbody{
+    background-color:#935fa3 ;
+    color: #ffff;
+   
+  
+}
+.container__table1{
+    position: absolute;
+    overflow-y:auto;
+margin-top: 6px;
+}
 #inputLinkFirstName,#inputLinkLastName{
     width: 500px;
 }
-
+.container__table {
+    height: 290px;
+    overflow-y: scroll;
+}
+.container__table1 {
+    height: 290px;
+    overflow-y: scroll;
+}
 .add-user-h{
 text-align: center;
 }
@@ -23,6 +49,8 @@ text-align: center;
     position: relative;
    right: 150px;
 }
+
+
 
 .last-link-input-btn{
     position: relative;

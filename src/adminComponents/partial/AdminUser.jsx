@@ -14,8 +14,10 @@ class AdminUser extends Component {
       phone: "",
       address: "",
       area: "",
+      gender: "",
       birthDate: "",
       type: "",
+      first: "",
       addOnce: true
     };
   }
@@ -26,14 +28,16 @@ class AdminUser extends Component {
         this.usersRef.doc(user.uid).get().then(doc => {
           if (!doc.exists && this.state.addOnce) {
             this.setState({ addOnce: false });
-            var newUser = {
+            let newUser = {
               fName: this.state.firstName,
               lName: this.state.lastName,
               id: this.state.id,
               email: this.state.email,
               phone: this.state.phone,
               area: this.state.area,
+              gender: this.state.gender,
               type: this.state.type,
+              first: "true",
               birthDate: this.state.birthDate
             }
             if (this.state.address !== "")
@@ -46,7 +50,7 @@ class AdminUser extends Component {
                     addOnce: true,
                     firstName: "", lastName: "", id: "",
                     email: "", phone: "", address: "", area: "",
-                    birthDate: "", type: ""
+                    gender: "", birthDate: "", type: ""
                   })
                 })
                 .catch((e) => console.log(e.name))
@@ -62,6 +66,14 @@ class AdminUser extends Component {
     var con = window.confirm("האם אתה בטוח שברצונך להוסיף משתמש זה?")
     if (!con)
       return;
+    if (this.state.id.length !== 9) {
+        alert("מספר תז לא תקין");
+        return;
+    }
+    if (this.state.phone.length !== 10 || this.state.phone.substring(0, 2) !== "05") {
+        alert("מספר טלפון לא תקין");
+        return;
+    }
     this.usersRef.get()
       .then(querySnap => querySnap.forEach(doc => {
         if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
@@ -166,16 +178,32 @@ class AdminUser extends Component {
             />
           </div>
         </div>
+        <div className="form-row">
         <div className="form-group">
-          <label htmlFor="inputAddress2">כתובת מגורים</label>
+          <label htmlFor="inputAddress">כתובת מגורים</label>
           <input
             type="text"
             className="form-control"
-            id="inputAddress2"
+            id="inputAddress"
             value={this.state.address}
             placeholder="כתובת מגורים"
             onChange={(e) => this.setState({ address: e.target.value })}
           />
+        </div>
+
+          <div className="form-group col-md-6">
+            <label htmlFor="inputState">מין</label>
+            <select
+                required id="inputState"
+                className="form-control"
+                value={this.state.gender}
+                onChange={(e) => this.setState({ gender: e.target.value })}>
+              <option id="ff" disabled value=""> בחר המין</option>
+              <option >זכר</option>
+              <option >נקבה</option>
+            </select>
+          </div>
+
         </div>
         <div className="form-row">
 
@@ -199,11 +227,11 @@ class AdminUser extends Component {
               value={this.state.type}
               onChange={(e) => this.setState({ type: e.target.value })}>
               <option id="ff" disabled value=""> הכנס סוג משתמש</option>
+              <option >אדמין</option>
+              <option >רכז</option>
+              <option >מדריך</option>
               <option >חונך</option>
               <option >חניך</option>
-              <option >מדריך</option>
-              <option >רכז</option>
-              <option >אדמין</option>
 
             </select>
           </div>
