@@ -281,8 +281,8 @@ class Meetings extends Component {
             <div className="main-background" >
                 <form className="meeting-form" onSubmit={this.handleSubmit}>
                     <br />
-                    <div className="form-group">
-                        <h1 className="meeting-title"><u>קביעת פגישה</u></h1>
+                    <div className="form-1">
+                        
 
                         <label
                             className="fLabels"
@@ -300,8 +300,9 @@ class Meetings extends Component {
                             value={this.state.date}
                             required
                         />
+                    
                     </div>
-                    <div className="form-group">
+                        <div className = 'time'>
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -318,8 +319,9 @@ class Meetings extends Component {
                             value={this.state.time}
                             required
                         />
-                    </div>
-                    <div className="form-group">
+                       
+                       </div>
+                    <div className="place">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -337,7 +339,7 @@ class Meetings extends Component {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="descrip">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -356,7 +358,7 @@ class Meetings extends Component {
                         />
                     </div>
                     <div className="form-group">
-
+                                 <div className= "table-w">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -371,6 +373,7 @@ class Meetings extends Component {
                             placeholder="search"
                             onChange={(e) => this.setState({ search: e.target.value })}
                         />
+                        </div>
                         <table className="table table-bordered"  >
 
 
@@ -400,7 +403,7 @@ class Meetings extends Component {
                             type="checkbox"
                             className="form-check-input w-25"
                             id="scheduledMeeting"
-                            style={{ float: "right" , marginTop:"258px" , marginRight:"500px" }}
+                            style={{ float: "right" , marginTop:"258px" , marginRight:"40px" }}
 
                             checked={this.state.scheduled}
                             onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
@@ -408,7 +411,7 @@ class Meetings extends Component {
                         <div className = "meeting-thi">
                         <label
                             className="form-check-label check-meeting-lbl w-75"
-                            style={{ float: "right"  }}
+                            style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}
                             htmlFor="description"
                         >
                             פגישות קבועות - לשלושת החודשים הקרובים

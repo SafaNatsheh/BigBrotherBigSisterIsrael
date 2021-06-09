@@ -2,6 +2,29 @@
     width: 500px;
     direction: rtl;
 }
+.form-1{
+    width: 180px;
+    padding-right: 5px;
+    position: absolute;
+}
+.place{
+    width: 180px;
+    position: absolute;
+ padding-right: 5px;
+    margin-top: 80px;
+}
+.descrip{
+    width: 320px;
+    position: absolute;
+    margin-right: 190px;
+    margin-top: 80px;
+}
+.time{
+    width: 180px;
+    position: absolute;
+    margin-right: 190px;
+   
+}
 
 .meeting-title{
     position: relative;
@@ -19,7 +42,9 @@
     overflow-y: scroll;
 
 }
-
+.table-w{
+    padding-right: 5px;
+}
 .meeting-form{
     width: 500px;
     float: right;
@@ -75,7 +100,12 @@ button {
 .container__table{
     position: absolute;
     overflow-y:auto;
+  width: 500px;
 
+}
+.table-w{
+
+    padding-top: 150px;
 }
 .meeting-thi{
   
