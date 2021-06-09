@@ -409,7 +409,7 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
-          <Redirect push to="/HomePage" ></Redirect>
+
         </Switch>
       );
   }
