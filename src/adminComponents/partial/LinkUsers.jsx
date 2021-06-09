@@ -213,7 +213,7 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
                         <br></br>
-
+                        <div className ='container__table1'>
                         <table className="table table-bordered">
                             <thead>
                             <tr>
@@ -227,10 +227,15 @@ class LinkUsers extends Component {
                             {this.renderSecondTable()}
                             </tbody>
                         </table>
+                        </div>
 
-                        <button type="submit" className="btn btn-primary link-users-btn">
+                        <button type="submit" className="btn btn-primary link-users-btn"
+                        style={{   marginTop:"300px"  }}
+                        >
+                        
                             בצע פעולות
                         </button>
+                        
                     </div>
                 </div>
             </form>
@@ -244,7 +249,9 @@ class LinkUsers extends Component {
                 .map((person) => (
 
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
+
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
+                        
                             if (this.state.mentorId === "") {
                                 this.setState({mentorId: e.target.id});
                             }
