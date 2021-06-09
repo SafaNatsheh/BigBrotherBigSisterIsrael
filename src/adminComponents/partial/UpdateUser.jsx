@@ -37,6 +37,7 @@ class UpdateUser extends Component {
             alert("אנא מלא רק אחד מהשדות: אימייל או תעודת זהות");
             return;
         }
+
         if (this.state.email !== "") {
             this.usersRef
                 .where('email', "==", this.state.email)
@@ -99,6 +100,12 @@ class UpdateUser extends Component {
 
     UpdateUser = (event) => {
         event.preventDefault();
+
+        if (this.state.phone.length !== 10 || this.state.phone.substring(0, 2) !== "05") {
+            alert("מספר טלפון לא תקין");
+            return;
+        }
+
         if(this.type === "רכז" && this.state.type === "אדמין"){
             alert("אין לך הרשאות לעדכן ");
             this.setState({

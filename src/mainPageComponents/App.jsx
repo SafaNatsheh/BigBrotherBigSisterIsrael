@@ -261,10 +261,10 @@ class App extends Component {
       if ((typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") && this.state.userDetails.type === "חניך") {
         alert("למשתמש זה אין חונך. אנא פנה למנהל המערכת עם הודעה זו.");
         this.setState({ loadingLinkedUser: false });
-        this.setState({linkedUserDetails : {fName: "אין", lName: "חניך" , type: "" , area: "" , birthDate: ""}});
+        this.setState({linkedUserDetails : {fName: "אין", lName: "חונך" , type: "" , area: "" , birthDate: ""}});
       }
       else if ((typeof (this.state.userDetails.link_user) === 'undefined' || this.state.userDetails.link_user === "") && this.state.userDetails.type === "חונך") {
-        alert("למשתמש זה אין חונך/חניך. אנא פנה למנהל המערכת עם הודעה זו.");
+        alert("למשתמש זה אין חניך. אנא פנה למנהל המערכת עם הודעה זו.");
         this.setState({ loadingLinkedUser: false });
         this.setState({linkedUserDetails : {fName: "אין", lName: "חניך" , type: "" , area: "" , birthDate: ""}});
       }
