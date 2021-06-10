@@ -1,22 +1,19 @@
 import React, {Component} from "react";
-import Loader from 'react-loader-spinner'
 import "./UsersTable.css";
 import firebase, {auth} from "../../config/Firebase"
 import NoLinkedUsers from "./NoLinkedUsers";
+
 
 class UsersTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            usersArr: [],
-            linkedUserArr: [],
-            noLinkedUsers: [],
-            noLink: false,
             checkedList: [],
             id: "",
             type: "",
             searchTerm: "",
-            people:[]
+            people:[],
+            pathToStorage:"profile_pictures/"
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -29,7 +26,14 @@ class UsersTable extends Component {
 
 
     }
-
+    arrayContainsID(id,arr){
+        for(let i=0;i<arr.length;i++)
+        {
+            if(arr[i].id === id)
+                return true;
+        }
+        return false;
+    }
     componentDidMount() {
         auth.onAuthStateChanged(user=> {
             console.log(user)
@@ -63,6 +67,11 @@ class UsersTable extends Component {
         return(newList)
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let str='profile_pictures/';
+
+
     handleSubmit = async (event) => {
         event.preventDefault();
         var list=this.state.people
@@ -72,9 +81,11 @@ class UsersTable extends Component {
             if (con){
                 for(let i =0;i<this.state.checkedList.length;i++)
                 {
+
                 list = this.removePeople(list,this.state.checkedList[i])
 
                    let querySnapshot=await firebase.firestore().collection('Users').get()
+
 
                     querySnapshot.docs.forEach(doc => {
                         if(doc.data().id === this.state.checkedList[i])
@@ -88,6 +99,25 @@ class UsersTable extends Component {
                         }
 
                     })
+                    let tmp = this.state.checkedList[i];
+                    firebase.firestore().collection('Chats').get().then((querySnapshot) => {
+                        querySnapshot.docs.forEach(doc => {
+                            if(doc.data().type === "private")
+                            {
+                                if(this.arrayContainsID(tmp,doc.data().members)===true){
+                                    doc.ref.delete();
+                                }
+                            }
+                            if(doc.data().type === "group"){
+                                if(this.arrayContainsID(tmp,doc.data().members)===true){
+                                    const newArr=doc.data().members.filter(member => member.id !== tmp);
+                                    doc.ref.update({members: newArr});
+                                }
+                            }
+
+                        });
+                    })
+
                 }
                 console.log(this.state.checkedList)
                 this.state.checkedList.forEach(elem =>
@@ -100,8 +130,7 @@ class UsersTable extends Component {
         {
             alert("אין לך הרשאה לעשות זה");
         }
-
-
+        
 
 
     }
@@ -167,6 +196,7 @@ class UsersTable extends Component {
         );
     }
     renderTable() {
+
         if (this.state.type === "אדמין")
         {
             return (this.state.people

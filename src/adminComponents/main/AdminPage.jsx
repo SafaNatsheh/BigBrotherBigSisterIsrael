@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Chat from "../../Chat/Chat";
 import AdminUser from "../partial/AdminUser";
 import UpdateUser from "../partial/UpdateUser"
 import UsersTable from "../partial/UsersTable"
@@ -15,6 +16,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./AdminPage.css";
+import CreateNewChat from "../partial/CreateNewChat";
 
 class AdminPage extends Component {
   constructor(props) {
@@ -124,10 +126,16 @@ class AdminPage extends Component {
               <Route path="/Meetings">
                 <Meetings />
              </Route>{" "}
-
+              <Route path="/Chat">
+                <Chat />
+              </Route>{" "}
+              <Route path="/CreateChat">
+                <CreateNewChat />
+              </Route>{" "}
               <Route path="/">
               <Home />
               </Route>
+
             </Switch>{" "}
           </Router>{" "}
         </div>
@@ -198,6 +206,26 @@ class AdminPage extends Component {
               קביעת פגשים
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink
+                className="tab"
+                to="/Chat"
+                activeStyle={activeTabStyle}
+
+            >
+              שיחות{" "}
+            </NavLink>{" "}
+          </li>{" "}
+            <li className="nav-item">
+                <NavLink
+                    className="tab"
+                    to="/CreateChat"
+                    activeStyle={activeTabStyle}
+
+                >
+                    יצור קבוצה{" "}
+                </NavLink>{" "}
+            </li>{" "}
         </ul>
     )
   }

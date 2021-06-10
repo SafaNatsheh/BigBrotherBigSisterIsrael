@@ -13,6 +13,8 @@ import {
     NavLink,
 } from "react-router-dom";
 import "./InstructorPage.css";
+import Chat from "../Chat/Chat";
+import CreateNewChat from "../adminComponents/partial/CreateNewChat";
 
 
 class InstructorPage extends Component {
@@ -111,6 +113,12 @@ class InstructorPage extends Component {
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/Chat">
+                                <Chat />
+                            </Route>{" "}
+                            <Route path="/CreateChat">
+                                <CreateNewChat />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -158,6 +166,26 @@ class InstructorPage extends Component {
                         קביעת פגישה
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/Chat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        שיחות{" "}
+                    </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/CreateChat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        יצור קבוצה{" "}
+                    </NavLink>{" "}
+                </li>{" "}
             </ul>
         )
     }
