@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../../config/Firebase"
+import firebase,{auth} from "../../config/Firebase"
 import "./LinkUsers.css";
 
 class LinkUsers extends Component {
@@ -21,30 +21,40 @@ class LinkUsers extends Component {
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
-    componentDidMount() {
-        this.state.people = [];
+      componentDidMount() {
+       auth.onAuthStateChanged(user=>{
+            if(!user)
+            {
+                window.location.href="/"
+                return
+            }
+
+        var people = [];
         this.usersRef
             .get()
             .then(queryShot => {
                 queryShot.forEach(
                     (doc) => {
-                        this.setState({ people: [...this.state.people, doc.data()] })
+                        people.push(doc.data())
+
                     }
                 )
-            })
+            }).then(()=>{
+            this.setState({ people: people })
+        })
             .catch((e) => console.log(e.name));
 
-
+       })
     }
     fillpepl() {
         setTimeout(function(){
-            window.location.reload(1);
-        }, 1000);
+        window.location.reload(1);
+        }, 1200);
 
     }
     isValid = (querySnapshot, type) => {
         if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
-            var con = window.confirm("האם אתה בטוח לבצונך לננתק את החניך ?")
+            var con = window.confirm("האם אתה בטוח לבצונך לנתק את החניך ?")
             if (con) {
                 this.usersRef.where('id', '==', this.state.mentorId)
                     .limit(1)
@@ -65,9 +75,22 @@ class LinkUsers extends Component {
                             }
                         );
                     }).catch((e) => console.log(e.name));
+
+                firebase.firestore().collection('Chats').get().then((querySnapshot) => {
+                    querySnapshot.docs.forEach(doc => {
+                        if (doc.data().type === "private") {
+                            console.log(doc.data().members[0].id)
+                            console.log(this.state.lnkstudid)
+                            if (doc.data().members[0].id === this.state.lnkstudid) {
+                                doc.ref.delete();
+                            }
+                        }
+                    });
+                })
+
                 console.log("המשתמשים עודכנו בהצלחה!");
                 alert("עודכן בהצלחה!\n");
-                this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: "" , lnkstudid: ""});
+                this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
                 this.fillpepl();
 
                 return;
@@ -112,6 +135,18 @@ class LinkUsers extends Component {
                 if (con) {
                     this.linkUser(studentId);
                     this.linkUser(mentorId);
+
+                    var map1 ={id: studentId,name: this.state.studentName}
+                    var map2 ={id: mentorId,name: this.state.mentorName}
+                    const arr=[map1,map2]
+                    firebase.firestore().collection('Chats').add(
+                        {
+
+                            name: "שיחה חניך חניך",
+                            type: "private",
+                            members: arr,
+                        })
+
                     console.log("המשתמשים עודכנו בהצלחה!");
                     alert("עודכן בהצלחה!\n" + this.state.mentorName + " הוא החונך של " + this.state.studentName + ".");
                     this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
@@ -162,7 +197,7 @@ class LinkUsers extends Component {
                             className="form-control"
                             id="inputLinkFirstName"
                             value={this.state.teachsrch}
-                            placeholder="תעודת זהות חניך"
+                            placeholder="שם חניך"
                             title="שם פרטי"
                             onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
@@ -330,19 +365,20 @@ class LinkUsers extends Component {
         //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it
 
         var lists = [];
-        var nwlst = false;
+        var nwlst = 0;
+        var mins = 0;
         for (var i = 0 ; i < 3 ; i++) {
-            if (nwlst) {
+
                 lists.push(<tr>
                     <td>  </td>
                     <td>  </td>
                     <td> {"עדיפות "+(i)} </td>
                     <td>  </td>
                 </tr>)
-                nwlst = false;
-            }
+
+
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = true))
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst++))
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                         <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
@@ -364,9 +400,12 @@ class LinkUsers extends Component {
                         }
                         }/></td></tr>
                 )))
-
+            if (nwlst > 0) {
+                mins++
+                nwlst = 0;
+            }
         }
-
+        lists=lists.slice(0,lists.length-(6 - (mins*2)))
         return (lists)
     }
 
@@ -376,10 +415,30 @@ class LinkUsers extends Component {
             .filter(person => person.type ==="חונך" && person.first !== "true" && person.id === this.state.mentorId)
             .forEach((elem) => (menscr = elem.isfirst))
         var scr = 0;
+            menscr = ""
+        for (var ln , ind , ind2 = 0 ; ln < 9 ; ) {
 
-        for (var ln , ind = 0 ; ln < 9 ; ind++) {
-            if (studscr[ind] === this.state.menscr[ind]) {
+            if (studscr[ind] === '/') {
+                ln++;
+                ind++;
+                while (menscr[ind2] !== '/') {
+                    ind2++
+                }
+            }
 
+           else if (menscr[ind2] === '/') {
+                ind2++;
+                while (studscr[ind] !== '/') {
+                    ind++
+                }
+            }
+
+            if (studscr[ind] === this.state.menscr[ind2]) {
+                ind++;
+                ind2++;
+            }
+            else {
+                scr++;
             }
         }
         return scr;

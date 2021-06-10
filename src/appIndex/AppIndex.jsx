@@ -17,7 +17,8 @@ class AppIndex extends Component {
             isRakaz: false,
             isInstructor : false,
             isfirst : "",
-            filled: false
+            filled: false,
+            end:false
         };
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -73,13 +74,14 @@ class AppIndex extends Component {
                 })
                 .then(() => {
                     this.determineIfAdmin(userType);
+
                 })
-                .then(() => this.setState({ isLoggedIn: true }))
+                .then(() => this.setState({ isLoggedIn: true,end:true }))
                 .catch((e) => console.log(e.name));
         }
         else
             // No user is signed in.
-            this.setState({ isLoggedIn: false });
+            this.setState({ isLoggedIn: false ,end:true});
     }
 
     componentDidMount() {
@@ -87,6 +89,7 @@ class AppIndex extends Component {
     }
 
     renderContent() {
+        console.log(this.state)
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor ) {
             if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חונך" && this.state.filled === false) {
                 return (<Quest refwin = {this.state.isfirst} complt = {this.filled}/>)
@@ -117,9 +120,9 @@ class AppIndex extends Component {
 
             return (<InstructorPage exitInstructor={this.exitInstructor}/>)
         }
-        else
-
+        else if(!this.state.isLoggedIn && this.state.end)
             return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} />)
+        return <div></div>
     }
 
     render() {

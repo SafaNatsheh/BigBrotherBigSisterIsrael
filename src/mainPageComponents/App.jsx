@@ -8,7 +8,7 @@ import VideoPage from "../navBarComponents/videoComponents/main/VideoPage";
 import ChangePassword from "./ChangePassword"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import firebase from "../config/Firebase"
+import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
 import {
@@ -246,13 +246,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    var webSiteWidth = 1280;
-    var webScale = window.screen.width / webSiteWidth
-    document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      var webSiteWidth = 1280;
+      var webScale = window.screen.width / webSiteWidth
+      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
 
-    window.addEventListener("resize", this.resizeWin);
-    this.getUserName();
-    this.getProfilePictures();
+      window.addEventListener("resize", this.resizeWin);
+      this.getUserName();
+      this.getProfilePictures();
+    })
   }
 
   componentDidUpdate(prevProp, prevState) {

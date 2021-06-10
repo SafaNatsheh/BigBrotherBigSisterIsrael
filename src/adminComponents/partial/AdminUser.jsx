@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./AdminUser.css";
-import firebase from "../../config/Firebase"
+import firebase, {auth,CreateNewUser,db} from "../../config/Firebase"
 
 class AdminUser extends Component {
   constructor(props) {
     super(props);
-    this.usersRef = firebase.firestore().collection('Users');
+    this.usersRef = db.collection('Users');
     this.state = {
       firstName: "",
       lastName: "",
@@ -18,32 +18,37 @@ class AdminUser extends Component {
       birthDate: "",
       type: "",
       first: "",
-      addOnce: true
+      addOnce: true,
+      changeUser:false
     };
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.usersRef.doc(user.uid).get().then(doc => {
-          if (!doc.exists && this.state.addOnce) {
-            this.setState({ addOnce: false });
-            let newUser = {
-              fName: this.state.firstName,
-              lName: this.state.lastName,
-              id: this.state.id,
-              email: this.state.email,
-              phone: this.state.phone,
-              area: this.state.area,
-              gender: this.state.gender,
-              type: this.state.type,
-              first: "true",
-              birthDate: this.state.birthDate
-            }
-            if (this.state.address !== "")
-              newUser.address = this.state.address;
-            if (this.state.addOnce === false && this.state.id !== "") {
-              this.usersRef.doc(user.uid).set(newUser)
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      this.usersRef.doc(user.uid).get().then(doc => {
+        if (!doc.exists && this.state.addOnce) {
+          this.setState({addOnce: false});
+          let newUser = {
+            fName: this.state.firstName,
+            lName: this.state.lastName,
+            id: this.state.id,
+            email: this.state.email,
+            phone: this.state.phone,
+            area: this.state.area,
+            gender: this.state.gender,
+            type: this.state.type,
+            first: "true",
+            birthDate: this.state.birthDate
+          }
+          if (this.state.address !== "")
+            newUser.address = this.state.address;
+          if (this.state.addOnce === false && this.state.id !== "") {
+            this.usersRef.doc(user.uid).set(newUser)
                 .then(() => {
                   alert("המשתמש נוסף למערכת בהצלחה!");
                   this.setState({
@@ -54,10 +59,9 @@ class AdminUser extends Component {
                   })
                 })
                 .catch((e) => console.log(e.name))
-            }
           }
-        })
-      }
+        }
+      })
     })
   }
 
@@ -82,7 +86,7 @@ class AdminUser extends Component {
         }
       }))
       .then(() => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.id)
+        CreateNewUser(this.state.email, this.state.id)
           .catch(() => {
             alert("בעיה בהוספת משתמש חדש למערכת. ייתכן והסיסמא שהוכנסה קצרה או חלשה מדי או שהאימייל שהוכנס כבר קיים במערכת.");
           })
