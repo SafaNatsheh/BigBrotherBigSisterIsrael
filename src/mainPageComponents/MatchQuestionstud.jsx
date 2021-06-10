@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./MatchQuestionstud.css";
 import {Component, useState} from 'react';
+import logo from '../static_pictures/big_brothers_big_sisters.png'
 
 class matchQuestionstud extends Component {
 
@@ -31,12 +32,18 @@ class matchQuestionstud extends Component {
 
     render() {
         return (
-            <form className="add-user-form" onSubmit={this.submit}>
+            <form className="q" onSubmit={this.submit}>
             <div className="questions">
-                <div >
-                    <label htmlFor="inputState">1. סניף </label>
+                <img src={logo} alt="asfsa" className="logo"/>
+                <h2>ברוכים הבאים לשאלון ההתאמה</h2>
+                <br/>
+                <div className="form-row">
+                <div  className="form-group col-md-3">
+
+                    <label htmlFor="inputState"> <h6>1. סניף</h6></label>
                     <select
                         required id="inputState"
+                        className="form-control"
                         value={this.state.firQues}
                         onChange={(e) => this.setState({ firQues: e.target.value })}>
                         <option id="ff" disabled value="">בחר תשובה</option>
@@ -56,14 +63,13 @@ class matchQuestionstud extends Component {
                         <option value="14\">שדרות</option>
                         <option value="15\">באר שבע</option>
                         <option value="16\">אחר</option>
-
                     </select>
                 </div>
-                <br/>
-                <div>
-                        <label htmlFor="inputState">2. אזור בעיר:</label>
+                <div  className="form-group col-md-3">
+                        <label htmlFor="inputState"><h6>2. אזור בעיר</h6></label>
                         <select
                             required id="inputState"
+                            className="form-control"
                             value={this.state.secQues}
                             onChange={(e) => this.setState({ secQues: e.target.value })}>
                             <option id="ff" disabled value="">בחר תשובה</option>
@@ -73,37 +79,49 @@ class matchQuestionstud extends Component {
                             <option value="4\">מערב העיר</option>
                         </select>
                 </div>
-                <br/>
-                <div>
-                    <label htmlFor="inputState">3. בעל.ת לקויות למידה:</label>
-                    <select
-                        required id="inputState"
-                        value={this.state.thiQues}
-                        onChange={(e) => this.setState({ thiQues: e.target.value })}>
-                        <option id="ff" disabled value="">בחר תשובה</option>
-                        <option value="1\">כן</option>
-                        <option value="2\">לא</option>
-
-                    </select>
+                <div className="form-group col-md-3">
+                        <label htmlFor="inputState"><h6>3.שפות מדוברות</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.thiQues}
+                            onChange={(e) => this.setState({ thiQues: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">עברית</option>
+                            <option value="2\">ערבית</option>
+                            <option value="3\">אנגלית</option>
+                            <option value="4\">אמהרית</option>
+                            <option value="5\">רוסית</option>
+                            <option value="6\">צרפתית</option>
+                        </select>
+                    </div>
+                <div className="form-group col-md-3">
+                        <label htmlFor="inputState"><h6>4.תחומי עניין</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.forQues}
+                            onChange={(e) => this.setState({ forQues: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">ספורט וריקוד</option>
+                            <option value="2\">מוסיקה ונגינה</option>
+                            <option value="3\">בעלי חיים</option>
+                            <option value="4\">שופינג</option>
+                            <option value="5\">ציור ופיסול</option>
+                            <option value="6\">צילום ועריכה</option>
+                            <option value="7\">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
+                            <option value="8\">טיולים</option>
+                            <option value="9\">אחר</option>
+                        </select>
+                </div>
                 </div>
                 <br/>
-                <div>
-                    <label htmlFor="inputState">4. מצב לימודי: </label>
+                <div className="form-row row_R2">
+                <div className="form-group col-md-3">
+                    <label htmlFor="inputState"><h6>5. מצב רגשי</h6></label>
                     <select
                         required id="inputState"
-                        value={this.state.forQues}
-                        onChange={(e) => this.setState({ forQues: e.target.value })}>
-                        <option id="ff" disabled value="">בחר תשובה</option>
-                        <option value="1\">גבוה</option>
-                        <option value="2\">בינוני</option>
-                        <option value="3\">נמוך</option>
-                    </select>
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="inputState">5. מצב רגשי:</label>
-                    <select
-                        required id="inputState"
+                        className="form-control"
                         value={this.state.fifQues}
                         onChange={(e) => this.setState({ fifQues: e.target.value })}>
                         <option id="ff" disabled value="">בחר תשובה</option>
@@ -111,46 +129,41 @@ class matchQuestionstud extends Component {
                         <option value="2\">מאתגר</option>
                     </select>
                 </div>
-                <br/>
-                <div>
-                    <label htmlFor="inputState">6.שפות מדוברות:</label>
-                    <select
-                        required id="inputState"
-                        value={this.state.sixQues}
-                        onChange={(e) => this.setState({ sixQues: e.target.value })}>
-                        <option id="ff" disabled value="">בחר תשובה</option>
-                        <option value="1\">עברית</option>
-                        <option value="2\">ערבית</option>
-                        <option value="3\">אנגלית</option>
-                        <option value="4\">אמהרית</option>
-                        <option value="5\">רוסית</option>
-                        <option value="6\">צרפתית</option>
-                    </select>
+                <div className="form-group col-md-3">
+                        <label htmlFor="inputState"><h6>6. מצב לימודי</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.sixQues}
+                                onChange={(e) => this.setState({ sixQues: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">גבוה</option>
+                                <option value="2\">בינוני</option>
+                                <option value="3\">נמוך</option>
+                            </select>
+                </div>
+                <div  className="form-group col-md-3">
+                        <label htmlFor="inputState"><h6>7. בעל/ת לקויות למידה</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.sevQues}
+                            onChange={(e) => this.setState({ sevQues: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">כן</option>
+                            <option value="2\">לא</option>
+
+                        </select>
+                </div>
+
                 </div>
                 <br/>
-                <div>
-                    <label htmlFor="inputState">7.תחומי עניין:</label>
+                <div className="form-row row_R3">
+                <div className="form-group col-md-6">
+                    <label htmlFor="inputState"><h6>8. באילו ימים החונכות אפשרית לך?</h6></label>
                     <select
                         required id="inputState"
-                        value={this.state.sevQues}
-                        onChange={(e) => this.setState({ sevQues: e.target.value })}>
-                        <option id="ff" disabled value="">בחר תשובה</option>
-                        <option value="1\">ספורט וריקוד</option>
-                        <option value="2\">מוסיקה ונגינה</option>
-                        <option value="3\">בעלי חיים</option>
-                        <option value="4\">שופינג</option>
-                        <option value="5\">ציור ופיסול</option>
-                        <option value="6\">צילום ועריכה</option>
-                        <option value="7\">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
-                        <option value="8\">טיולים</option>
-                        <option value="9\">אחר</option>
-                    </select>
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="inputState">8. באילו ימים החונכות אפשרית לך:</label>
-                    <select
-                        required id="inputState"
+                        className="form-control"
                         value={this.state.eigQues}
                         onChange={(e) => this.setState({ eigQues: e.target.value })}>
                         <option id="ff" disabled value="">בחר תשובה</option>
@@ -163,11 +176,11 @@ class matchQuestionstud extends Component {
                         <option value="7\">ללא העדפה</option>
                     </select>
                 </div>
-                <br/>
-                <div>
-                    <label htmlFor="inputState">9. באילו שעות החונכות אפשרית לך:</label>
+                <div className="form-group col-md-6">
+                    <label htmlFor="inputState"><h6>9. באילו שעות החונכות אפשרית לך?</h6></label>
                     <select
                         required id="inputState"
+                        className="form-control"
                         value={this.state.ninQues}
                         onChange={(e) => this.setState({ ninQues: e.target.value })}>
                         <option id="ff" disabled value="">בחר תשובה</option>
@@ -178,16 +191,18 @@ class matchQuestionstud extends Component {
                         <option value="5\">ללא העדפה</option>
                     </select>
                 </div>
+                </div>
                 <br/>
-                <div >
-                    <input type="checkbox" id="myCheck" className="people_check" />
-                   <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות</h6>
+                <div>
+                    <input type="checkbox" id="myCheck" className='check' />
+                    <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות.</h6>
                 </div>
 
-            </div>
-                <button type="submit" className="btn btn-success add-new-user-btn">
+                <button type="submit" className="btn btn-success add-new-user-btn bot">
                     שלח
                 </button>
+            </div>
+
             </form>
 
         );

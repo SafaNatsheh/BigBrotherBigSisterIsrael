@@ -328,30 +328,63 @@ class LinkUsers extends Component {
             return null;
         }
         //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it
-        return (this.state.people
-            .filter(person => person.type === "חניך" && person.first !== "true" && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)))
-            .map((person) => (
-                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
-                    <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
-                        if (this.state.studentId === "") {
-                            this.setState({studentId: e.target.id});
-                        }
-                        else if (e.target.id !== this.state.studentId) {
-                            document.getElementById(this.state.studentId).checked = false;
-                            this.setState({studentId: e.target.id});
-                            this.setState({discon: true});
-                        }
-                        else {
-                            this.setState({studentId: ""});
-                            this.setState({discon: true});
-                            console.log(this.state.lnkstudid);
-                        }
+
+        var lists = [];
+        var nwlst = false;
+        for (var i = 0 ; i < 3 ; i++) {
+            if (nwlst) {
+                lists.push(<tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td> {"עדיפות "+(i)} </td>
+                    <td>  </td>
+                </tr>)
+                nwlst = false;
+            }
+            lists.push(this.state.people
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = true))
+                .map((person) => (
+                    <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
+                        <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
+                            if (this.state.studentId === "") {
+                                this.setState({studentId: e.target.id});
+                            }
+                            else if (e.target.id !== this.state.studentId) {
+                                document.getElementById(this.state.studentId).checked = false;
+                                this.setState({studentId: e.target.id});
+                                this.setState({discon: true});
+                            }
+                            else {
+                                this.setState({studentId: ""});
+                                this.setState({discon: true});
+                                console.log(this.state.lnkstudid);
+                            }
 
 
-                    }
-                    }/></td></tr>
-            )))
+                        }
+                        }/></td></tr>
+                )))
+
+        }
+
+        return (lists)
     }
+
+    gtscor(studscr) {
+        var menscr;
+        this.state.people
+            .filter(person => person.type ==="חונך" && person.first !== "true" && person.id === this.state.mentorId)
+            .forEach((elem) => (menscr = elem.isfirst))
+        var scr = 0;
+
+        for (var ln , ind = 0 ; ln < 9 ; ind++) {
+            if (studscr[ind] === this.state.menscr[ind]) {
+
+            }
+        }
+        return scr;
+    }
+
 
 }
 

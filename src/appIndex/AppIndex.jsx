@@ -89,7 +89,6 @@ class AppIndex extends Component {
     renderContent() {
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor ) {
             if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חונך" && this.state.filled === false) {
-
                 return (<Quest refwin = {this.state.isfirst} complt = {this.filled}/>)
             }
             else if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חניך" && this.state.filled === false) {
