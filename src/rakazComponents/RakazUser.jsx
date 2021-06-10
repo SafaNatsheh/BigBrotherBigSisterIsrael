@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./RakazUser.css";
-import firebase from "../config/Firebase"
+import firebase, {auth} from "../config/Firebase"
 
 class RakazUser extends Component {
     constructor(props) {
@@ -21,40 +21,44 @@ class RakazUser extends Component {
     }
 
     componentDidMount() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.usersRef.doc(user.uid).get().then(doc => {
-                    if (!doc.exists && this.state.addOnce) {
-                        this.setState({ addOnce: false });
-                        var newUser = {
-                            fName: this.state.firstName,
-                            lName: this.state.lastName,
-                            id: this.state.id,
-                            email: this.state.email,
-                            phone: this.state.phone,
-                            area: this.state.area,
-                            type: this.state.type,
-                            birthDate: this.state.birthDate
-                        }
-                        if (this.state.address !== "")
-                            newUser.address = this.state.address;
-                        if (this.state.addOnce === false && this.state.id !== "") {
-                            this.usersRef.doc(user.uid).set(newUser)
-                                .then(() => {
-                                    alert("המשתמש נוסף למערכת בהצלחה!");
-                                    this.setState({
-                                        addOnce: true,
-                                        firstName: "", lastName: "", id: "",
-                                        email: "", phone: "", address: "", area: "",
-                                        birthDate: "", type: ""
-                                    })
-                                })
-                                .catch((e) => console.log(e.name))
-                        }
-                    }
-                })
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
             }
+            this.usersRef.doc(user.uid).get().then(doc => {
+                if (!doc.exists && this.state.addOnce) {
+                    this.setState({addOnce: false});
+                    var newUser = {
+                        fName: this.state.firstName,
+                        lName: this.state.lastName,
+                        id: this.state.id,
+                        email: this.state.email,
+                        phone: this.state.phone,
+                        area: this.state.area,
+                        type: this.state.type,
+                        birthDate: this.state.birthDate
+                    }
+                    if (this.state.address !== "")
+                        newUser.address = this.state.address;
+                    if (this.state.addOnce === false && this.state.id !== "") {
+                        this.usersRef.doc(user.uid).set(newUser)
+                            .then(() => {
+                                alert("המשתמש נוסף למערכת בהצלחה!");
+                                this.setState({
+                                    addOnce: true,
+                                    firstName: "", lastName: "", id: "",
+                                    email: "", phone: "", address: "", area: "",
+                                    birthDate: "", type: ""
+                                })
+                            })
+                            .catch((e) => console.log(e.name))
+                    }
+                }
+            })
         })
+
     }
 
     addUser = (event) => {

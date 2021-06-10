@@ -17,7 +17,8 @@ class AppIndex extends Component {
             isRakaz: false,
             isInstructor : false,
             isfirst : "",
-            filled: false
+            filled: false,
+            end:false
         };
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -73,13 +74,14 @@ class AppIndex extends Component {
                 })
                 .then(() => {
                     this.determineIfAdmin(userType);
+
                 })
-                .then(() => this.setState({ isLoggedIn: true }))
+                .then(() => this.setState({ isLoggedIn: true,end:true }))
                 .catch((e) => console.log(e.name));
         }
         else
             // No user is signed in.
-            this.setState({ isLoggedIn: false });
+            this.setState({ isLoggedIn: false ,end:true});
     }
 
     componentDidMount() {
@@ -87,9 +89,9 @@ class AppIndex extends Component {
     }
 
     renderContent() {
+        console.log(this.state)
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor ) {
             if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חונך" && this.state.filled === false) {
-
                 return (<Quest refwin = {this.state.isfirst} complt = {this.filled}/>)
             }
             else if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חניך" && this.state.filled === false) {
@@ -101,16 +103,26 @@ class AppIndex extends Component {
             return (<AdminPage exitAdmin={this.exitAdmin}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor) {
-            //this.state.isfirst.ref.update({first: "acpt"})
+            var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
+            if (con) {
+                this.state.isfirst.ref.update({first: "acpt"});
+                return (<RakazPage exitRakaz={this.exitRakaz}/>)
+            }
+            else {
+                alert("אתה צריך לאשר");
+                this.setState({isLoggedIn: false});
+                return;
+            }
+
             return (<RakazPage exitRakaz={this.exitRakaz}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
 
             return (<InstructorPage exitInstructor={this.exitInstructor}/>)
         }
-        else
-
+        else if(!this.state.isLoggedIn && this.state.end)
             return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} />)
+        return <div></div>
     }
 
     render() {

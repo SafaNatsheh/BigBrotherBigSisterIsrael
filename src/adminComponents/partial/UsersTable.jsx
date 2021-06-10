@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import "./UsersTable.css";
-import firebase from "../../config/Firebase"
+import firebase, {auth} from "../../config/Firebase"
+import NoLinkedUsers from "./NoLinkedUsers";
+
 
 class UsersTable extends Component {
     constructor(props) {
@@ -33,42 +35,69 @@ class UsersTable extends Component {
         return false;
     }
     componentDidMount() {
-        this.usersRef
-            .get()
-            .then(queryShot => {
-                queryShot.forEach(
-                    (doc) => {
-                        this.setState({ people: [...this.state.people, doc.data()] })
-                    }
-                )
-            })
-            .catch((e) => console.log(e.name));
-
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+            this.usersRef
+                .get()
+                .then(queryShot => {
+                    queryShot.forEach(
+                        (doc) => {
+                            this.setState({people: [...this.state.people, doc.data()]})
+                        }
+                    )
+                })
+                .catch((e) => console.log(e.name));
+        })
     }
+
+    removePeople(list,people)
+    {
+        var newList=[]
+        list.forEach(p=>{
+            if(p.id !=people)
+            {
+                newList.push(p)
+
+            }
+        })
+        return(newList)
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
         let str='profile_pictures/';
 
+
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        var list=this.state.people
         if(this.state.type === "אדמין"||this.state.type === "רכז")
         {
             var con = window.confirm("האם אתה בטוח שברצונך למחוק את המשתמשים?" )
             if (con){
                 for(let i =0;i<this.state.checkedList.length;i++)
                 {
-                    firebase.firestore().collection('Users').get().then((querySnapshot) => {
-                        querySnapshot.docs.forEach(doc => {
-                            if(doc.data().id === this.state.checkedList[i])
-                            {
-                                if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")
-                                {
-                                    this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
-                                }
-                                doc.ref.delete()
-                                var desertRef = firebase.storage().ref(str+doc.id);
-                                desertRef.delete()
 
+                list = this.removePeople(list,this.state.checkedList[i])
+
+                   let querySnapshot=await firebase.firestore().collection('Users').get()
+
+
+                    querySnapshot.docs.forEach(doc => {
+                        if(doc.data().id === this.state.checkedList[i])
+                        {
+                            if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")
+                            {
+                                this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                             }
-                        });
+                            doc.ref.delete();
+
+                        }
+
                     })
                     let tmp = this.state.checkedList[i];
                     firebase.firestore().collection('Chats').get().then((querySnapshot) => {
@@ -90,6 +119,11 @@ class UsersTable extends Component {
                     })
 
                 }
+                console.log(this.state.checkedList)
+                this.state.checkedList.forEach(elem =>
+                    document.getElementById(elem).checked = false
+                );
+                this.setState({checkedList:[],people:list})
             }
         }
         else
@@ -169,16 +203,16 @@ class UsersTable extends Component {
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
                 )))
         }
         else if(this.state.type === "רכז")
         {
             return (this.state.people
-                .filter(person => person.type !== "אדמין")
+                .filter(person => person.type !== "אדמין" && person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
                 )))
         }
     }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./HomePage.css";
-import firebase from "../../config/Firebase"
+import firebase, {auth} from "../../config/Firebase"
 import AddPicture from "../wallComponents/wall/AddPicture"
 import NewsList from "./NewsList"
 import logo from '../../static_pictures/no_profile_picture.png'
@@ -67,10 +67,17 @@ export class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.setVideoButton();
-    this.props.getNextMeeting();
-    this.setState({ profilePicture: this.props.myProfilePic });
-    this.getNewPostAlert();
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      this.setVideoButton();
+      this.props.getNextMeeting();
+      this.setState({profilePicture: this.props.myProfilePic});
+      this.getNewPostAlert();
+    })
   }
 
   componentDidUpdate(prevProp) {

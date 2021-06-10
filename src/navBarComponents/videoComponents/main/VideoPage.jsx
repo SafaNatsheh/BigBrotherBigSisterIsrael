@@ -3,7 +3,7 @@ import Video from "../partial/video/Video";
 import VidButtons from "../partial/video/VidButtons";
 import Chat from "../partial/chat/Chat";
 import "./VideoPage.css";
-import firebase from "../../../config/Firebase"
+import firebase, {auth} from "../../../config/Firebase"
 import Credit from "../partial/credit/Credit"
 
 const configuration = { // determine internet configuation
@@ -82,8 +82,15 @@ class VideoPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.directVid && (this.props.room_id !== "" || this.props.hostVid))
-      this.startVideoDirectly();
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      if (this.props.directVid && (this.props.room_id !== "" || this.props.hostVid))
+        this.startVideoDirectly();
+    })
   }
 
   componentWillUnmount(event) {
