@@ -17,13 +17,17 @@
     width: fit-content;
     background-color: white;
     margin-bottom: 30px;
-    float: left;
+    background-color: #dcf8c6;
+ }
+ .messageReceiver{
+    margin-right: auto;
+     background-color: white;
  }
  .messageName{
      position: absolute;
      white-space: nowrap;
-     right: 0px;
-     top: -15px;
+     right: 18px;
+     top: 0px;
      font-weight: 800;
      font-size: xx-small;
  }
@@ -57,7 +61,7 @@
  .conversationBody{
     flex: 1;
     height: 85%;
-    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    background-image: url("../static_pictures/chat_background.jpg");
     background-repeat: repeat;
     background-position: center;
     padding: 30px;

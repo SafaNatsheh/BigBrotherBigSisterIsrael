@@ -13,6 +13,8 @@ import {
 } from "react-router-dom";
 import "./RakazPage.css";
 import RakazUser from "./RakazUser";
+import Chat from "../Chat/Chat";
+import CreateNewChat from "../adminComponents/partial/CreateNewChat";
 
 class RakazPage extends Component {
     constructor(props) {
@@ -112,6 +114,12 @@ class RakazPage extends Component {
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/Chat">
+                                <Chat />
+                            </Route>{" "}
+                            <Route path="/CreateChat">
+                                <CreateNewChat />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -166,6 +174,26 @@ class RakazPage extends Component {
                         קביעת פגישה
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/Chat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        שיחות{" "}
+                    </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/CreateChat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        יצור קבוצה{" "}
+                    </NavLink>{" "}
+                </li>{" "}
             </ul>
         )
     }
