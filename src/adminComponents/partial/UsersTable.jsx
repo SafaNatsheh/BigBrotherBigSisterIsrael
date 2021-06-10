@@ -96,10 +96,7 @@ class UsersTable extends Component {
         {
             alert("אין לך הרשאה לעשות זה");
         }
-
-        setTimeout(function(){
-            window.location.reload(1);
-        }, 1000);
+        
 
 
     }

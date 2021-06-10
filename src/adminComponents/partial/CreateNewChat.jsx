@@ -153,7 +153,7 @@ class CreateNewChat extends Component {
                         onClick={this.handleSubmit}
                     >
                         <div className="button-text">
-                            מחק המשתמשים
+                            יצור קבוצה
                         </div>
                         {" "}
                     </button>
@@ -170,7 +170,7 @@ class CreateNewChat extends Component {
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push({id: person.id,neme: person.fName + " " + person.lName})}/></td></tr>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push({id: person.id,name: person.fName + " " + person.lName})}/></td></tr>
                 )))
 
     }
