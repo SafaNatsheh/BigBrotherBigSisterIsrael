@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import "./Chat.css";
 import {
     BrowserRouter as Router,
@@ -6,7 +6,8 @@ import {
     Route,
     NavLink,
     Redirect,
-    Link
+    Link,
+    useParams
 } from "react-router-dom";
 
 import firebase from "../config/Firebase"
@@ -17,23 +18,30 @@ class Chat extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state ={}
     }
-
-
     render(){
-        return(
+        return (
             <div className="chat">
+                <Router>
+                    <Sidebar />
+                    <Switch>
+                        <Route path="/chats/:chatId">
+                            <Conversation />
+                        </Route>
+                        <Route path="/">
+                            <Conversation />
+                        </Route>
+                    </Switch>
+                </Router>
 
-                <Sidebar />
-                <Conversation />
 
             </div>
 
+
         )
     }
+
 
 }
 

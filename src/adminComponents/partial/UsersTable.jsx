@@ -1,17 +1,11 @@
 import React, {Component} from "react";
-import Loader from 'react-loader-spinner'
 import "./UsersTable.css";
 import firebase from "../../config/Firebase"
-import NoLinkedUsers from "./NoLinkedUsers";
 
 class UsersTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            usersArr: [],
-            linkedUserArr: [],
-            noLinkedUsers: [],
-            noLink: false,
             checkedList: [],
             id: "",
             type: "",
@@ -30,7 +24,14 @@ class UsersTable extends Component {
 
 
     }
-
+    arrayContainsID(id,arr){
+        for(let i=0;i<arr.length;i++)
+        {
+            if(arr[i].id === id)
+                return true;
+        }
+        return false;
+    }
     componentDidMount() {
         this.usersRef
             .get()
@@ -69,6 +70,25 @@ class UsersTable extends Component {
                             }
                         });
                     })
+                    let tmp = this.state.checkedList[i];
+                    firebase.firestore().collection('Chats').get().then((querySnapshot) => {
+                        querySnapshot.docs.forEach(doc => {
+                            if(doc.data().type === "private")
+                            {
+                                if(this.arrayContainsID(tmp,doc.data().members)===true){
+                                    doc.ref.delete();
+                                }
+                            }
+                            if(doc.data().type === "group"){
+                                if(this.arrayContainsID(tmp,doc.data().members)===true){
+                                    const newArr=doc.data().members.filter(member => member.id !== tmp);
+                                    doc.ref.update({members: newArr});
+                                }
+                            }
+
+                        });
+                    })
+
                 }
             }
         }
@@ -77,7 +97,9 @@ class UsersTable extends Component {
             alert("אין לך הרשאה לעשות זה");
         }
 
-
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 1000);
 
 
     }

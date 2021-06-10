@@ -187,7 +187,7 @@ class App extends Component {
     });
   }
 
-  removeDocs = () => {
+  removeDocs = () => {/*
     var ref = this.usersRef
       .doc(this.state.userDetails.link_user)
       .collection('Rooms');
@@ -215,7 +215,7 @@ class App extends Component {
       })
       .catch(() => {
         console.log("Problem in removing Doc")
-      })
+      })*/
   }
 
   updateDisconnection = () => {
