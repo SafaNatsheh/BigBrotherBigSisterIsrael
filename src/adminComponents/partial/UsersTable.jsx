@@ -13,7 +13,6 @@ class UsersTable extends Component {
             type: "",
             searchTerm: "",
             people:[],
-            pathToStorage:"profile_pictures/"
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -66,7 +65,15 @@ class UsersTable extends Component {
         })
         return(newList)
     }
+    getDetails(person){
+        
 
+        window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז: "+person.id+"\n תאריך לידה: "+person.birthDate+"\n אימייל: " + person.email+
+            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area+"\n טלפון: "+person.phone );
+        return
+    }
+
+        
 
 
     handleSubmit = async (event) => {
@@ -93,6 +100,8 @@ class UsersTable extends Component {
                                 this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                             }
                             doc.ref.delete();
+                            var desertRef = firebase.storage().ref(str+doc.id);
+                            desertRef.delete()
 
                         }
 
@@ -128,7 +137,7 @@ class UsersTable extends Component {
         {
             alert("אין לך הרשאה לעשות זה");
         }
-        
+
 
 
     }
@@ -165,6 +174,7 @@ class UsersTable extends Component {
                             <th>ת.ז</th>
                             <th>דוא"ל</th>
                             <th>סוג משתמש</th>
+                            <th>פרטים</th>
                             <th>בחר</th>
                         </tr>
                         </thead>
@@ -201,7 +211,8 @@ class UsersTable extends Component {
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
+                        <td button onClick={(event)=>this.getDetails(person)}></td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
         else if(this.state.type === "רכז")
@@ -210,6 +221,7 @@ class UsersTable extends Component {
                 .filter(person => person.type !== "אדמין" && person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td button onClick={(event)=>this.getDetails(person)}></td>
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
                 )))
         }
