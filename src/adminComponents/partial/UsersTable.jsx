@@ -66,10 +66,11 @@ class UsersTable extends Component {
         return(newList)
     }
     getDetails(person){
-        console.log(person);
+        
 
-        window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז:"+person.id+"\n תאריך לידה:"+person.birthDate+"\n אימייל:" + person.email+
-            "\n כתובת:"+person.address+"\n אֵזוֹר:" + person.area+"\n טלפון:"+person.phone );
+        window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז: "+person.id+"\n תאריך לידה: "+person.birthDate+"\n אימייל: " + person.email+
+            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area+"\n טלפון: "+person.phone );
+        return
     }
 
         
@@ -220,6 +221,7 @@ class UsersTable extends Component {
                 .filter(person => person.type !== "אדמין" && person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td button onClick={(event)=>this.getDetails(person)}></td>
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
                 )))
         }
