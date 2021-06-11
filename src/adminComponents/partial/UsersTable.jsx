@@ -13,7 +13,6 @@ class UsersTable extends Component {
             type: "",
             searchTerm: "",
             people:[],
-            pathToStorage:"profile_pictures/"
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -100,6 +99,8 @@ class UsersTable extends Component {
                                 this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                             }
                             doc.ref.delete();
+                            var desertRef = firebase.storage().ref(str+doc.id);
+                            desertRef.delete()
 
                         }
 
