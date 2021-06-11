@@ -69,7 +69,7 @@ class UsersTable extends Component {
         
 
         window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז: "+person.id+"\n תאריך לידה: "+person.birthDate+"\n אימייל: " + person.email+
-            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area+"\n טלפון: "+person.phone );
+            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area );
         return
     }
 
