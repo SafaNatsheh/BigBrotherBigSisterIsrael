@@ -45,6 +45,12 @@ class UsersTable extends Component {
             .catch((e) => console.log(e.name));
 
     }
+    getDetails(person){
+        console.log(person);
+
+        window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז:"+person.id+"\n תאריך לידה:"+person.birthDate+"\n אימייל:" + person.email+
+            "\n כתובת:"+person.address+"\n אֵזוֹר:" + person.area+"\n טלפון:"+person.phone );
+    }
     handleSubmit = (event) => {
         event.preventDefault();
         let str='profile_pictures/';
@@ -96,7 +102,7 @@ class UsersTable extends Component {
         {
             alert("אין לך הרשאה לעשות זה");
         }
-        
+
 
 
     }
@@ -133,6 +139,7 @@ class UsersTable extends Component {
                             <th>ת.ז</th>
                             <th>דוא"ל</th>
                             <th>סוג משתמש</th>
+                            <th>פרטים</th>
                             <th>בחר</th>
                         </tr>
                         </thead>
@@ -169,6 +176,7 @@ class UsersTable extends Component {
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td button onClick={(event)=>this.getDetails(person)}></td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
