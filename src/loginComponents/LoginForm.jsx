@@ -33,11 +33,14 @@ class LoginForm extends React.Component {
 
   onLoginSuccess() {
     console.log("Successful login");
+
   }
 
   componentDidUpdate(prevProp) {
-    if (this.props.isLoggedIn !== prevProp.isLoggedIn)
-      this.setState({ loading: false });
+    if (this.props.isLoggedIn !== prevProp.isLoggedIn) {
+      this.setState({loading: false});
+   console.log("in")
+    }
   }
 
   onLoginFail() {
@@ -55,7 +58,7 @@ class LoginForm extends React.Component {
       alert("אנא הכנס סיסמא");
       return;
     }
-
+console.log(this.state)
     const username = this.state.username;
     const password = this.state.password;
     this.setState({ loading: true });

@@ -19,3 +19,9 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export default firebase;
+
+export async function CreateNewUser(email,phone) {
+
+    var res = auth.createUserWithEmailAndPassword(email,phone)
+    return res;
+}

@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import "./MessageCube.css";
+import {auth} from "../../../../config/Firebase";
 
 class MessageCube extends Component {
     state = {
         lastMes: React.createRef()
     }
-
     componentDidMount() {
-        this.state.lastMes.current.scrollIntoView({ behavior: "smooth" })
+        auth.onAuthStateChanged(user => {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+            this.state.lastMes.current.scrollIntoView({behavior: "smooth"})
+        })
     }
 
     returnTime = () => {

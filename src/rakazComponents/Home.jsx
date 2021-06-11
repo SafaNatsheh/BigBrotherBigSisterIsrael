@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./Home.css";
-import firebase from "../config/Firebase"
+import firebase, {auth} from "../config/Firebase"
 import AddPicture from "../navBarComponents/wallComponents/wall/AddPicture"
 import logo from '../static_pictures/no_profile_picture.png'
 import NewsList from "../navBarComponents/homeComponents/NewsList"
@@ -88,16 +88,21 @@ export class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.setVideoButton();
-    this.getNextMeeting();
-    if (this.profilePicture !== undefined) {
-      this.setState({profilePicture: this.myProfilePicturesRef});
-    }
-    else
-    {
-      this.setState({profilePicture: ""});
-    }
-    this.getNewPostAlert();
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      this.setVideoButton();
+      this.getNextMeeting();
+      if (this.profilePicture !== undefined) {
+        this.setState({profilePicture: this.myProfilePicturesRef});
+      } else {
+        this.setState({profilePicture: ""});
+      }
+      this.getNewPostAlert();
+    })
   }
 
   componentDidUpdate(prevProp) {

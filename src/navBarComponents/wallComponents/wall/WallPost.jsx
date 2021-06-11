@@ -2,7 +2,7 @@ import * as React from "react";
 import "./WallPost.css";
 import { Post } from "./post/Post";
 import AddPicture from "./AddPicture";
-import firebase from "../../../config/Firebase"
+import firebase, {auth} from "../../../config/Firebase"
 import Loader from 'react-loader-spinner'
 
 class WallPost extends React.Component {
@@ -127,8 +127,15 @@ class WallPost extends React.Component {
   }
 
   componentDidMount() {
-    this.readNewmessages();
-    this.getPosts();
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      this.readNewmessages();
+      this.getPosts();
+    })
   }
 
   sortFunc = (a, b) => {

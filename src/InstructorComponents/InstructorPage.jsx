@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
-import firebase from "../config/Firebase";
+import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
 
 import {
@@ -29,16 +29,23 @@ class InstructorPage extends Component {
         this.uid = firebase.auth().currentUser.uid;
     }
     componentDidMount() {
-        var webSiteWidth = 1280;
-        var webScale = window.screen.width / webSiteWidth
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+            var webSiteWidth = 1280;
+            var webScale = window.screen.width / webSiteWidth
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
 
-        window.addEventListener("resize", this.resizeWin);
-        this.usersRef.doc(this.uid).get()
-            .then((doc) => {
-                this.setState({ user_name: doc.data().fName });
-            })
-            .catch((e) => console.log(e.name));
+            window.addEventListener("resize", this.resizeWin);
+            this.usersRef.doc(this.uid).get()
+                .then((doc) => {
+                    this.setState({user_name: doc.data().fName});
+                })
+                .catch((e) => console.log(e.name));
+        })
     }
 
     resizeWin = (e) => {
