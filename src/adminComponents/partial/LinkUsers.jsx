@@ -372,13 +372,12 @@ class LinkUsers extends Component {
                 lists.push(<tr>
                     <td>  </td>
                     <td>  </td>
-                    <td> {"עדיפות "+(i)} </td>
+                    <td> {"עדיפות "+(i+1)} </td>
                     <td>  </td>
                 </tr>)
 
-
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst++))
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1))
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                         <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
@@ -400,47 +399,83 @@ class LinkUsers extends Component {
                         }
                         }/></td></tr>
                 )))
+            console.log(nwlst)
             if (nwlst > 0) {
-                mins++
+                mins = i+1
                 nwlst = 0;
             }
+
+            var chk = lists.pop();
+            if (chk == "") {
+                lists.push(<tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td> {"אין"} </td>
+                    <td>  </td>
+                </tr>)
+            }
+            else {
+                lists.push(chk)
+            }
+            chk = null;
         }
         lists=lists.slice(0,lists.length-(6 - (mins*2)))
+
         return (lists)
     }
 
-    gtscor(studscr) {
+    gtscor(studscr , date) {
         var menscr;
         this.state.people
             .filter(person => person.type ==="חונך" && person.first !== "true" && person.id === this.state.mentorId)
             .forEach((elem) => (menscr = elem.isfirst))
         var scr = 0;
-            menscr = ""
-        for (var ln , ind , ind2 = 0 ; ln < 9 ; ) {
+            menscr = "1/2/4/3/5/7/4/2/9/"
+            studscr = "1/02/4/3/5/7/4/2/9/"
 
-            if (studscr[ind] === '/') {
+        var ind  = 0
+        var ind2 = 0
+        for (var ln  = 0 ; ln < 8 ;) {
+
+            if (studscr[ind] === "/") {
                 ln++;
                 ind++;
-                while (menscr[ind2] !== '/') {
+                while (menscr[ind2] !== "/") {
                     ind2++
                 }
+                ind2++;
             }
 
-           else if (menscr[ind2] === '/') {
+           else if (menscr[ind2] === "/") {
+                ln++;
                 ind2++;
-                while (studscr[ind] !== '/') {
+                while (studscr[ind] !== "/") {
                     ind++
                 }
+                ind++;
             }
-
-            if (studscr[ind] === this.state.menscr[ind2]) {
+            if (studscr[ind] === menscr[ind2] && studscr[ind+1] === "/" && menscr[ind2+1] === "/") {
+                //console.log(studscr[ind] +" "+ ind +" "+ ind2+"match"+" "+ln)
                 ind++;
                 ind2++;
+
             }
             else {
+                //console.log(studscr[ind] +" "+menscr[ind2] +" "+ ind +" "+ ind2+" "+ln)
                 scr++;
+                while (menscr[ind2] !== "/") {
+                    ind2++
+
+                }
+                while (studscr[ind] !== "/") {
+                    ind++
+
+                }
+
             }
+
         }
+
         return scr;
     }
 

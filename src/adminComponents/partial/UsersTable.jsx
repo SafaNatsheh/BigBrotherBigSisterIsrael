@@ -67,13 +67,11 @@ class UsersTable extends Component {
         return(newList)
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        let str='profile_pictures/';
 
 
     handleSubmit = async (event) => {
         event.preventDefault();
+        let str='profile_pictures/';
         var list=this.state.people
         if(this.state.type === "אדמין"||this.state.type === "רכז")
         {
