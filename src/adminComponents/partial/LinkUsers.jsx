@@ -480,7 +480,7 @@ class LinkUsers extends Component {
                 else {
                     let newDate = new Date();
                     let year = newDate.getFullYear();
-                    let number = parseInt(date.substring(0,4) , 10 ) + 1;
+                    let number = parseInt(date.substring(0,4) , 10 );
                     if (menscr[ind2] === "1" && ((year - number) < 5 || (year - number) > 12)) {
                         scr++;
                     }
