@@ -204,7 +204,7 @@ class LinkUsers extends Component {
                             onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
                         <h5>
-                            ללא קישור
+
                             <input type='checkbox' className='people_check' onChange={(e)=> {
                                 if (this.state.lnkstat === "0"){
                                     this.setState({ lnkstat: "1" });
@@ -219,6 +219,8 @@ class LinkUsers extends Component {
                                 this.setState({lnkstudid: ""})
                             }
                         } />
+                        ללא קישור
+
                         </h5>
 
                         { this.state.mentorRef !== "" && this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
