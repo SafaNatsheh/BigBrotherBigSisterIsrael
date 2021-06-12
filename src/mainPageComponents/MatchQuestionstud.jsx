@@ -16,7 +16,31 @@ class matchQuestionstud extends Component {
             sixQues: "",
             sevQues: "",
             eigQues: "",
-            ninQues: ""
+            ninQues: "",
+            tenQues: "",
+            fName: "",
+            sName: "",
+            numID: "",
+            address: "",
+            country: "",
+            year:"",
+            school: "",
+            grade: "",
+            problem: "",
+            birthDate: "",
+            religion1: "",
+            religion2: "",
+            MName: "",
+            MID: "",
+            numphon: "",
+            work1: "",
+            DName: "",
+            DID: "",
+            numphon2:"",
+            work2: "",
+            stat: "",
+            leve:"",
+            numBro:"",
 
         };
     }
@@ -33,7 +57,7 @@ class matchQuestionstud extends Component {
     render() {
         return (
             <form className="q" onSubmit={this.submit}>
-            <div className="questions">
+            <div className="ques">
                 <img src={logo} alt="asfsa" className="logo"/>
                 <h2>ברוכים הבאים לשאלון ההתאמה</h2>
                 <br/>
@@ -117,8 +141,9 @@ class matchQuestionstud extends Component {
                 </div>
                 <br/>
                 <div className="form-row row_R2">
-                <div className="form-group col-md-3">
+                <div className="form-group col-md-4">
                     <label htmlFor="inputState"><h6>5. מצב רגשי</h6></label>
+
                     <select
                         required id="inputState"
                         className="form-control"
@@ -129,7 +154,7 @@ class matchQuestionstud extends Component {
                         <option value="2\">מאתגר</option>
                     </select>
                 </div>
-                <div className="form-group col-md-3">
+                <div className="form-group col-md-4">
                         <label htmlFor="inputState"><h6>6. מצב לימודי</h6></label>
                             <select
                                 required id="inputState"
@@ -142,8 +167,8 @@ class matchQuestionstud extends Component {
                                 <option value="3\">נמוך</option>
                             </select>
                 </div>
-                <div  className="form-group col-md-3">
-                        <label htmlFor="inputState"><h6>7. בעל/ת לקויות למידה</h6></label>
+                <div  className="form-group col-md-4">
+                        <label htmlFor="inputState"><h6>7. בעל/ת מוגבלות פיזית</h6></label>
                         <select
                             required id="inputState"
                             className="form-control"
@@ -158,25 +183,25 @@ class matchQuestionstud extends Component {
 
                 </div>
                 <br/>
-                <div className="form-row row_R3">
-                <div className="form-group col-md-6">
-                    <label htmlFor="inputState"><h6>8. באילו ימים החונכות אפשרית לך?</h6></label>
-                    <select
-                        required id="inputState"
-                        className="form-control"
-                        value={this.state.eigQues}
-                        onChange={(e) => this.setState({ eigQues: e.target.value })}>
-                        <option id="ff" disabled value="">בחר תשובה</option>
-                        <option value="1\">ראשון</option>
-                        <option value="2\">שני</option>
-                        <option value="3\">שלישי</option>
-                        <option value="4\">רביעי</option>
-                        <option value="5\">חמישי</option>
-                        <option value="6\">שישי</option>
-                        <option value="7\">ללא העדפה</option>
-                    </select>
-                </div>
-                <div className="form-group col-md-6">
+                <div className="form-row row_R2">
+                <div className="form-group col-md-4">
+                        <label htmlFor="inputState"><h6>8. באילו ימים החונכות אפשרית לך?</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.eigQues}
+                            onChange={(e) => this.setState({ eigQues: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">ראשון</option>
+                            <option value="2\">שני</option>
+                            <option value="3\">שלישי</option>
+                            <option value="4\">רביעי</option>
+                            <option value="5\">חמישי</option>
+                            <option value="6\">שישי</option>
+                            <option value="7\">ללא העדפה</option>
+                        </select>
+                    </div>
+                <div className="form-group col-md-4">
                     <label htmlFor="inputState"><h6>9. באילו שעות החונכות אפשרית לך?</h6></label>
                     <select
                         required id="inputState"
@@ -191,16 +216,357 @@ class matchQuestionstud extends Component {
                         <option value="5\">ללא העדפה</option>
                     </select>
                 </div>
+                <div className="form-group col-md-4">
+                        <label htmlFor="inputState"><h6>10. האם נמצא על הרצף האוטיסטי</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.tenQues}
+                            onChange={(e) => this.setState({ tenQues: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">כן</option>
+                            <option value="2\">לא</option>
+                        </select>
+                </div>
                 </div>
                 <br/>
+
+
+                <h2>שאלות נוספות</h2>
+                <br/>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שם פרטי</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.fName}
+                            placeholder="שם פרטי"
+                            title="שם פרטי"
+                            onChange={(e) => this.setState({ fName: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שם משפחה</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.sName}
+                            placeholder="שם משפחה"
+                            title="שם משפחה"
+                            onChange={(e) => this.setState({ sName: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>ת.ז ילד/ה</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.numID}
+                            placeholder="ת.ז"
+                            title="ת.ז"
+                            onChange={(e) => this.setState({ numID: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>כתובת ילד/ה</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.address}
+                            placeholder="כתובת ילד/ה"
+                            title="כתובת ילד/ה"
+                            onChange={(e) => this.setState({ address: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>ארץ לידה</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.country}
+                            placeholder="ארץ לידה"
+                            title="ארץ לידה"
+                            onChange={(e) => this.setState({ country: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שנת עלייה</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.year}
+                            placeholder="שנת עלייה"
+                            title="שנת עלייה"
+                            onChange={(e) => this.setState({ year: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שם בית הספר:</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.school}
+                            placeholder="שם בית הספר"
+                            title="שם בית הספר"
+                            onChange={(e) => this.setState({ school: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>כיתה</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.grade}
+                            placeholder="כיתה"
+                            title="כיתה"
+                            onChange={(e) => this.setState({ grade: e.target.value })}
+                        />
+                    </div>
+                </div>
+
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>בעל/ת בעיות בריאות</h6></label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.problem}
+                            onChange={(e) => this.setState({ problem: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">כן</option>
+                            <option value="2\">לא</option>
+
+                        </select>
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputCity"><h6>תאריך לידה</h6></label>
+                        <input
+                            required
+                            type="date"
+                            className="form-control"
+                            id="inputBirthDate"
+                            value={this.state.birthDate}
+                            placeholder="תאריך לידה"
+                            onChange={(e) => this.setState({ birthDate: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>דת</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.religion1}
+                            placeholder="דת"
+                            title="דת"
+                            onChange={(e) => this.setState({ religion1: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>זיקה לדת</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.religion2}
+                            placeholder="דת"
+                            title="דת"
+                            onChange={(e) => this.setState({ religion2: e.target.value })}
+                        />
+                    </div>
+                </div>
+
+              <br/>
+              <h5 className="right">פרטי הורה/ים:</h5>
+                <br/>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שם האם</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.MName}
+                            placeholder="שם האם"
+                            title="שם האם"
+                            onChange={(e) => this.setState({ MName: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>ת.ז</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.MID}
+                            placeholder="ת.ז"
+                            title="ת.ז"
+                            onChange={(e) => this.setState({ MID: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>טלפון סלולרי</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.numphon}
+                            placeholder="טלפון סלולרי"
+                            title="טלפון סלולרי"
+                            onChange={(e) => this.setState({ numphon: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>עיסוק</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.work1}
+                            placeholder="עיסוק"
+                            title="עיסוק"
+                            onChange={(e) => this.setState({ work1: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>שם האב</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.DName}
+                            placeholder="שם האב"
+                            title="שם האב"
+                            onChange={(e) => this.setState({ DName: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>ת.ז</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.DID}
+                            placeholder="ת.ז"
+                            title="ת.ז"
+                            onChange={(e) => this.setState({ DID: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>טלפון סלולרי</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.numphon2}
+                            placeholder="טלפון סלולרי"
+                            title="טלפון סלולרי"
+                            onChange={(e) => this.setState({ numphon2: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>עיסוק</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.work2}
+                            placeholder="עיסוק"
+                            title="עיסוק"
+                            onChange={(e) => this.setState({ work2: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <br/>
+                <h5 className="right">מידע על המשפחה:</h5>
+                <br/>
+
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>סטטוס הורים</h6></label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.stat}
+                            placeholder="סטטוס הורים"
+                            title="סטטוס הורים"
+                            onChange={(e) => this.setState({ stat: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group col-md-3">
+                            <label htmlFor="inputFirstName"><h6>רמת הכנסה של המשפחה</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.leve}
+                                onChange={(e) => this.setState({ leve: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">מתחת לקו העוני</option>
+                                <option value="2\">ברמת קו העוני</option>
+                                <option value="3\">מעל קו העוני</option>
+                            </select>
+                    </div>
+                    <div className="form-group col-md-3">
+                        <label htmlFor="inputFirstName"><h6>מספר ילדים במשפחה</h6></label>
+                        <input
+                            required
+                            type="number"
+                            className="form-control"
+                            id="inputFirstName"
+                            value={this.state.numBro}
+                            placeholder="טלפון סלולרי"
+                            title="טלפון סלולרי"
+                            onChange={(e) => this.setState({ numBro: e.target.value })}
+                        />
+                    </div>
+                </div>
+
+
                 <div>
                     <input type="checkbox" id="myCheck" className='check' />
                     <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות.</h6>
                 </div>
 
-                <button type="submit" className="btn btn-success add-new-user-btn bot">
+                <button type="submit" className="btn btn-success add-new-user-btn bot1">
                     שלח
                 </button>
+
+
+
+
             </div>
 
             </form>
