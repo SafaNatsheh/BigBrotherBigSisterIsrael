@@ -9,7 +9,7 @@ function Sidebar(){
     const [rooms,setRooms] = useState([]);
     const [searchTerm,setSearchTerm] = useState("");
     const db = firebase.firestore().collection('Chats');
-    const userRef =firebase.firestore().collection('Users');
+   // const userRef =firebase.firestore().collection('Users');
     const uid = firebase.auth().currentUser.uid;
     //const [linkedUid,setLinked] = useState("");
     const [bool,setBool] =useState(false);
