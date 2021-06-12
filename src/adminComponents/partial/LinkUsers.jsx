@@ -367,7 +367,7 @@ class LinkUsers extends Component {
         var lists = [];
         var nwlst = 0;
         var mins = 0;
-        for (var i = 0 ; i < 3 ; i++) {
+        for (var i = 0 ; i < 10 ; i++) {
 
                 lists.push(<tr>
                     <td>  </td>
@@ -377,7 +377,7 @@ class LinkUsers extends Component {
                 </tr>)
 
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.isfirst , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1))
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1))
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                         <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
@@ -399,13 +399,12 @@ class LinkUsers extends Component {
                         }
                         }/></td></tr>
                 )))
-            console.log(nwlst)
             if (nwlst > 0) {
                 mins = i+1
                 nwlst = 0;
             }
 
-            var chk = lists.pop();
+            let chk = lists.pop();
             if (chk == "") {
                 lists.push(<tr>
                     <td>  </td>
@@ -413,29 +412,38 @@ class LinkUsers extends Component {
                     <td> {"אין"} </td>
                     <td>  </td>
                 </tr>)
+
             }
             else {
                 lists.push(chk)
             }
             chk = null;
         }
-        lists=lists.slice(0,lists.length-(6 - (mins*2)))
+        lists=lists.slice(0,lists.length-((i*2) - (mins*2)))
 
         return (lists)
     }
 
     gtscor(studscr , date) {
-        var menscr;
+        if (studscr === undefined) {
+
+            return 0;
+        }
+
+        let menscr= "";
         this.state.people
             .filter(person => person.type ==="חונך" && person.first !== "true" && person.id === this.state.mentorId)
-            .forEach((elem) => (menscr = elem.isfirst))
+            .forEach((elem) => (menscr = elem.first))
         var scr = 0;
-            menscr = "1/2/4/3/5/7/4/2/9/"
-            studscr = "1/02/4/3/5/7/4/2/9/"
+
+        if (menscr === undefined) {
+
+            return -1;
+        }
 
         var ind  = 0
         var ind2 = 0
-        for (var ln  = 0 ; ln < 8 ;) {
+        for (var ln  = 0 ; ln < 12 ;) {
 
             if (studscr[ind] === "/") {
                 ln++;
@@ -461,15 +469,33 @@ class LinkUsers extends Component {
 
             }
             else {
-                //console.log(studscr[ind] +" "+menscr[ind2] +" "+ ind +" "+ ind2+" "+ln)
-                scr++;
+                if (ln === 0 && menscr[ind2] === "1") {
+                    return -1;
+                }
+
+                if (ln !== 8) {
+                    scr++;
+                }
+                else {
+                    let newDate = new Date();
+                    let year = newDate.getFullYear();
+                    let number = parseInt(date.substring(0,4) , 10 ) + 1;
+                    if (menscr[ind2] === "1" && ((year - number) < 5 || (year - number) > 12)) {
+                        scr++;
+                    }
+                    else if (menscr[ind2] === "2" && ((year - number) < 12 || (year - number) > 18)) {
+                        scr++;
+                    }
+                    else if (menscr[ind2] === "3" && (year - number) < 18) {
+                        scr++;
+                    }
+                }
+
                 while (menscr[ind2] !== "/") {
                     ind2++
-
                 }
                 while (studscr[ind] !== "/") {
                     ind++
-
                 }
 
             }

@@ -57,7 +57,7 @@ class UsersTable extends Component {
     {
         var newList=[]
         list.forEach(p=>{
-            if(p.id !=people)
+            if(p.id !== people)
             {
                 newList.push(p)
 
