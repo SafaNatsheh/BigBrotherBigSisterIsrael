@@ -46,36 +46,19 @@ class CreateNewChat extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-
-        var con = window.confirm("האם אתה בטוח שברצונך ליצור קבוצה זו?" )
-        if(this.state.groupName === "")
+        if(this.state.groupName === "" )//make sure the inpute is correct
         {
             window.alert("הזן שם קבוצה");
-
-
-
+        }
+        else if(this.state.checkedList.length === 0)
+        {
+            window.alert("אין משתמשים נבחרים");
         }
         else
         {
+            var con = window.confirm("האם אתה בטוח שברצונך ליצור קבוצה זו?" )
             if(con){
-                for(let i =0;i<this.state.checkedList.length;i++)
-                {
-
-                    firebase.firestore().collection('Users').get().then((querySnapshot) => {
-                        querySnapshot.docs.forEach(doc => {
-                            if(doc.data().id === this.state.checkedList[i].id)
-                            {
-                                this.state.members.push({
-                                    id: doc.data().id,
-                                    name: doc.data().fName + " " + doc.data().lName,
-                                    uid: doc.id
-                                })
-
-                            }
-                        });
-                    })
-
-                }
+                //add the chat to the db
                 firebase.firestore().collection('Chats').add(
                     {
 
@@ -83,12 +66,13 @@ class CreateNewChat extends Component {
                         type: "group",
                         members: this.state.checkedList,
                     })
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 1000);
             }
         }
 
-        setTimeout(function(){
-            window.location.reload(1);
-        }, 1000);
+
     }
 
 
