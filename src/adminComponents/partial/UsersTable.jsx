@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "./UsersTable.css";
 import firebase, {auth} from "../../config/Firebase"
-import NoLinkedUsers from "./NoLinkedUsers";
-import {Link} from "react-router-dom"
+//import NoLinkedUsers from "./NoLinkedUsers";
+//import {Link} from "react-router-dom"
 
 class UsersTable extends Component {
     constructor(props) {

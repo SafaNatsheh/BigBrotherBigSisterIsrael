@@ -1,13 +1,9 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import "./Chat.css";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    NavLink,
-    Redirect,
-    Link,
-    useParams
 } from "react-router-dom";
 
 import firebase from "../config/Firebase"
