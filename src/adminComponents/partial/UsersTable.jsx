@@ -84,6 +84,9 @@ class UsersTable extends Component {
         {
             var con = window.confirm("האם אתה בטוח שברצונך למחוק את המשתמשים?" )
             if (con){
+                this.state.checkedList.forEach(elem =>
+                    document.getElementById(elem).checked = false
+                );
                 for(let i =0;i<this.state.checkedList.length;i++)
                 {
 
@@ -126,10 +129,8 @@ class UsersTable extends Component {
                     })
 
                 }
-                console.log(this.state.checkedList)//empty the checked list
-                this.state.checkedList.forEach(elem =>
-                    document.getElementById(elem).checked = false
-                );
+                //empty the checked list
+
                 this.setState({checkedList:[],people:list})
             }
         }
@@ -214,8 +215,8 @@ class UsersTable extends Component {
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
-                        <td button onClick={(event)=>this.getDetails(person)}></td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                        <td className='buttDetails'><input className='detailsButt' value="הצג פרטים" type ='button' onClick={(event)=>this.getDetails(person)}/></td>
+                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
         else if(this.state.type === "רכז")//if the user is an instructor he can't remove an admin

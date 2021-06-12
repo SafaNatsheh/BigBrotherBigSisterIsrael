@@ -83,3 +83,13 @@
     left: 500px;
     top:100px;
 }
+.buttDetails{
+    width:60px;
+    height: 48px;
+    margin-right:20px;
+
+}
+
+.detailsButt{
+    background-color: white;
+}
