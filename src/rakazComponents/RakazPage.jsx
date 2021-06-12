@@ -194,6 +194,15 @@ class RakazPage extends Component {
                         יצור קבוצה{" "}
                     </NavLink>{" "}
                 </li>{" "}
+                <li className="nav-item ">
+                    <NavLink
+                        className="tab"
+                        to="/VideoPage"
+                        activeStyle={activeTabStyle}
+                    >
+                        שיחת וידאו{" "}
+                    </NavLink>{" "}
+                </li>{" "}
             </ul>
         )
     }

@@ -17,7 +17,9 @@ import {
 } from "react-router-dom";
 import "./AdminPage.css";
 import CreateNewChat from "../partial/CreateNewChat";
-
+import UserDetails from "../partial/UserDetails";
+import addMeeting from "../partial/addMeeting";
+import ReportTable from "../partial/ReportTable";
 class AdminPage extends Component {
   constructor(props) {
     super(props);
@@ -132,6 +134,15 @@ class AdminPage extends Component {
               <Route path="/CreateChat">
                 <CreateNewChat />
               </Route>{" "}
+                <Route path="/UserDetails">
+                    <UserDetails />
+                </Route>{" "}
+                <Route path="/ReportTable">
+                    <ReportTable />
+                </Route>{" "}
+                <Route path="/addMeeting">
+                    <addMeeting />
+                </Route>{" "}
               <Route path="/">
               <Home />
               </Route>
@@ -226,6 +237,16 @@ class AdminPage extends Component {
                     יצור קבוצה{" "}
                 </NavLink>{" "}
             </li>{" "}
+            <li className="nav-item ">
+                <NavLink
+                    className="tab"
+                    to="/VideoPage"
+                    activeStyle={activeTabStyle}
+                >
+                    שיחת וידאו{" "}
+                </NavLink>{" "}
+            </li>{" "}
+
         </ul>
     )
   }
