@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./MatchQuestion.css";
-import {Component, useState} from 'react';
+import {Component} from 'react';
 import logo from "../static_pictures/big_brothers_big_sisters.png";
 
 class matchQuestion extends Component {
@@ -18,8 +18,12 @@ class matchQuestion extends Component {
             eigQues: "",
             ninQues: "",
             tenQues: "",
+            elevQues: "",
+            twlvQues: "",
+            thrtQues: "",
             fName: "",
             sName:"",
+            car:"",
             numPhone1: "",
             numPhone2: "",
             email: "",
@@ -45,10 +49,36 @@ class matchQuestion extends Component {
             info18: "",
             info19: "",
 
-
+            gend:""
 
 
         };
+    }
+
+    componentDidMount() {
+
+
+        if (this.props.refwin.data().gender === "זכר") {
+            this.setState({firQues: "1/"})
+        }
+        else {
+            this.setState({firQues: "0/"})
+        }
+
+        console.log(document.getElementById("age"))
+
+    }
+
+    submit = (event) => {
+        event.preventDefault();
+        if (document.getElementById("myCheck").checked === true) {
+            var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
+            this.props.refwin.ref.update({first: all})
+            this.props.complt();
+        }
+        else {
+            alert("");
+        }
     }
 
     render() {
@@ -65,15 +95,15 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.secQues}
-                                onChange={(e) => this.setState({ secQues: e.target.value })}>
+                                value={this.state.forQues}
+                                onChange={(e) => this.setState({ forQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">צפון העיר / יישוב</option>
-                                <option value="2\">מזרח העיר / יישוב</option>
-                                <option value="3\">דרום העיר / יישוב</option>
-                                <option value="4\">מערב העיר / יישוב</option>
-                                <option value="5\">מרכז העיר / יישוב</option>
-                                <option value="6\">ללא העדפה</option>
+                                <option value="1/">צפון העיר / יישוב</option>
+                                <option value="2/">מזרח העיר / יישוב</option>
+                                <option value="3/">דרום העיר / יישוב</option>
+                                <option value="4/">מערב העיר / יישוב</option>
+                                <option value="5/">מרכז העיר / יישוב</option>
+                                <option value="6/">ללא העדפה</option>
                             </select>
                         </div>
                         <div className="form-group col-md-6">
@@ -81,18 +111,18 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.forQues}
-                                onChange={(e) => this.setState({ forQues: e.target.value })}>
+                                value={this.state.sixQues}
+                                onChange={(e) => this.setState({ sixQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">ספורט וריקוד</option>
-                                <option value="2\">מוסיקה ונגינה</option>
-                                <option value="3\">בעלי חיים</option>
-                                <option value="4\">שופינג</option>
-                                <option value="5\">ציור ופיסול</option>
-                                <option value="6\">צילום ועריכה</option>
-                                <option value="7\">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
-                                <option value="8\">טיולים</option>
-                                <option value="9\">אחר</option>
+                                <option value="1/">ספורט וריקוד</option>
+                                <option value="2/">מוסיקה ונגינה</option>
+                                <option value="3/">בעלי חיים</option>
+                                <option value="4/">שופינג</option>
+                                <option value="5/">ציור ופיסול</option>
+                                <option value="6/">צילום ועריכה</option>
+                                <option value="7/">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
+                                <option value="8/">טיולים</option>
+                                <option value="9/">אחר</option>
                             </select>
                         </div>
 
@@ -103,15 +133,15 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.thiQues}
-                                onChange={(e) => this.setState({ thiQues: e.target.value })}>
+                                value={this.state.fifQues}
+                                onChange={(e) => this.setState({ fifQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">עברית</option>
-                                <option value="2\">ערבית</option>
-                                <option value="3\">אנגלית</option>
-                                <option value="4\">אמהרית</option>
-                                <option value="5\">רוסית</option>
-                                <option value="6\">צרפתית</option>
+                                <option value="1/">עברית</option>
+                                <option value="2/">ערבית</option>
+                                <option value="3/">אנגלית</option>
+                                <option value="4/">אמהרית</option>
+                                <option value="5/">רוסית</option>
+                                <option value="6/">צרפתית</option>
                             </select>
                         </div>
                         <div className="form-group col-md-6">
@@ -120,25 +150,25 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.firQues}
-                                onChange={(e) => this.setState({ firQues: e.target.value })}>
+                                value={this.state.thiQues}
+                                onChange={(e) => this.setState({ thiQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">עכו</option>
-                                <option value="2\">כרמיאל</option>
-                                <option value="3\">הרצליה</option>
-                                <option value="4\">רעננה</option>
-                                <option value="5\">כפר יונה</option>
-                                <option value="6\">כפר סבא</option>
-                                <option value="7\">תל אביב</option>
-                                <option value="8\">בת ים</option>
-                                <option value="9\">חולון</option>
-                                <option value="10\">אור יהודה</option>
-                                <option value="11\">ירושלים</option>
-                                <option value="12\">אשדוד</option>
-                                <option value="13\">דימונה</option>
-                                <option value="14\">שדרות</option>
-                                <option value="15\">באר שבע</option>
-                                <option value="16\">אחר</option>
+                                <option value="1/">עכו</option>
+                                <option value="2/">כרמיאל</option>
+                                <option value="3/">הרצליה</option>
+                                <option value="4/">רעננה</option>
+                                <option value="5/">כפר יונה</option>
+                                <option value="6/">כפר סבא</option>
+                                <option value="7/">תל אביב</option>
+                                <option value="8/">בת ים</option>
+                                <option value="9/">חולון</option>
+                                <option value="10/">אור יהודה</option>
+                                <option value="11/">ירושלים</option>
+                                <option value="12/">אשדוד</option>
+                                <option value="13/">דימונה</option>
+                                <option value="14/">שדרות</option>
+                                <option value="15/">באר שבע</option>
+                                <option value="16/">אחר</option>
                             </select>
                         </div>
 
@@ -149,17 +179,35 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.fifQues}
-                                onChange={(e) => this.setState({ fifQues: e.target.value })}>
+                                onChange={(e) => {
+                                    if (e.target.value === "1/") {
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "1/", thrtQues: "2/"})
+                                    }
+                                    else if (e.target.value === "2/") {
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "1/"})
+                                    }
+                                    else if (e.target.value === "3/") {
+                                        document.getElementById("age").value = "3/";
+                                        this.setState({ninQues: "3/" , tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" , thrtQues: "2/"})
+                                    }
+                                    else if (e.target.value === "4/") {
+                                        this.setState({tenQues:"2/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                    }
+                                    else if (e.target.value === "5/") {
+                                        this.setState({tenQues:"1/" , elevQues: "3/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                    }
+                                    else if (e.target.value === "6/") {
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                    }
+                                }
+                                }>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option>אח.ות צעיר.ה עם מוגבלות פיזית</option>
-                                <option>אח.ות צעיר.ה על הרצף בתפקוד גבוה</option>
-                                <option>אח.ות צעיר.ה שהינו.ה חלק ממשפחה עם ילד.ה על הרצף</option>
-                                <option>אח.ות צעיר.ה חסרי תעסוקה והשכלה (18+)</option>
-                                <option>אח.ות צעיר.ה עם קשיים רגשיים</option>
-                                <option>אח.ות צעיר.ה עם קשיים לימודיים</option>
-                                <option>אח.ות צעיר.ה חסרי עורף משפחתי</option>
-                                <option>ללא העדפה</option>
+                                <option value="1/">אח.ות צעיר.ה עם מוגבלות פיזית</option>
+                                <option value="2/">אח.ות צעיר.ה על הרצף בתפקוד גבוה</option>
+                                <option value="3/">אח.ות צעיר.ה חסרי תעסוקה והשכלה (18+)</option>
+                                <option value="4/">אח.ות צעיר.ה עם קשיים רגשיים</option>
+                                <option value="5/">אח.ות צעיר.ה עם קשיים לימודיים</option>
+                                <option value="6/">ללא העדפה</option>
                             </select>
                         </div>
                         <div className="form-group col-md-6">
@@ -168,28 +216,29 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.sixQues}
-                                onChange={(e) => this.setState({ sixQues: e.target.value })}>
+                                value={this.state.car}
+                                onChange={(e) => this.setState({ car: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option>כן, רכב</option>
-                                <option>כן, אופנוע</option>
-                                <option>לא</option>
+                                <option value="1/">כן, רכב</option>
+                                <option value="2/">כן, אופנוע</option>
+                                <option value="3/">לא</option>
 
                             </select>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
-                            <label htmlFor="inputState"><h6>האם את מעדיפה לחנוך אח צעיר או אחות צעירה?</h6> </label>
-                            <select
-                                required id="inputState"
+                            <label htmlFor="inputState"><h6>האם יש לך העדפה לגיל האח/ות הצעיר/ה?</h6> </label>
+                            <select id="age"
+                                required
                                 className="form-control"
-                                value={this.state.sevQues}
-                                onChange={(e) => this.setState({ sevQues: e.target.value })}>
+                                value={this.state.ninQues}
+                                onChange={(e) => this.setState({ ninQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option>זכר</option>
-                                <option>נקבה</option>
-                                <option>ללא העדפה</option>
+                                <option value="1/">6 - 12</option>
+                                <option value="2/">12 - 18</option>
+                                <option value="3/">מעל 18</option>
+                                <option value="4/">ללא העדפה</option>
                             </select>
                         </div>
                         <div className="form-group col-md-6">
@@ -197,16 +246,16 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.eigQues}
-                                onChange={(e) => this.setState({ eigQues: e.target.value })}>
+                                value={this.state.sevQues}
+                                onChange={(e) => this.setState({ sevQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">ראשון</option>
-                                <option value="2\">שני</option>
-                                <option value="3\">שלישי</option>
-                                <option value="4\">רביעי</option>
-                                <option value="5\">חמישי</option>
-                                <option value="6\">שישי</option>
-                                <option value="7\">ללא העדפה</option>
+                                <option value="1/">ראשון</option>
+                                <option value="2/">שני</option>
+                                <option value="3/">שלישי</option>
+                                <option value="4/">רביעי</option>
+                                <option value="5/">חמישי</option>
+                                <option value="6/">שישי</option>
+                                <option value="7/">ללא העדפה</option>
                             </select>
                         </div>
                     </div>
@@ -216,30 +265,40 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.ninQues}
-                                onChange={(e) => this.setState({ ninQues: e.target.value })}>
+                                value={this.state.eigQues}
+                                onChange={(e) => {
+                                    if (e.target.value === "1/") {
+                                        document.getElementById("age").value = "3/";
+                                        this.setState({eigQues: e.target.value , ninQues: "3/"})
+                                    }
+                                    else {
+                                        this.setState({eigQues: e.target.value})
+                                    }
+                                }}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\"> שעות הבוקר (לגילאי 18+)</option>
-                                <option value="2\">שעות הצהרים</option>
-                                <option value="3\">שעות אחר הצהרים</option>
-                                <option value="4\">שעות הערב</option>
-                                <option value="5\">ללא העדפה</option>
+                                <option value="1/"> שעות הבוקר (לגילאי 18+)</option>
+                                <option value="2/">שעות הצהרים</option>
+                                <option value="3/">שעות אחר הצהרים</option>
+                                <option value="4/">שעות הערב</option>
+                                <option value="5/">ללא העדפה</option>
                             </select>
                         </div>
-                        <div className="form-group col-md-6" >
-                            <label htmlFor="inputState"><h6>האם יש לך העדפה לגיל האח/ות הצעיר/ה?</h6> </label>
+                        { (this.state.firQues === "0/")&&(<div className="form-group col-md-6" >
+                            <label htmlFor="inputState"><h6>האם את מעדיפה לחנוך אח צעיר או אחות צעירה?</h6> </label>
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={this.state.tenQues}
-                                onChange={(e) => this.setState({ tenQues: e.target.value })}>
+                                value={this.state.secQues}
+                                onChange={(e) => this.setState({ secQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">6 - 12</option>
-                                <option value="2\">12 - 18</option>
-                                <option value="3\">מעל 18</option>
-                                <option value="4\">ללא העדפה</option>
+                                <option value="1/">זכר</option>
+                                <option value="2/">נקבה</option>
+                                <option value="3/">ללא העדפה</option>
                             </select>
-                        </div>
+                        </div>)
+
+                        }
+
                     </div>
 
                     <br/>
