@@ -93,15 +93,15 @@ class UsersTable extends Component {
 
 
                     querySnapshot.docs.forEach(doc => {
-                        if(doc.data().id === this.state.checkedList[i])
-                        {
+                        if(doc.data().id === this.state.checkedList[i])//search for the user that is on the checked list
+                        {//then delete that user
                             if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")
-                            {
+                            {//if the user is limked to another user, remove the link
                                 this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                             }
                             doc.ref.delete();
                             var desertRef = firebase.storage().ref(str+doc.id);
-                            desertRef.delete()
+                            desertRef.delete()//delete the users's profile picture from the storage
 
                         }
 
@@ -109,13 +109,13 @@ class UsersTable extends Component {
                     let tmp = this.state.checkedList[i];
                     firebase.firestore().collection('Chats').get().then((querySnapshot) => {
                         querySnapshot.docs.forEach(doc => {
-                            if(doc.data().type === "private")
+                            if(doc.data().type === "private")//if the chat is private delete the chat if
                             {
                                 if(this.arrayContainsID(tmp,doc.data().members)===true){
                                     doc.ref.delete();
                                 }
                             }
-                            if(doc.data().type === "group"){
+                            if(doc.data().type === "group"){//if the chat is a group chat remove the user from the group
                                 if(this.arrayContainsID(tmp,doc.data().members)===true){
                                     const newArr=doc.data().members.filter(member => member.id !== tmp);
                                     doc.ref.update({members: newArr});
@@ -126,7 +126,7 @@ class UsersTable extends Component {
                     })
 
                 }
-                console.log(this.state.checkedList)
+                console.log(this.state.checkedList)//empty the checked list
                 this.state.checkedList.forEach(elem =>
                     document.getElementById(elem).checked = false
                 );
@@ -208,8 +208,8 @@ class UsersTable extends Component {
                         </button></Link></td>*/
     renderTable() {
 
-        if (this.state.type === "אדמין")
-        {
+        if (this.state.type === "אדמין")//if the user is an admin he can remove any user
+        {//show all users in the table
             return (this.state.people
                 .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
@@ -218,8 +218,8 @@ class UsersTable extends Component {
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
-        else if(this.state.type === "רכז")
-        {
+        else if(this.state.type === "רכז")//if the user is an instructor he can't remove an admin
+        {//show all users in the table except for admins
             return (this.state.people
                 .filter(person => person.type !== "אדמין" && person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (

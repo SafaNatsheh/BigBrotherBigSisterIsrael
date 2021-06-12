@@ -46,7 +46,7 @@ class CreateNewChat extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        if(this.state.groupName === "" )
+        if(this.state.groupName === "" )//make sure the inpute is correct
         {
             window.alert("הזן שם קבוצה");
         }
@@ -58,7 +58,7 @@ class CreateNewChat extends Component {
         {
             var con = window.confirm("האם אתה בטוח שברצונך ליצור קבוצה זו?" )
             if(con){
-
+                //add the chat to the db
                 firebase.firestore().collection('Chats').add(
                     {
 
