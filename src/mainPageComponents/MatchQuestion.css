@@ -3,7 +3,7 @@
     border: 5px solid rgb(76, 175, 80) ;
     border-radius: 0px;
     width: 900px;
-    height: 700px;
+    height: 2300px;
     margin-top: 10px;
     margin-right: 300px;
     margin-left: 300px;
@@ -20,13 +20,12 @@
     width: 100%;
     height: 100%;
 }
-.bot{
-    margin-right: 1175px;
-    margin-top: -25px;
+.bot1{
+    margin-right: 800px;
     width: 100px;
     background-color: darkmagenta;
-
 }
+
 
 .logo{
     margin-top: 10px;
@@ -41,10 +40,10 @@
 .check{
 
     margin-left: 5px;
-
-
 }
 
-
+.right{
+    text-align:right;
+}
 
 

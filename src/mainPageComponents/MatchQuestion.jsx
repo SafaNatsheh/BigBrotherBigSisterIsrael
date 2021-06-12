@@ -18,6 +18,35 @@ class matchQuestion extends Component {
             eigQues: "",
             ninQues: "",
             tenQues: "",
+            fName: "",
+            sName:"",
+            numPhone1: "",
+            numPhone2: "",
+            email: "",
+            area: "",
+            address: "",
+            info1: "",
+            info2: "",
+            info3: "",
+            info4: "",
+            info5: "",
+            info6: "",
+            info7: "",
+            info8: "",
+            info9: "",
+            info10: "",
+            info11: "",
+            info12: "",
+            info13: "",
+            info14: "",
+            info15: "",
+            info16: "",
+            info17: "",
+            info18: "",
+            info19: "",
+
+
+
 
         };
     }
@@ -27,11 +56,67 @@ class matchQuestion extends Component {
             <form className="q" onSubmit={this.submit}>
                 <div className="questions">
                     <img src={logo} alt="asfsa" className="logo"/>
-                    <h2>ברוכים הבאים לשאלון ההתאמה</h2>
+                    <h2>ברוכים הבאים לשאלון ההתאמה ושאלון ההיכרות</h2>
                     <br/>
+
                     <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">1. סניף </label>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>האם יש לך העדפה גאוגכרפית בעירך/יישובך למיקום החונכות? אם כן, אנא ציינ/י איזו</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.secQues}
+                                onChange={(e) => this.setState({ secQues: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">צפון העיר / יישוב</option>
+                                <option value="2\">מזרח העיר / יישוב</option>
+                                <option value="3\">דרום העיר / יישוב</option>
+                                <option value="4\">מערב העיר / יישוב</option>
+                                <option value="5\">מרכז העיר / יישוב</option>
+                                <option value="6\">ללא העדפה</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>מהם התחביבים והיכולות שלך, אותם היית שמח להביא לידי ביטוי בקשר עם האח/ות הצעיר/ה?</h6> </label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.forQues}
+                                onChange={(e) => this.setState({ forQues: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">ספורט וריקוד</option>
+                                <option value="2\">מוסיקה ונגינה</option>
+                                <option value="3\">בעלי חיים</option>
+                                <option value="4\">שופינג</option>
+                                <option value="5\">ציור ופיסול</option>
+                                <option value="6\">צילום ועריכה</option>
+                                <option value="7\">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
+                                <option value="8\">טיולים</option>
+                                <option value="9\">אחר</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>אנא ציינ/י את השפות המדוברות שלך</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.thiQues}
+                                onChange={(e) => this.setState({ thiQues: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">עברית</option>
+                                <option value="2\">ערבית</option>
+                                <option value="3\">אנגלית</option>
+                                <option value="4\">אמהרית</option>
+                                <option value="5\">רוסית</option>
+                                <option value="6\">צרפתית</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-6">
+
+                            <label htmlFor="inputState"><h6>סניף</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -56,62 +141,11 @@ class matchQuestion extends Component {
                                 <option value="16\">אחר</option>
                             </select>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">2. האם יש לך העדפה גאוגכרפית בעירך/יישובך למיקום החונכות? אם כן, אנא ציינ/י איזו</label>
-                            <select
-                                required id="inputState"
-                                className="form-control"
-                                value={this.state.secQues}
-                                onChange={(e) => this.setState({ secQues: e.target.value })}>
-                                <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">צפון העיר / יישוב</option>
-                                <option value="2\">מזרח העיר / יישוב</option>
-                                <option value="3\">דרום העיר / יישוב</option>
-                                <option value="4\">מערב העיר / יישוב</option>
-                                <option value="5\">מרכז העיר / יישוב</option>
-                                <option value="6\">ללא העדפה</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">3. אנא ציינ/י את השפות המדוברות שלך</label>
-                            <select
-                                required id="inputState"
-                                className="form-control"
-                                value={this.state.thiQues}
-                                onChange={(e) => this.setState({ thiQues: e.target.value })}>
-                                <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">עברית</option>
-                                <option value="2\">ערבית</option>
-                                <option value="3\">אנגלית</option>
-                                <option value="4\">אמהרית</option>
-                                <option value="5\">רוסית</option>
-                                <option value="6\">צרפתית</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">4. מהם התחביבים והיכולות שלך, אותם היית שמח להביא לידי ביטוי בקשר עם האח/ות הצעיר/ה?</label>
-                            <select
-                                required id="inputState"
-                                className="form-control"
-                                value={this.state.forQues}
-                                onChange={(e) => this.setState({ forQues: e.target.value })}>
-                                <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1\">ספורט וריקוד</option>
-                                <option value="2\">מוסיקה ונגינה</option>
-                                <option value="3\">בעלי חיים</option>
-                                <option value="4\">שופינג</option>
-                                <option value="5\">ציור ופיסול</option>
-                                <option value="6\">צילום ועריכה</option>
-                                <option value="7\">טכנולוגיה, משחקי וידיאו ומיחשוב</option>
-                                <option value="8\">טיולים</option>
-                                <option value="9\">אחר</option>
-                            </select>
-                        </div>
+
                     </div>
-                    <br/>
                     <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">5. אנא ציינ/י אם יש לך העדפה מסויימת לאח/ות צעיר/ה מהתוכנית הבאות:</label>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>אנא ציינ/י אם יש לך העדפה מסויימת לאח/ות צעיר/ה מהתוכנית הבאות:</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -119,19 +153,18 @@ class matchQuestion extends Component {
                                 onChange={(e) => this.setState({ fifQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
                                 <option>אח.ות צעיר.ה עם מוגבלות פיזית</option>
-                                <option>אח.ות צעיר.ה עם מוגבלות שכלית</option>
                                 <option>אח.ות צעיר.ה על הרצף בתפקוד גבוה</option>
                                 <option>אח.ות צעיר.ה שהינו.ה חלק ממשפחה עם ילד.ה על הרצף</option>
                                 <option>אח.ות צעיר.ה חסרי תעסוקה והשכלה (18+)</option>
                                 <option>אח.ות צעיר.ה עם קשיים רגשיים</option>
                                 <option>אח.ות צעיר.ה עם קשיים לימודיים</option>
                                 <option>אח.ות צעיר.ה חסרי עורף משפחתי</option>
-                                <option>אח.ות צעיר.ה במצבי סיכון</option>
                                 <option>ללא העדפה</option>
                             </select>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">6. האם יש כלי רכב בבעלותך/נגיש לשימושך?</label>
+                        <div className="form-group col-md-6">
+                            <br/>
+                            <label htmlFor="inputState"><h6> האם יש כלי רכב בבעלותך/נגיש לשימושך?</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -144,8 +177,10 @@ class matchQuestion extends Component {
 
                             </select>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">7. האם את מעדיפה לחנוך אח צעיר או אחות צעירה?</label>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>האם את מעדיפה לחנוך אח צעיר או אחות צעירה?</h6> </label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -157,11 +192,8 @@ class matchQuestion extends Component {
                                 <option>ללא העדפה</option>
                             </select>
                         </div>
-                    </div>
-                    <br/>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label htmlFor="inputState">8. באילו ימים החונכות אפשרית לך </label>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6> באילו ימים החונכות אפשרית לך</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -177,8 +209,10 @@ class matchQuestion extends Component {
                                 <option value="7\">ללא העדפה</option>
                             </select>
                         </div>
-                        <div className="form-group col-md-3" >
-                            <label htmlFor="inputState">9. באילו שעות החונכות אפשרית לך</label>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6" >
+                            <label htmlFor="inputState"> <h6>באילו שעות החונכות אפשרית לך</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -192,8 +226,8 @@ class matchQuestion extends Component {
                                 <option value="5\">ללא העדפה</option>
                             </select>
                         </div>
-                        <div className="form-group col-md-3" >
-                            <label htmlFor="inputState">10. האם יש לך העדפה לגיל האח/ות הצעיר/ה?</label>
+                        <div className="form-group col-md-6" >
+                            <label htmlFor="inputState"><h6>האם יש לך העדפה לגיל האח/ות הצעיר/ה?</h6> </label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -207,14 +241,385 @@ class matchQuestion extends Component {
                             </select>
                         </div>
                     </div>
+
+                    <br/>
+                    <h2>שאלון ההיכרות</h2>
+                    <br/>
+                    <div className="form-row">
+                        <div className="form-group col-md-3">
+                            <label htmlFor="inputFirstName"><h6>שם פרטי</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.fName}
+                                placeholder="שם פרטי"
+                                title="שם פרטי"
+                                onChange={(e) => this.setState({ fName: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label htmlFor="inputFirstName"><h6>שם משפחה</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.sName}
+                                placeholder="שם משפחה"
+                                title="שם משפחה"
+                                onChange={(e) => this.setState({ sName: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label htmlFor="inputFirstName"><h6>טלפון נייד</h6></label>
+                            <input
+                                required
+                                type="number"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.numPhone1}
+                                placeholder="טלפון נייד"
+                                title="טלפון נייד"
+                                onChange={(e) => this.setState({ numPhone1: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label htmlFor="inputFirstName"><h6>טלפון נוסף</h6></label>
+                            <input
+                                required
+                                type="number"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.numPhone2}
+                                placeholder="טלפון נוסף"
+                                title="טלפון נוסף"
+                                onChange={(e) => this.setState({ numPhone2: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>דואר אלקטרוני</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.email}
+                                placeholder="דואר אלקטרוני"
+                                title="דואר אלקטרוני"
+                                onChange={(e) => this.setState({ email: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>עיר מגורים</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.area}
+                                placeholder="עיר מגורים"
+                                title="עיר מגורים"
+                                onChange={(e) => this.setState({ area: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>כתובת</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.address}
+                                placeholder="כתובת"
+                                title="כתובת"
+                                onChange={(e) => this.setState({ address: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>אנא סמנ/י אם עשית שירות צבאי/לאומי.</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.info1}
+                                onChange={(e) => this.setState({ info1: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">שירות צבאי מלא</option>
+                                <option value="2\">שירות צבאי חלקי</option>
+                                <option value="3\">שירות לאומי</option>
+                                <option value="4\">פטור משירות</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>מה עיסוקך</h6> </label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info2}
+                                placeholder="מה עיסוקך"
+                                title="מה עיסוקך"
+                                onChange={(e) => this.setState({ info2: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>במידה שאינך עובד/ת כיום ציינ/י סיבה.</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info3}
+                                placeholder="במידה שאינך עובד/ת כיום ציינ/י סיבה."
+                                title="במידה שאינך עובד/ת כיום ציינ/י סיבה"
+                                onChange={(e) => this.setState({ info3: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>אנא ציינ/י איזו סוג(י) השכלה ברשותך.</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.info4}
+                                onChange={(e) => this.setState({ info4: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">תיכונית</option>
+                                <option value="2\">תעודה</option>
+                                <option value="3\"> תואר ראשון</option>
+                                <option value="4\"> תואר שני ומעלה</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputState"><h6>האם הינך מלגאי?</h6></label>
+                            <select
+                                required id="inputState"
+                                className="form-control"
+                                value={this.state.info5}
+                                onChange={(e) => this.setState({ info5: e.target.value })}>
+                                <option id="ff" disabled value="">בחר תשובה</option>
+                                <option value="1\">כן</option>
+                                <option value="2\">לא</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6> שם הקרן/מלגה:</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info6}
+                                placeholder="שם הקרן/מלגה"
+                                title="שם הקרן/מלגה"
+                                onChange={(e) => this.setState({ info6: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputFirstName"><h6>מוסד אקדמאי:</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info7}
+                                placeholder="מוסד אקדמאי"
+                                title="מוסד אקדמאי"
+                                onChange={(e) => this.setState({ info7: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <label htmlFor="inputFirstName"><h6>האם הינך בעל.ת ניסיון בעבודה עם ילדים ונוער? אם כן, פרט/י</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info8}
+                                placeholder=" "
+                                title=" "
+                                onChange={(e) => this.setState({ info8: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <label htmlFor="inputFirstName"><h6>מדוע ברצונך להתנדב?</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info9}
+                                placeholder=""
+                                title=""
+                                onChange={(e) => this.setState({ info9: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <label htmlFor="inputFirstName"><h6>במה לדעתך, תוכל/י לתרום לאח/ות הצעיר/ה שלך?</h6></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info10}
+                                placeholder=""
+                                title=""
+                                onChange={(e) => this.setState({ info10: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    <h6 className="right">ציינ/י 3 שמות של ממליצים שאינם בני משפחה או חברים.</h6>
+                    <h6 className="right">אנא דאג.י לקבל את הסכמת הממליצים לפנייתנו.</h6>
+                    <h6 className="right">ממליץ 1:</h6>
+                    <div className="form-row">
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    id="inputFirstName"
+                                    value={this.state.info11}
+                                    placeholder="שם מלא"
+                                    onChange={(e) => this.setState({ info11: e.target.value })}
+                                />
+                            </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <br/>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info12}
+                                placeholder="קשר אליך "
+                                onChange={(e) => this.setState({ info12: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info13}
+                                placeholder="פרטי התקשורת"
+                                onChange={(e) => this.setState({ info13: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <h6 className="right">ממליץ 2:</h6>
+                    <div className="form-row">
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info14}
+                                placeholder="שם מלא"
+                                onChange={(e) => this.setState({ info14: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <br/>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info15}
+                                placeholder="קשר אליך "
+                                onChange={(e) => this.setState({ info15: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info16}
+                                placeholder="פרטי התקשורת"
+                                onChange={(e) => this.setState({ info16: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <h6 className="right">ממליץ 3:</h6>
+                    <div className="form-row">
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info17}
+                                placeholder="שם מלא"
+                                onChange={(e) => this.setState({ info17: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <br/>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info18}
+                                placeholder="קשר אליך "
+                                onChange={(e) => this.setState({ info18: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputFirstName"></label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                value={this.state.info19}
+                                placeholder="פרטי התקשורת"
+                                onChange={(e) => this.setState({ info19: e.target.value })}
+                            />
+                        </div>
+                    </div>
                     <br/>
                     <div >
-                        <input type="checkbox" id="myCheck" className="people_check"/>
+                        <input type="checkbox" id="myCheck" className="check"/>
                         <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות</h6>
                     </div>
-                    <button type="submit" className="btn btn-success add-new-user-btn">
+
+                    <button type="submit" className="btn btn-success add-new-user-btn bot1">
                         שלח
                     </button>
+
+
                 </div>
             </form>
 
