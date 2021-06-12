@@ -474,7 +474,10 @@ class LinkUsers extends Component {
                 }
 
                 if (ln !== 8) {
-                    scr++;
+                    if (ln !== 0) {
+                        scr++;
+                    }
+
                 }
                 else {
                     let newDate = new Date();
