@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import "./UsersTable.css";
 import firebase, {auth} from "../../config/Firebase"
 import NoLinkedUsers from "./NoLinkedUsers";
-
+import {Link} from "react-router-dom"
 
 class UsersTable extends Component {
     constructor(props) {
@@ -203,6 +203,9 @@ class UsersTable extends Component {
             </div>
         );
     }
+    /*<td><Link to="/UpdateUser"><button  type="button">
+                            Click Me!
+                        </button></Link></td>*/
     renderTable() {
 
         if (this.state.type === "אדמין")
