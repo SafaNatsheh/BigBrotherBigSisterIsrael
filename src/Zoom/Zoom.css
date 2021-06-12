@@ -1,0 +1,99 @@
+/*main {*/
+/*    width: 70%;*/
+/*    margin: auto;*/
+/*    text-align: center;*/
+/*}*/
+
+
+/*.main-page-app{*/
+/*    background-color: #343a40;*/
+/*}*/
+
+
+/*main button {*/
+/*    margin-top: 20px;*/
+/*    background-color: #2D8CFF;*/
+/*    color: #ffffff;*/
+/*    text-decoration: none;*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 10px;*/
+/*    padding-left: 40px;*/
+/*    padding-right: 40px;*/
+/*    display: inline-block;*/
+/*    border-radius: 10px;*/
+/*    cursor: pointer;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*}*/
+
+main button:hover {
+    background-color: #2681F2;
+}
+
+/*Join Meeting*/
+.meeting-title{
+    margin-left: 100px;
+}
+
+
+/*#zmmtg-root{*/
+/*    display: none;*/
+/*}*/
+
+/*.media-preview-mic-option-btn{*/
+/*    margin-top: 700px;*/
+/*}*/
+/*.media-preview-icon-mic-option {*/
+
+/*    background-position: -278px -96px;*/
+/*}*/
+
+.media-preview-disconnect-audio-text{
+    /*background-color: black;*/
+    margin-top: 1000px;
+}
+
+/*button Join*/
+.zm-btn{
+    width: 400px;
+    margin-right: 500px;
+    margin-left: 1px;
+    background-color: #0E71EB;
+    border: none;
+}
+
+
+#mic-icon{
+    /*background-color: #1c7430;*/
+    margin-right: 500px;
+}
+
+#video-icon{
+    margin-right: 510px;
+}
+
+
+                                                                                                                                                                                                       </span></button><button tabindex="0" type="button" class="zm-btn zm-btn-legacy zm-btn--default zm-btn__outline--blue" aria-label="">OK<span class="loading" style="display: none;"></span></button></div>*/
+
+/*.zm-modal-footer-default-actions{*/
+/*    width: 0px;*/
+/*    height:0px;*/
+
+/*}*/
+
+/*.zm-btn__outline--blue{*/
+/*    margin-right: 500px;*/
+/*    width: 40px;*/
+/*    height:40px;*/
+/*}*/
+
+
+
+/*.zm-btn-legacy{*/
+/*    margin-right: 155px;*/
+/*    margin-top: -10px;*/
+/*}*/
+
+/*.zm-btn--default{*/
+/*    margin-right: -150px;*/
+/*}*/
