@@ -9,13 +9,13 @@ function Sidebar(){
     const [rooms,setRooms] = useState([]);
     const [searchTerm,setSearchTerm] = useState("");
     const db = firebase.firestore().collection('Chats');
-    const userRef =firebase.firestore().collection('Users');
+   // const userRef =firebase.firestore().collection('Users');
     const uid = firebase.auth().currentUser.uid;
     //const [linkedUid,setLinked] = useState("");
     const [bool,setBool] =useState(false);
     //firebase.firestore().collection('Users').doc(uid).onSnapshot(snapshot => (setLinked(snapshot.data().link_user)))
     firebase.firestore().collection('Users').get().then((querySnapshot)=>{
-        querySnapshot.docs.map((doc) => {
+        querySnapshot.docs.forEach((doc) => {
             if(doc.id === uid){
                 setId(doc.data().id);
 

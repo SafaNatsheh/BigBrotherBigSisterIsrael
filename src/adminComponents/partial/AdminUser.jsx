@@ -78,6 +78,13 @@ class AdminUser extends Component {
         alert("מספר טלפון לא תקין");
         return;
     }
+    let newDate = new Date();
+    let year = newDate.getFullYear();
+    console.log((year -parseInt(this.state.birthDate.substring(0,4) , 10 )))
+    if (year - (parseInt(this.state.birthDate.substring(0,4) , 10 )) < 6) {
+      alert("תאריך לידה לא תקין");
+      return;
+    }
     this.usersRef.get()
       .then(querySnap => querySnap.forEach(doc => {
         if (doc.data().id === this.state.id && doc.data().email === this.state.email) {

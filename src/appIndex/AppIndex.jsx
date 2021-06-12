@@ -66,7 +66,7 @@ class AppIndex extends Component {
                 .then(doc => {
                     if (doc.exists) {
                         userType = doc.data().type;
-                        this.state.isfirst = doc;
+                        this.setState({isfirst: doc})
                     }
                         else {
                         userType = "";
