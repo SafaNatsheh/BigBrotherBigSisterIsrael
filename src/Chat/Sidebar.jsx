@@ -15,7 +15,7 @@ function Sidebar(){
     const [bool,setBool] =useState(false);
     //firebase.firestore().collection('Users').doc(uid).onSnapshot(snapshot => (setLinked(snapshot.data().link_user)))
     firebase.firestore().collection('Users').get().then((querySnapshot)=>{
-        querySnapshot.docs.map((doc) => {
+        querySnapshot.docs.forEach((doc) => {
             if(doc.id === uid){
                 setId(doc.data().id);
 

@@ -53,6 +53,7 @@ class LinkUsers extends Component {
 
     }
     isValid = (querySnapshot, type) => {
+
         if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
             var con = window.confirm("האם אתה בטוח לבצונך לנתק את החניך ?")
             if (con) {
@@ -90,7 +91,7 @@ class LinkUsers extends Component {
 
                 console.log("המשתמשים עודכנו בהצלחה!");
                 alert("עודכן בהצלחה!\n");
-                this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
+                this.setState({ studentId: "" , mentorId: "" , mentorRef: "" , studentRef: ""});
                 this.fillpepl();
 
                 return;
@@ -99,7 +100,7 @@ class LinkUsers extends Component {
                 throw Error(500);
             }
         }
-        else if (querySnapshot.empty && this.state.discon === false) {
+        else if (querySnapshot.empty) {
             alert("ה" + type + " לא קיים במערכת")
             throw Error(500);
         }
@@ -108,7 +109,7 @@ class LinkUsers extends Component {
                 alert("המשתמש אינו " + type);
                 throw Error(500);
             }
-            if (doc.data().link_user != null && doc.data().link_user !== "") {
+            if (doc.data().link_user != null && doc.data().link_user !== "" && this.state.discon === false) {
                 alert("המשתמש כבר מחובר");
                 throw Error(500);
             }
@@ -131,6 +132,7 @@ class LinkUsers extends Component {
                 .get()
                 .then((querySnapshot) => this.isValid(querySnapshot, "חונך")))
             .then(() => {
+                if (this.state.discon === false) {
                 var con = window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                 if (con) {
                     this.linkUser(studentId);
@@ -152,7 +154,7 @@ class LinkUsers extends Component {
                     this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
                     this.fillpepl();
                 }
-            })
+            }})
             .catch(() => console.log("Error in adding new user"));
     }
 
@@ -212,10 +214,9 @@ class LinkUsers extends Component {
                                 }
                                 if (this.state.mentorId !== "") {
                                     document.getElementById(this.state.mentorId).checked = false;
-                                    this.state.mentorId = "";
-                                    this.state.studentId = "";
+                                    this.setState({mentorId: "" , studentId: ""})
                                 }
-                                this.state.lnkstudid = "";
+                                this.setState({lnkstudid: ""})
                             }
                         } />
                         </h5>
@@ -299,15 +300,14 @@ class LinkUsers extends Component {
                             }
                             if (this.state.lnkstudid !== "") {
                                 document.getElementById(this.state.lnkstudid).checked = false;
-                                this.state.lnkstudid = "";
+                                this.setState({lnkstudid: ""});
                             }
                             if (this.state.studentId !== "") {
                                 document.getElementById(this.state.studentId).checked = false;
-                                this.state.studentId = "";
+                                this.setState({studentId: ""});
                             }
-                            this.state.mentorRef = "";
-                            this.state.lnkstudid = "";
-                            this.setState({discon: false});
+
+                            this.setState({discon: false , mentorRef: "" , lnkstudid: ""});
                         }
                         } />
                         </td>
@@ -332,15 +332,13 @@ class LinkUsers extends Component {
                         }
                         if (this.state.lnkstudid !== "") {
                             document.getElementById(this.state.lnkstudid).checked = false;
-                            this.state.lnkstudid = "";
+                            this.setState({lnkstudid: ""})
                         }
                         if (this.state.studentId !== "") {
                             document.getElementById(this.state.studentId).checked = false;
-                            this.state.studentId = "";
-                        }
-                        this.state.mentorRef = "";
-                        this.state.lnkstudid = "";
-                        this.setState({discon: false});
+                            this.setState({studentId: ""})
+                            }
+                        this.setState({discon: false , mentorRef: "" , lnkstudid: ""});
                     }
                     } />
                     </td>
