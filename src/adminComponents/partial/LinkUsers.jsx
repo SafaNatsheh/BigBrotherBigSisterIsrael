@@ -283,9 +283,8 @@ class LinkUsers extends Component {
         if (this.state.lnkstat === "1") {
 
             return (this.state.people
-                .filter(person => person.type ==="חונך" && person.first !== "true" && (person.link_user == null || person.link_user === "")).filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
+                .filter(person => person.type ==="חונך" && person.first !== "true" && (person.link_user == null || person.link_user === "") ).filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
                 .map((person) => (
-
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
 
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
@@ -425,8 +424,8 @@ class LinkUsers extends Component {
     }
 
     gtscor(studscr , date) {
-        if (studscr === undefined) {
 
+        if (studscr === undefined) {
             return 0;
         }
 
@@ -437,14 +436,12 @@ class LinkUsers extends Component {
         var scr = 0;
 
         if (menscr === undefined) {
-
             return -1;
         }
 
         var ind  = 0
         var ind2 = 0
-        for (var ln  = 0 ; ln < 12 ;) {
-
+        for (var ln  = 0 ; ln < 12 ; ) {
             if (studscr[ind] === "/") {
                 ln++;
                 ind++;
@@ -452,6 +449,7 @@ class LinkUsers extends Component {
                     ind2++
                 }
                 ind2++;
+                continue;
             }
 
            else if (menscr[ind2] === "/") {
@@ -461,6 +459,7 @@ class LinkUsers extends Component {
                     ind++
                 }
                 ind++;
+                continue;
             }
             if (studscr[ind] === menscr[ind2] && studscr[ind+1] === "/" && menscr[ind2+1] === "/") {
                 //console.log(studscr[ind] +" "+ ind +" "+ ind2+"match"+" "+ln)
