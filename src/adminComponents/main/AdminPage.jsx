@@ -17,9 +17,9 @@ import {
 } from "react-router-dom";
 import "./AdminPage.css";
 import CreateNewChat from "../partial/CreateNewChat";
-import UserDetails from "../partial/UserDetails";
-import addMeeting from "../partial/addMeeting";
-import ReportTable from "../partial/ReportTable";
+//import UserDetails from "../partial/UserDetails";
+//import addMeeting from "../partial/addMeeting";
+//import ReportTable from "../partial/ReportTable";
 class AdminPage extends Component {
   constructor(props) {
     super(props);
@@ -135,13 +135,13 @@ class AdminPage extends Component {
                 <CreateNewChat />
               </Route>{" "}
                 <Route path="/UserDetails">
-                    <UserDetails />
+                    {/*<UserDetails />*/}
                 </Route>{" "}
                 <Route path="/ReportTable">
-                    <ReportTable />
+                    {/*} <ReportTable />*/}
                 </Route>{" "}
                 <Route path="/addMeeting">
-                    <addMeeting />
+                    {/*<addMeeting />*/}
                 </Route>{" "}
               <Route path="/">
               <Home />
