@@ -325,11 +325,11 @@ class App extends Component {
       e.preventDefault();
   }
 
-  routeToVideo = () => {
+  routeToVideo = () => {/*
     if (this.state.directVid)
       return (<Redirect push to="/VideoPage" ></Redirect>);
     return null;
-  }
+  */}
 
   getWallRouteStatus = () => {
     this.setState({ routeToWall: true })
@@ -354,19 +354,8 @@ class App extends Component {
     }
     return null;
   }
-
-  waitUntilPageIsLoaded = () => {
-    if (this.state.loadingUser || this.state.loadingLinkedUser)
-      return (
-        <div className="loader-element">
-          <h1>אנא המתן... </h1>
-          <Loader color="#776078" width="300px" height="300px" type="Bars" />
-        </div>
-      );
-    else
-      return (
-        <Switch>
-          <Route path="/VideoPage">
+  /*
+    <Route path="/VideoPage">
             <VideoPage
               userName={this.state.userDetails.fName}
               linkedName={this.state.linkedUserDetails.fName}
@@ -381,6 +370,19 @@ class App extends Component {
             />
 
           </Route>{" "}
+  */
+  waitUntilPageIsLoaded = () => {
+    if (this.state.loadingUser || this.state.loadingLinkedUser)
+      return (
+        <div className="loader-element">
+          <h1>אנא המתן... </h1>
+          <Loader color="#776078" width="300px" height="300px" type="Bars" />
+        </div>
+      );
+    else
+      return (
+        <Switch>
+
           <Route path="/Wall">
             <div className="app-page">
               <Profile
@@ -455,6 +457,27 @@ class App extends Component {
       backgroundColor: "#4CAF50",
     };
 
+    /*
+      <li className="nav-item ">
+                  <NavLink
+                    className="tab"
+                    to="/Wall"
+                    activeStyle={activeTabStyle}
+                    onClick={(event) => this.checkIfVideo(event)}
+                  >
+                    קיר{" "}
+                  </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item ">
+                  <NavLink
+                    className="tab"
+                    to="/VideoPage"
+                    activeStyle={activeTabStyle}
+                  >
+                    שיחת וידאו{" "}
+                  </NavLink>{" "}
+                </li>{" "}
+     */
     return (
       <div className="main-page-app" style={{ zoom: this.state.zoom }}>
         <Router>
@@ -482,23 +505,14 @@ class App extends Component {
                 </li>{" "}
                 <li className="nav-item ">
                   <NavLink
-                    className="tab"
-                    to="/Wall"
-                    activeStyle={activeTabStyle}
-                    onClick={(event) => this.checkIfVideo(event)}
-                  >
-                    קיר{" "}
-                  </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item ">
-                  <NavLink
-                    className="tab"
-                    to="/VideoPage"
-                    activeStyle={activeTabStyle}
+                      className="tab"
+                      to="/VideoPage"
+                      activeStyle={activeTabStyle}
                   >
                     שיחת וידאו{" "}
                   </NavLink>{" "}
                 </li>{" "}
+
                 <li className="nav-item">
                   <NavLink
                     className="tab"
