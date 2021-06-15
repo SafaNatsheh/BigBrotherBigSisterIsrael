@@ -54,7 +54,6 @@ class matchQuestion extends Component {
 
 
         };
-        this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
     }
 
