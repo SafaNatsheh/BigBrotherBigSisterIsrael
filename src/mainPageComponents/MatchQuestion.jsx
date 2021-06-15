@@ -2,6 +2,7 @@ import * as React from "react";
 import "./MatchQuestion.css";
 import {Component} from 'react';
 import logo from "../static_pictures/big_brothers_big_sisters.png";
+import firebase from "../config/Firebase";
 
 class matchQuestion extends Component {
 
@@ -53,6 +54,7 @@ class matchQuestion extends Component {
 
 
         };
+        this.uid = firebase.auth().currentUser.uid;
     }
 
     componentDidMount() {
@@ -75,6 +77,45 @@ class matchQuestion extends Component {
             var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
             this.props.refwin.ref.update({first: all})
             this.props.complt();
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").add(
+                {
+                    fName: this.state.fName,
+                    sName: this.state.sName,
+                    car: this.state.car,
+                    numPhone1: this.state.numPhone1,
+                    numPhone2:  this.state.numPhone2,
+                    email: this.state.email,
+                    area: this.state.area,
+                    address: this.state.address,
+                    info1: this.state.info1,
+                    info2: this.state.info2,
+                    info3: this.state.info3,
+                    info4: this.state.info4,
+                    info5: this.state.info5,
+                    info6: this.state.info6,
+                    info7: this.state.info7,
+                    info8: this.state.info8,
+                    info9: this.state.info9,
+                    info10: this.state.info10,
+                    info11: this.state.info11,
+                    info12: this.state.info12,
+                    info13: this.state.info13,
+                    info14: this.state.info14,
+                    info15: this.state.info15,
+                    info16: this.state.info16,
+                    info17: this.state.info17,
+                    info18: this.state.info18,
+                    info19: this.state.info19,
+
+                    gend: this.state.gend
+
+
+
+
+
+
+                })
+
         }
         else {
             alert("");

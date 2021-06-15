@@ -2,6 +2,7 @@ import * as React from "react";
 import "./MatchQuestionstud.css";
 import {Component} from 'react';
 import logo from '../static_pictures/big_brothers_big_sisters.png'
+import firebase from "../config/Firebase";
 
 class matchQuestionstud extends Component {
 
@@ -26,7 +27,7 @@ class matchQuestionstud extends Component {
             numID: "",
             address: "",
             country: "",
-            year:"",
+            year: "",
             school: "",
             grade: "",
             problem: "",
@@ -39,13 +40,15 @@ class matchQuestionstud extends Component {
             work1: "",
             DName: "",
             DID: "",
-            numphon2:"",
+            numphon2: "",
             work2: "",
             stat: "",
-            leve:"",
-            numBro:"",
+            leve: "",
+            numBro: "",
 
         };
+        this.uid = firebase.auth().currentUser.uid;
+
     }
 
     componentDidMount() {
@@ -67,6 +70,38 @@ class matchQuestionstud extends Component {
             var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
             this.props.refwin.ref.update({first: all})
             this.props.complt();
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").add(
+                {
+                    fName: this.state.fName,
+                    sName: this.state.sName,
+                    numID: this.state.numID,
+                    address: this.state.address,
+                    country: this.state.country,
+                    year: this.state.year,
+                    school: this.state.school,
+                    grade: this.state.grade,
+                    problem: this.state.problem,
+                    birthDate: this.state.birthDate,
+                    religion1: this.state.religion1,
+                    MName: this.state.MName,
+                    MID: this.state.MID,
+                    numphon: this.state.numphon,
+                    work1: this.state.work1,
+                    DName: this.state.DName,
+                    DID: this.state.DID,
+                    numphon2: this.state.numphon2,
+                    work2: this.state.work2,
+                    stat: this.state.stat,
+                    leve: this.state.leve,
+                    numBro: this.state.numBro
+
+
+
+
+
+
+
+                })
         }
         else {
             alert("");
