@@ -99,7 +99,7 @@ class UsersTable extends Component {
                         if(doc.data().id === this.state.checkedList[i])//search for the user that is on the checked list
                         {//then delete that user
                             if (typeof (doc.data().link_user) !== 'undefined' && doc.data().link_user !== "")
-                            {//if the user is limked to another user, remove the link
+                            {//if the user is linked to another user, remove the link
                                 this.usersRef.doc(doc.data().link_user).update({ link_user: "" })
                             }
                             doc.ref.delete();

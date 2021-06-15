@@ -17,7 +17,8 @@ class LinkUsers extends Component {
             chekstat: "",
             lnkstat: "0",
             lnkstudid: "",
-            discon: false
+            discon: false,
+            numofpri:3
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -49,7 +50,7 @@ class LinkUsers extends Component {
     fillpepl() {
         setTimeout(function(){
         window.location.reload(1);
-        }, 1200);
+        }, 2000);
 
     }
     isValid = (querySnapshot, type) => {
@@ -187,19 +188,19 @@ class LinkUsers extends Component {
             <form className="ad-user-form" onSubmit={this.addLink}>
                 <header className="title">
                     <h1 className="add-user-h">
-                        <u> קישור חניך לחונך</u>
+                        <u> קישור חןנך לחניך</u>
                     </h1>
                 </header>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חניך</label>
+                        <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חונך</label>
 
                         <input
                             type="text"
                             className="form-control"
                             id="inputLinkFirstName"
                             value={this.state.teachsrch}
-                            placeholder="שם חניך"
+                            placeholder="שם חונך"
                             title="שם פרטי"
                             onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
@@ -222,6 +223,27 @@ class LinkUsers extends Component {
                         ללא קישור
 
                         </h5>
+                        <br></br>
+                        <h5>מספר עדיפויות
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.numofpri}
+                            onChange={(e) => this.setState({ numofpri: parseInt(e.target.value , 10)})}>
+                            <option id="ff" disabled value="0">בחר תשובה</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </h5>
+
 
                         { this.state.mentorRef !== "" && this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
 
@@ -251,6 +273,10 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
                         <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
                         <div className ='container__table1'>
                         <table className="table table-bordered">
                             <thead>
@@ -366,7 +392,7 @@ class LinkUsers extends Component {
         var lists = [];
         var nwlst = 0;
         var mins = 0;
-        for (var i = 0 ; i < 10 ; i++) {
+        for (var i = 0 ; i < this.state.numofpri ; i++) {
 
                 lists.push(<tr>
                     <td>  </td>
@@ -376,7 +402,7 @@ class LinkUsers extends Component {
                 </tr>)
 
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1))
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1) || ((person.link_user !== "") && (person.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.first , person.birthDate) && (this.state.numofpri = this.gtscor(person.first , person.birthDate) + 1) && console.log(person.fName))))
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                         <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {

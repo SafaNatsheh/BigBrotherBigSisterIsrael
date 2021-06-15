@@ -18,7 +18,9 @@ class AppIndex extends Component {
             isInstructor : false,
             isfirst : "",
             filled: false,
-            end:false
+            end:false,
+            oldusr:"",
+            passwrd:""
         };
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -66,7 +68,7 @@ class AppIndex extends Component {
                 .then(doc => {
                     if (doc.exists) {
                         userType = doc.data().type;
-                        this.setState({isfirst: doc})
+                        this.setState({isfirst: doc , oldusr: user})
                     }
                         else {
                         userType = "";
@@ -84,12 +86,15 @@ class AppIndex extends Component {
             this.setState({ isLoggedIn: false ,end:true});
     }
 
+    myCallback = (dataFromChild) => {
+        this.setState({passwrd: dataFromChild})
+    }
+
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => this.onAuthChanged(user));
     }
 
     renderContent() {
-        console.log(this.state)
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor ) {
             if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חונך" && this.state.filled === false) {
                 return (<Quest refwin = {this.state.isfirst} complt = {this.filled}/>)
@@ -100,10 +105,10 @@ class AppIndex extends Component {
             return (<App/>)
         }
         if (this.state.isLoggedIn && this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
-            return (<AdminPage exitAdmin={this.exitAdmin}/>)
+            return (<AdminPage exitAdmin={this.exitAdmin} oldusr = {this.state.oldusr} oldpass = {this.state.passwrd}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor) {
-            return (<RakazPage exitRakaz={this.exitRakaz}/>)
+            return (<RakazPage exitRakaz={this.exitRakaz} oldusr = {this.state.oldusr} oldpass = {this.state.passwrd}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
             var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
@@ -118,7 +123,7 @@ class AppIndex extends Component {
             }
         }
         else if(!this.state.isLoggedIn && this.state.end)
-            return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} />)
+            return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} funcret={this.myCallback}/>)
         return <div></div>
     }
 

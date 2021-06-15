@@ -26,14 +26,18 @@ class AdminPage extends Component {
     this.state = {
       active: false,
       zoom: Math.min(window.innerHeight / 620, window.innerWidth / 1536),
-      user_name: ""
+      user_name: "",
+        passwrd:""
     };
     this.usersRef = firebase.firestore().collection('Users');
     this.uid = firebase.auth().currentUser.uid;
   }
+  myCallback = (dataFromChild) => {
+      this.setState({passwrd: dataFromChild})
+  }
   componentDidMount() {
+      this.setState({passwrd:this.props.oldpass})
     auth.onAuthStateChanged(user=> {
-      console.log(user)
       if (!user) {
         window.location.href = "/"
         return
@@ -114,7 +118,7 @@ class AdminPage extends Component {
                 <Home />
                 </Route>
               <Route path="/AdminUser">
-                <AdminUser />
+                <AdminUser oldusr={this.props.oldusr} oldpass={this.state.passwrd} funcret={this.myCallback}/>
               </Route>
               <Route path="/UpdateUser">
                 <UpdateUser />
