@@ -15,6 +15,7 @@ import "./RakazPage.css";
 import RakazUser from "./RakazUser";
 import Chat from "../Chat/Chat";
 import CreateNewChat from "../adminComponents/partial/CreateNewChat";
+import UsersTable from "../adminComponents/partial/UsersTable";
 
 class RakazPage extends Component {
     constructor(props) {
@@ -111,6 +112,9 @@ class RakazPage extends Component {
                             <Route path="/Home">
                                 <Home />
                             </Route>
+                            <Route path="/UsersTable">
+                                <UsersTable />
+                            </Route>{" "}
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
@@ -164,6 +168,13 @@ class RakazPage extends Component {
                         עדכון פרטי משתמש
                     </NavLink>
                 </li>
+                <NavLink
+                    className="tab"
+                    to="/UsersTable"
+                    activeStyle={activeTabStyle}
+                >
+                    רשימת משתמשים
+                </NavLink>
                
                 <li className="nav-item text-center">
                     <NavLink
