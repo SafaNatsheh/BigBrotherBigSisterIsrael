@@ -402,7 +402,7 @@ class LinkUsers extends Component {
                 </tr>)
 
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1))
+                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1) || ((person.link_user !== "") && (person.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.first , person.birthDate) && (this.state.numofpri = this.gtscor(person.first , person.birthDate) + 1) && console.log(person.fName))))
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                         <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
