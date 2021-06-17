@@ -11,6 +11,7 @@
     "bootstrap": "^4.5.0",
     "create-react-app": "^4.0.3",
     "firebase": "^8.6.3",
+    "mailjs": "^0.1.18",
     "mui-datatables": "^3.7.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
