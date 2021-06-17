@@ -60,6 +60,37 @@ class matchQuestionstud extends Component {
         else {
             this.setState({firQues: "0/" , secQues: "0/"})
         }
+        firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
+            .get()
+            .then((doc) => {
+                this.setState({fName: doc.data().fName});
+                this.setState({sName: doc.data().sName});
+                this.setState({numID: doc.data().numID});
+                this.setState({address: doc.data().address});
+                this.setState({country: doc.data().country});
+                this.setState({year: doc.data().year});
+                this.setState({school: doc.data().school});
+                this.setState({grade: doc.data().grade});
+                this.setState({problem: doc.data().problem});
+                this.setState({birthDate: doc.data().birthDate});
+                this.setState({religion1: doc.data().religion1});
+                this.setState({religion2: doc.data().religion2});
+                this.setState({MName: doc.data().MName});
+                this.setState({MID: doc.data().MID});
+                this.setState({numphon: doc.data().numphon});
+                this.setState({work1: doc.data().work1});
+                this.setState({DName: doc.data().DName});
+                this.setState({DID: doc.data().DID});
+                this.setState({numphon2: doc.data().numphon2});
+                this.setState({work2: doc.data().work2});
+                this.setState({stat: doc.data().stat});
+                this.setState({leve: doc.data().leve});
+                this.setState({numBro: doc.data().numBro});
+
+
+
+            })
+            .catch((e) => console.log(e.name));
 
     }
 
@@ -70,7 +101,7 @@ class matchQuestionstud extends Component {
             var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
             this.props.refwin.ref.update({first: all})
             this.props.complt();
-            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").add(
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers").set(
                 {
                     fName: this.state.fName,
                     sName: this.state.sName,
@@ -83,6 +114,7 @@ class matchQuestionstud extends Component {
                     problem: this.state.problem,
                     birthDate: this.state.birthDate,
                     religion1: this.state.religion1,
+                    religion2: this.state.religion2,
                     MName: this.state.MName,
                     MID: this.state.MID,
                     numphon: this.state.numphon,
