@@ -186,7 +186,7 @@ class LinkUsers extends Component {
             <form className="ad-user-form" onSubmit={this.addLink}>
                 <header className="title">
                     <h1 className="add-user-h">
-                        <u> קישור חןנך לחניך</u>
+                        <u> קישור חונך לחניך</u>
                     </h1>
                 </header>
                 <div className="form-row">
