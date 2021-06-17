@@ -66,6 +66,39 @@ class matchQuestion extends Component {
         else {
             this.setState({firQues: "0/"})
         }
+        firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
+            .get()
+            .then((doc) => {
+                this.setState({fName: doc.data().fName});
+                this.setState({sName: doc.data().sName});
+                this.setState({car: doc.data().car});
+                this.setState({numPhone1: doc.data().numPhone1});
+                this.setState({numPhone2: doc.data().numPhone2});
+                this.setState({email: doc.data().email});
+                this.setState({area: doc.data().area});
+                this.setState({address: doc.data().address});
+                this.setState({info1: doc.data().info1});
+                this.setState({info2: doc.data().info2});
+                this.setState({info3: doc.data().info3});
+                this.setState({info4: doc.data().info4});
+                this.setState({info5: doc.data().info5});
+                this.setState({info6: doc.data().info6});
+                this.setState({info7: doc.data().info7});
+                this.setState({info8: doc.data().info8});
+                this.setState({info9: doc.data().info9});
+                this.setState({info10: doc.data().info10});
+                this.setState({info11: doc.data().info11});
+                this.setState({info12: doc.data().info12});
+                this.setState({info13: doc.data().info13});
+                this.setState({info14: doc.data().info14});
+                this.setState({info15: doc.data().info15});
+                this.setState({info16: doc.data().info16});
+                this.setState({info17: doc.data().info17});
+                this.setState({info18: doc.data().info18});
+                this.setState({info19: doc.data().info19});
+                this.setState({gend: doc.data().gend});
+            })
+            .catch((e) => console.log(e.name));
 
         console.log(document.getElementById("age"))
 
@@ -77,7 +110,7 @@ class matchQuestion extends Component {
             var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
             this.props.refwin.ref.update({first: all})
             this.props.complt();
-            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").add(
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers").set(
                 {
                     fName: this.state.fName,
                     sName: this.state.sName,
