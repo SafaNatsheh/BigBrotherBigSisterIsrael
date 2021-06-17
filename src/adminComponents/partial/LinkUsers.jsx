@@ -18,7 +18,8 @@ class LinkUsers extends Component {
             lnkstat: "0",
             lnkstudid: "",
             discon: false,
-            numofpri:3
+            numofpri:3,
+            didup:false
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -50,35 +51,33 @@ class LinkUsers extends Component {
     fillpepl() {
         setTimeout(function(){
         window.location.reload(1);
-        }, 2000);
+        }, 1500);
 
     }
-    isValid = (querySnapshot, type) => {
+    isValid = async (querySnapshot, type) => {
 
         if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
             var con = window.confirm("האם אתה בטוח לבצונך לנתק את החניך ?")
             if (con) {
-                this.usersRef.where('id', '==', this.state.mentorId)
+                let querySnapshot = await
+                    this.usersRef.where('id', '==', this.state.mentorId)
                     .limit(1)
                     .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                                    doc.ref.update({ link_user: "" })
-                            }
-                        );
-                    }).catch((e) => console.log(e.name));
+                console.log(querySnapshot)
+                    if(querySnapshot && querySnapshot.docs.length>0) {
+                        querySnapshot.docs[0].ref.update({link_user: ""})
+                    }
 
-                this.usersRef.where('id', '==', this.state.lnkstudid)
+                 querySnapshot = await this.usersRef.where('id', '==', this.state.lnkstudid)
                     .limit(1)
                     .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                                    doc.ref.update({ link_user: "" })
-                            }
-                        );
-                    }).catch((e) => console.log(e.name));
-
-                firebase.firestore().collection('Chats').get().then((querySnapshot) => {
+                   if(querySnapshot) {
+                       querySnapshot.forEach((doc) => {
+                               doc.ref.update({link_user: ""})
+                           }
+                       );
+                   }
+                querySnapshot = await firebase.firestore().collection('Chats').get()
                     querySnapshot.docs.forEach(doc => {
                         if (doc.data().type === "private") {
                             console.log(doc.data().members[0].id)
@@ -88,7 +87,7 @@ class LinkUsers extends Component {
                             }
                         }
                     });
-                })
+
 
                 console.log("המשתמשים עודכנו בהצלחה!");
                 alert("עודכן בהצלחה!\n");
@@ -98,7 +97,7 @@ class LinkUsers extends Component {
                 return;
             }
             else {
-                throw Error(500);
+                return;
             }
         }
         else if (querySnapshot.empty) {
@@ -106,10 +105,6 @@ class LinkUsers extends Component {
             throw Error(500);
         }
         querySnapshot.forEach(doc => {
-            if (doc.data().type !== type) {
-                alert("המשתמש אינו " + type);
-                throw Error(500);
-            }
             if (doc.data().link_user != null && doc.data().link_user !== "" && this.state.discon === false) {
                 alert("המשתמש כבר מחובר");
                 throw Error(500);
@@ -127,12 +122,15 @@ class LinkUsers extends Component {
         this.usersRef.where('id', '==', studentId)
             .limit(1)
             .get()
-            .then((querySnapshot) => this.isValid(querySnapshot, "חניך"))
-            .then(() => this.usersRef.where('id', '==', mentorId)
-                .limit(1)
-                .get()
-                .then((querySnapshot) => this.isValid(querySnapshot, "חונך")))
+            .then((querySnapshot) => {
+                this.isValid(querySnapshot, "חניך")
+            })
             .then(() => {
+                this.usersRef.where('id', '==', mentorId).limit(1).get()
+                    .then((querySnapshot) =>
+                    {this.isValid(querySnapshot, "חונך")})
+                })
+            .then(async () => {
                 if (this.state.discon === false) {
                 var con = window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                 if (con) {
@@ -142,9 +140,8 @@ class LinkUsers extends Component {
                     var map1 ={id: studentId,name: this.state.studentName}
                     var map2 ={id: mentorId,name: this.state.mentorName}
                     const arr=[map1,map2]
-                    firebase.firestore().collection('Chats').add(
+                    await firebase.firestore().collection('Chats').add(
                         {
-
                             name: "שיחה חניך חניך",
                             type: "private",
                             members: arr,
@@ -156,7 +153,8 @@ class LinkUsers extends Component {
                     this.fillpepl();
                 }
             }})
-            .catch(() => console.log("Error in adding new user"));
+            .catch(() => {
+                console.log("Error in adding new user")});
     }
 
     linkUser = (curr) => {
@@ -188,7 +186,7 @@ class LinkUsers extends Component {
             <form className="ad-user-form" onSubmit={this.addLink}>
                 <header className="title">
                     <h1 className="add-user-h">
-                        <u> קישור חןנך לחניך</u>
+                        <u> קישור חונך לחניך</u>
                     </h1>
                 </header>
                 <div className="form-row">
@@ -316,25 +314,24 @@ class LinkUsers extends Component {
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
 
                             if (this.state.mentorId === "") {
-                                this.setState({mentorId: e.target.id});
+                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
                             }
                             else if (e.target.id === this.state.mentorId) {
-                                this.setState({mentorId: ""});
+                                this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
                             }
                             else {
                                 document.getElementById(this.state.mentorId).checked = false;
-                                this.setState({mentorId: e.target.id});
+                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
                             }
                             if (this.state.lnkstudid !== "") {
                                 document.getElementById(this.state.lnkstudid).checked = false;
-                                this.setState({lnkstudid: ""});
+                                this.setState({lnkstudid: "" , discon: false , mentorRef: ""});
                             }
                             if (this.state.studentId !== "") {
                                 document.getElementById(this.state.studentId).checked = false;
-                                this.setState({studentId: ""});
+                                this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
                             }
 
-                            this.setState({discon: false , mentorRef: "" , lnkstudid: ""});
                         }
                         } />
                         </td>
@@ -348,24 +345,23 @@ class LinkUsers extends Component {
                 <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                     <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
                         if (this.state.mentorId === "") {
-                            this.setState({mentorId: e.target.id});
+                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
                         }
                         else if (e.target.id === this.state.mentorId) {
-                            this.setState({mentorId: ""});
+                            this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
                         }
                         else {
                             document.getElementById(this.state.mentorId).checked = false;
-                            this.setState({mentorId: e.target.id});
+                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
                         }
                         if (this.state.lnkstudid !== "") {
                             document.getElementById(this.state.lnkstudid).checked = false;
-                            this.setState({lnkstudid: ""})
+                            this.setState({lnkstudid: "" , discon: false , mentorRef: ""})
                         }
                         if (this.state.studentId !== "") {
                             document.getElementById(this.state.studentId).checked = false;
-                            this.setState({studentId: ""})
+                            this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: ""})
                             }
-                        this.setState({discon: false , mentorRef: "" , lnkstudid: ""});
                     }
                     } />
                     </td>
@@ -373,21 +369,24 @@ class LinkUsers extends Component {
             )))
     }
     renderSecondTable (){
+        console.log("rend")
+        if (this.state.mentorId === "") {
+            return null;
+        }
+
         this.usersRef.where('id', '==', this.state.mentorId)
             .limit(1)
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                         if (this.state.mentorId === doc.data().id && this.state.discon === false) {
+                         if (this.state.mentorId === doc.data().id && this.state.discon === false && this.state.mentorRef !== doc.id) {
                              this.setState({mentorRef: doc.id})
                          }
                     }
                 );
             })
-        if (this.state.mentorId === "") {
-            return null;
-        }
-        //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it
+
+        //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it || if there is an connected user that is not up to score priority change priority
 
         var lists = [];
         var nwlst = 0;
@@ -411,19 +410,21 @@ class LinkUsers extends Component {
                             }
                             else if (e.target.id !== this.state.studentId) {
                                 document.getElementById(this.state.studentId).checked = false;
-                                this.setState({studentId: e.target.id});
-                                this.setState({discon: true});
+                                this.setState({studentId: e.target.id , discon: true});
                             }
                             else {
-                                this.setState({studentId: ""});
-                                this.setState({discon: true});
-                                console.log(this.state.lnkstudid);
+                                this.setState({studentId: "" , discon: true});
                             }
 
 
                         }
                         }/></td></tr>
                 )))
+
+            if (this.state.lnkstudid !== "" && this.state.didup === false) {
+                this.setState({didup: true});
+            }
+
             if (nwlst > 0) {
                 mins = i+1
                 nwlst = 0;
@@ -445,23 +446,27 @@ class LinkUsers extends Component {
             chk = null;
         }
         lists=lists.slice(0,lists.length-((i*2) - (mins*2)))
-
         return (lists)
     }
 
     gtscor(studscr , date) {
+        var menscr = "";
 
         if (studscr === undefined) {
             return 0;
         }
 
-        let menscr= "";
-        this.state.people
-            .filter(person => person.type ==="חונך" && person.first !== "true" && person.id === this.state.mentorId)
-            .forEach((elem) => (menscr = elem.first))
         var scr = 0;
+        this.state.people.forEach(person =>
+            {
+                if(person.id === this.state.mentorId && person.first !== "true" && person.type === "חונך"){
+                    menscr = person.first
+                }
+            })
 
-        if (menscr === undefined) {
+
+        if (menscr === "") {
+            console.log("error in database")
             return -1;
         }
 
@@ -478,7 +483,7 @@ class LinkUsers extends Component {
                 continue;
             }
 
-           else if (menscr[ind2] === "/") {
+            else if (menscr[ind2] === "/") {
                 ln++;
                 ind2++;
                 while (studscr[ind] !== "/") {
