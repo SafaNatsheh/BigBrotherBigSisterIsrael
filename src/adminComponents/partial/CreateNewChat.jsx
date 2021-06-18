@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import firebase from "../../config/Firebase"
-
+import './CreateNewChat.css';
 
 class CreateNewChat extends Component {
 
@@ -83,23 +83,23 @@ class CreateNewChat extends Component {
             <div className="form-group">
                 <br />
 
-
                 <input
                     type="text"
-
+                    className="group-design"
                     placeholder="שם הקבוצה"
                     value={this.state.groupName}
                     required
                     onChange={(e) => this.setState({ groupName: e.target.value })}
-                    style={{ marginRight: "225px" ,display:"block" }}
+
                 />
-                <br/>
+
                 <input
                     type="text"
+                    className="search-design"
                     placeholder="חיפוש"
                     value={this.state.searchTerm}
                     onChange={(e) => this.setState({ searchTerm: e.target.value })}
-                    style={{ marginRight: "225px" ,display:"block" }}
+
                 />
 
                 <div className="table-t" >
@@ -123,7 +123,6 @@ class CreateNewChat extends Component {
                         </thead>
 
                         <tbody>
-
                         {this.renderTable()}
                         </tbody>
 
@@ -132,12 +131,11 @@ class CreateNewChat extends Component {
                 <div className="button">
                     <br />
                     <button
-                        className="button-de"
-                        style={{ float: "right", marginRight: "780px" ,marginTop:"0px", color:"#dc3545"  }}
+                        className="button-de but-new-design"
                         onClick={this.handleSubmit}
                     >
-                        <div className="button-text">
-                            יצור קבוצה
+                        <div className="button-text-f">
+                            יצירת קבוצה
                         </div>
                         {" "}
                     </button>

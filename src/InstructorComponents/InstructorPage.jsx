@@ -136,65 +136,61 @@ class InstructorPage extends Component {
         return(
             <ul className="nav">
                 <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/Home"
-                activeStyle={activeTabStyle}
-            >
-              <div className= "bait">
-              דף הבית 
-              </div>
-            </NavLink>
-          </li>
+                   <NavLink
+                     className="tab"
+                     to="/Home"
+                     activeStyle={activeTabStyle}
+                   >
+                   <div className= "bait">
+                   דף הבית
+                   </div>
+                   </NavLink>
+                </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/UpdateUser"
                         activeStyle={activeTabStyle}
-                    >
-                        עדכון פרטי משתמש
+                    >עדכון פרטי משתמש
                     </NavLink>
                 </li>
-             
-               
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
                         activeStyle={activeTabStyle}
-                    >
-                        קביעת פגישה
+                    >קביעת פגישות
                     </NavLink>
                 </li>
-                <li className="nav-item">
+
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Chat"
                         activeStyle={activeTabStyle}
+                    >שיחות
+                    </NavLink>
+                </li>
 
-                    >
-                        שיחות{" "}
-                    </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item">
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/CreateChat"
                         activeStyle={activeTabStyle}
+                    >יצירת קבוצה
+                    </NavLink>
+                </li>
 
-                    >
-                        יצור קבוצה{" "}
-                    </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item ">
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/VideoPage"
                         activeStyle={activeTabStyle}
-                    >
-                        שיחת וידאו{" "}
-                    </NavLink>{" "}
-                </li>{" "}
+                    >שיחות וידאו
+                    </NavLink>
+                </li>
             </ul>
         )
     }

@@ -191,20 +191,20 @@ class LinkUsers extends Component {
                 </header>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חונך</label>
+                        <label className="first-link-input-btn new_Name" htmlFor="inputLinkFirstName"><h5>שם החונך</h5></label>
 
                         <input
                             type="text"
-                            className="form-control"
+                            className="new_design_link"
                             id="inputLinkFirstName"
                             value={this.state.teachsrch}
-                            placeholder="שם חונך"
+                            placeholder="חיפוש"
                             title="שם פרטי"
                             onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
                         <h5>
 
-                            <input type='checkbox' className='people_check' onChange={(e)=> {
+                            <input type='checkbox' className=' new_design_checkbox' onChange={(e)=> {
                                 if (this.state.lnkstat === "0"){
                                     this.setState({ lnkstat: "1" });
                                 }
@@ -222,10 +222,10 @@ class LinkUsers extends Component {
 
                         </h5>
                         <br></br>
-                        <h5>מספר עדיפויות
+                        <h5 className="right_to_right">מספר עדיפויות
                         <select
                             required id="inputState"
-                            className="form-control"
+                            className="new_design_link right_to "
                             value={this.state.numofpri}
                             onChange={(e) => this.setState({ numofpri: parseInt(e.target.value , 10)})}>
                             <option id="ff" disabled value="0">בחר תשובה</option>
@@ -248,8 +248,8 @@ class LinkUsers extends Component {
                             }
 
                         <br/>
-                        <div className ='container__table'>
-                        <table className="table table-bordered">
+                        <div className ='container__table new_radius'>
+                        <table className="table table-bordered ">
                             <thead>
                             <tr>
                                 <th>ת.ז</th>
@@ -275,8 +275,8 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
 
-                        <div className ='container__table1'>
-                        <table className="table table-bordered">
+                        <div className ='container__table1 new_radius'>
+                        <table className="table table-bordered ">
                             <thead>
                             <tr>
                                 <th>ת.ז</th>
@@ -291,12 +291,7 @@ class LinkUsers extends Component {
                         </table>
                         </div>
 
-                        <button type="submit" className="btn btn-primary link-users-btn"
-                        style={{   marginTop:"300px"  }}
-                        >
-                        
-                            בצע פעולות
-                        </button>
+                        <button type="submit" className="button-text">בצע פעולות</button>
                         
                     </div>
                 </div>

@@ -81,6 +81,7 @@ button {
 .fLabels {
     text-align: right;
     width: 500px;
+
 }
 .container__table thead th {
     position: sticky;
@@ -116,4 +117,9 @@ button {
     height: 550px;
 
 
+}
+
+.radius_to{
+    border-radius: 5px;
+    border-color: black;
 }
