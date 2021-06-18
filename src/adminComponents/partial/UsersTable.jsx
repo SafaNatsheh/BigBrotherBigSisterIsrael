@@ -165,11 +165,10 @@ class UsersTable extends Component {
             <div className="form-group">
                 <br />
 
-              
-
                 <input
                     type="text"
-                    placeholder="search"
+                    className="ser-design"
+                    placeholder="חיפוש"
                     value={this.state.searchTerm}
                     onChange={(e) => this.setState({ searchTerm: e.target.value })}
                     style={{ marginRight: "225px" ,display:"block" }}
@@ -210,7 +209,7 @@ class UsersTable extends Component {
                         style={{ float: "right", marginRight: "780px" ,marginTop:"0px", color:"#dc3545"  }}
                         onClick={this.handleSubmit}
                     >
-                        <div className="button-text">
+                        <div className="button-text-t">
                             מחק המשתמשים
                         </div>
                         {" "}
