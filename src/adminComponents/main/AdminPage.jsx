@@ -184,15 +184,15 @@ class AdminPage extends Component {
               הוספת משתמש חדש
             </NavLink>
           </li>
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/UpdateUser"
-                activeStyle={activeTabStyle}
-            >
-              עדכון פרטי משתמש
-            </NavLink>
-          </li>
+          {/*<li className="nav-item text-center">*/}
+          {/*  <NavLink*/}
+          {/*      className="tab"*/}
+          {/*      to="/UpdateUser"*/}
+          {/*      activeStyle={activeTabStyle}*/}
+          {/*  >*/}
+          {/*    עדכון פרטי משתמש*/}
+          {/*  </NavLink>*/}
+          {/*</li>*/}
           
           <li className="nav-item text-center">
             <NavLink
