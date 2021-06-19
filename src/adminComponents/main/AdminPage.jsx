@@ -163,8 +163,8 @@ class AdminPage extends Component {
   {
     return(
         <ul className="nav">
-          <li className="nav-item text-center">
 
+            <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/Home"
@@ -175,81 +175,78 @@ class AdminPage extends Component {
               </div>
             </NavLink>
           </li>
+
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/AdminUser"
                 activeStyle={activeTabStyle}
-            >
-              הוספת משתמש חדש
+            >הוספת משתמש חדש
             </NavLink>
           </li>
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/UpdateUser"
-                activeStyle={activeTabStyle}
-            >
-              עדכון פרטי משתמש
-            </NavLink>
-          </li>
+          {/*<li className="nav-item text-center">*/}
+          {/*  <NavLink*/}
+          {/*      className="tab"*/}
+          {/*      to="/UpdateUser"*/}
+          {/*      activeStyle={activeTabStyle}*/}
+          {/*  >*/}
+          {/*    עדכון פרטי משתמש*/}
+          {/*  </NavLink>*/}
+          {/*</li>*/}
           
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/LinkUsers"
                 activeStyle={activeTabStyle}
-            >
-              קישור חונך לחניך
+            >קישור חונך לחניך
             </NavLink>
           </li>
+
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/UsersTable"
                 activeStyle={activeTabStyle}
-            >
-                         רשימת משתמשים
+            >רשימת משתמשים
             </NavLink>
           </li>
+
           <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/Meetings"
                 activeStyle={activeTabStyle}
-            >
-              קביעת פגשים
+            >קביעת פגישות
             </NavLink>
           </li>
-          <li className="nav-item">
+
+          <li className="nav-item text-center">
             <NavLink
                 className="tab"
                 to="/Chat"
                 activeStyle={activeTabStyle}
+            >שיחות
+            </NavLink>
+          </li>
 
-            >
-              שיחות{" "}
-            </NavLink>{" "}
-          </li>{" "}
-            <li className="nav-item">
+            <li className="nav-item text-center">
                 <NavLink
                     className="tab"
                     to="/CreateChat"
                     activeStyle={activeTabStyle}
+                >יצירת קבוצה
+                </NavLink>
+            </li>
 
-                >
-                    יצור קבוצה{" "}
-                </NavLink>{" "}
-            </li>{" "}
             <li className="nav-item ">
                 <NavLink
                     className="tab"
                     to="/VideoPage"
                     activeStyle={activeTabStyle}
-                >
-                    שיחת וידאו{" "}
-                </NavLink>{" "}
-            </li>{" "}
+                >שיחות וידאו
+                </NavLink>
+            </li>
 
         </ul>
     )

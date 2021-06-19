@@ -1,3 +1,51 @@
+.new_design_link{
+    border-radius: 5px;
+    background-color: white;
+    height: 30px;
+    width: 150px;
+    margin-right: -80px;
+    margin-top: 30px;
+
+}
+
+.new_Name{
+    font-size:large;
+}
+
+.new_design_checkbox{
+    width:15px;
+    height: 15px;
+    margin-right: 40px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.right_to_right{
+    margin-right: 40px;
+}
+.right_to{
+    margin-right: 5px;
+    margin-top: -10px;
+}
+
+.button-text{
+    border-radius: 5px;
+    font-weight: normal;
+    margin-top: 320px;
+    margin-right: 50px;
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    position: relative;
+    /*left: 100px;*/
+    /*top: 30px;*/
+
+}
+
+.new_radius{
+    border-radius: 20px;
+}
+
 .link-users-btn{
     position:relative;
     left:100px;
@@ -25,7 +73,7 @@
 margin-top: 6px;
 }
 #inputLinkFirstName,#inputLinkLastName{
-    width: 500px;
+    width: 150px;
 }
 .container__table {
     height: 290px;
@@ -65,5 +113,5 @@ text-align: center;
 
 .first-link-input-btn{
     position: relative;
-    right: 135px;
+    right: 50px;
 }

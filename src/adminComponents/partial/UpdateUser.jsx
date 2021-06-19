@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
+import Queststud from "../../mainPageComponents/MatchQuestionstud";
 
 
 class UpdateUser extends Component {
@@ -17,14 +18,21 @@ class UpdateUser extends Component {
             birthDate: "",
             type: "",
             transferEnable: false,
-            docId: ""
+            docId: "",
+            prsn:"",
+            loaded: false
+
         };
         this.usersRef = firebase.firestore().collection('Users');
         firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
-        .then((doc) => {
-            this.type = doc.data().type;
-        })
-        .catch((e) => console.log(e.name))
+            .then((doc) => {
+                this.setState({type: doc.data().type })
+            })
+            .catch((e) => console.log(e.name))
+    }
+
+    componentDidMount() {
+
     }
 
     getUserByEmailOrId(event) {
@@ -60,7 +68,9 @@ class UpdateUser extends Component {
                                 birthDate: doc.data().birthDate,
                                 type: doc.data().type,
                                 transferEnable: true,
-                                docId: doc.id
+                                docId: doc.id,
+                                loaded:true,
+                                prsn: doc
                             })
                         })
                     }
@@ -89,7 +99,9 @@ class UpdateUser extends Component {
                                 birthDate: doc.data().birthDate,
                                 type: doc.data().type,
                                 transferEnable: true,
-                                docId: doc.id
+                                docId: doc.id,
+                                loaded:true,
+                                prsn: doc
                             })
                         })
                     }
@@ -161,6 +173,8 @@ class UpdateUser extends Component {
 
     render() {
         return (
+            <div>
+
             <form className="update-user-form">
                 <header className="title">
                     <h1 className="update-user-h">
@@ -332,6 +346,10 @@ class UpdateUser extends Component {
                     עדכן פרטי משתמש
         </button>
             </form>
+
+                {(this.state.loaded && (this.state.type === "חונך" || this.state.type === "חניך")) ? <Queststud   refwin={this.state.prsn} complt={null} />: <div></div>}
+
+            </div>
         );
     }
 }

@@ -1,9 +1,15 @@
 import React, {Component} from "react";
 import "./UsersTable.css";
 import firebase, {auth} from "../../config/Firebase"
+//import {Route, useHistory} from 'react-router-dom';
+import UpdateUser from "./UpdateUser";
 //import NoLinkedUsers from "./NoLinkedUsers";
 //import {Link} from "react-router-dom"
 
+
+
+
+let nwalr;
 class UsersTable extends Component {
     constructor(props) {
         super(props);
@@ -65,15 +71,25 @@ class UsersTable extends Component {
         })
         return(newList)
     }
-    getDetails(person){
-        
 
-        window.alert("שם: "+person.fName+" " + person.lName+ "\n ת.ז: "+person.id+"\n תאריך לידה: "+person.birthDate+"\n אימייל: " + person.email+
-            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area );
+
+
+
+    getDetails(person){
+
+         nwalr = window.confirm("שם: "+person.fName+" " + person.lName+ "\n ת.ז: "+person.id+"\n תאריך לידה: "+person.birthDate+"\n אימייל: " + person.email+
+            "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area + " \n\nהאם אתה רוצה לעדקן מידע המשתמש הזה? ");
+         if (nwalr) {
+
+             window.location.href = "/UpdateUser";
+         }
+         else{
+                 console.log("error")
+         }
         return
     }
 
-        
+
 
 
     handleSubmit = async (event) => {
@@ -149,11 +165,10 @@ class UsersTable extends Component {
             <div className="form-group">
                 <br />
 
-              
-
                 <input
                     type="text"
-                    placeholder="search"
+                    className="ser-design"
+                    placeholder="חיפוש"
                     value={this.state.searchTerm}
                     onChange={(e) => this.setState({ searchTerm: e.target.value })}
                     style={{ marginRight: "225px" ,display:"block" }}
@@ -194,7 +209,7 @@ class UsersTable extends Component {
                         style={{ float: "right", marginRight: "780px" ,marginTop:"0px", color:"#dc3545"  }}
                         onClick={this.handleSubmit}
                     >
-                        <div className="button-text">
+                        <div className="button-text-t">
                             מחק המשתמשים
                         </div>
                         {" "}

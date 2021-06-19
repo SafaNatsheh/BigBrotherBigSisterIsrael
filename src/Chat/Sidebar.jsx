@@ -79,7 +79,7 @@ function Sidebar(){
                 <div className="searchContainer">
                     <input
                         type="text"
-                        placeholder="search"
+                        placeholder="חיפוש"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
 

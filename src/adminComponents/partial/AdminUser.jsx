@@ -49,6 +49,8 @@ class AdminUser extends Component {
           .catch(() => console.log("נוצרה בעיה בהוספת משתמש חדש למערכת."))
   }
 
+
+
   componentDidMount() {
     if (this.props.oldpass !== "") {
 
@@ -87,17 +89,19 @@ class AdminUser extends Component {
 
                 this.usersRef.doc(user.uid).set(newUser)
                     .then(() => {
-                  console.log(user.uid)
+                      console.log(user.uid)
+                      alert("המשתמש נוסף למערכת בהצלחה!");
+                    }).then(()=>{
+                  auth.signInWithEmailAndPassword(this.props.oldusr.email, this.state.passwrd).then(()=>{
+                    this.setState({
+                      addOnce: true,
+                      firstName: "", lastName: "", id: "",
+                      email: "", phone: "", address: "", area: "",
+                      gender: "", birthDate: "", type: "", first: "true"
                     })
-                    .catch((e) => console.log(e.name))
-                  alert("המשתמש נוסף למערכת בהצלחה!");
-                  this.setState({
-                  addOnce: true,
-                  firstName: "", lastName: "", id: "",
-                  email: "", phone: "", address: "", area: "",
-                  gender: "", birthDate: "", type: "", first: "true"
-                })
-                auth.signInWithEmailAndPassword(this.props.oldusr.email, this.state.passwrd)
+                  })
+                }).catch((e) => console.log(e.name))
+
               }
             }
 
