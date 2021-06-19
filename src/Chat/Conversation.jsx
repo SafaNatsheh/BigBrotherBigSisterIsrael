@@ -27,12 +27,15 @@ function Conversation(){
     const[input,setInput] =useState("");
     const sendMessage =(e) =>{
         e.preventDefault();
-        firebase.firestore().collection('Chats').doc(chatId).collection("Messages").add(
-            {
-                Sender_Name: userName,
-                message: input,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            })
+        if(input !==""){
+            firebase.firestore().collection('Chats').doc(chatId).collection("Messages").add(
+                {
+                    Sender_Name: userName,
+                    message: input,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                })
+        }
+
         setInput("")
     };
 
