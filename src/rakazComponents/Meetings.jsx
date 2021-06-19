@@ -181,7 +181,7 @@ class Meetings extends Component {
                     description: this.state.description
                 })
                 newMeetingObj.push({});
-                let docRef= await this.myMeetingsRef.add(newMeetings[i])
+                let docRef=  this.myMeetingsRef.add(newMeetings[i])
                 this.newDocId = docRef.id;
                 // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
