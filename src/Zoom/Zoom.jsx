@@ -1,6 +1,6 @@
 import './Zoom.css';
 import React   from 'react';
-import { ZoomMtg } from '@zoomus/websdk'
+// import { ZoomMtg } from '@zoomus/websdk'
 import {useEffect} from 'react'
 import {yellow} from "@material-ui/core/colors";
 
@@ -40,6 +40,7 @@ generateSignature(apiKey, apiSecret, meetingNumber, role).then((res)=>{
 
 
 const Zoom=()=> {
+    const { ZoomMtg } = require('@zoomus/websdk')
     useEffect(()=>{
         showZoomDIv();
         ZoomMtg.setZoomJSLib('https://source.zoom.us/1.9.5/lib', '/av');
@@ -49,7 +50,7 @@ const Zoom=()=> {
     },[]);
 
     const showZoomDIv=()=>{
-        document.getElementById('zmmtg-root').style.display='block'
+        document.getElementById('zmmtg-root').style.display='hide'
     }
 
 
@@ -85,8 +86,11 @@ const Zoom=()=> {
 
 
     return (
-        <div className="Zoom" >
-        </div>
+        // <div className="Zoom" >
+            <div className="test" >
+                <h1 style={{backgroundColor:"white"}}>test</h1>
+            </div>
+        // </div>
     );
 }
 
