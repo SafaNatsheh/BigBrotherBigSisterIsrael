@@ -1,3 +1,4 @@
+import Zoom from "../Zoom/Zoom"
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
 import Chat from "../Chat/Chat"
@@ -430,7 +431,7 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
-
+          <Route exact path={"/zoom"} component={Zoom}/>
         </Switch>
       );
   }
@@ -506,8 +507,8 @@ class App extends Component {
                 <li className="nav-item ">
                   <NavLink
                       className="tab"
-                      to="/VideoPage"
-                      activeStyle={activeTabStyle}
+                      to="/Zoom"
+                     
                   >
                     שיחת וידאו{" "}
                   </NavLink>{" "}

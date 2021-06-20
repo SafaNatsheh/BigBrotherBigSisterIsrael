@@ -73,19 +73,19 @@ main button:hover {
 }
 
 
-                                                                                                                                                                                                       </span></button><button tabindex="0" type="button" class="zm-btn zm-btn-legacy zm-btn--default zm-btn__outline--blue" aria-label="">OK<span class="loading" style="display: none;"></span></button></div>*/
 
-/*.zm-modal-footer-default-actions{*/
-/*    width: 0px;*/
-/*    height:0px;*/
 
-/*}*/
+.zm-modal-footer-default-actions{
+    width: 0px;
+    height:0px;
 
-/*.zm-btn__outline--blue{*/
-/*    margin-right: 500px;*/
-/*    width: 40px;*/
-/*    height:40px;*/
-/*}*/
+}
+
+.zm-btn__outline--blue{
+    margin-right: 500px;
+    width: 40px;
+    height:40px;
+}
 
 
 
