@@ -111,15 +111,16 @@ class AppIndex extends Component {
             return (<RakazPage exitRakaz={this.exitRakaz} oldusr = {this.state.oldusr} oldpass = {this.state.passwrd}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
-            var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
-            if (con) {
-                this.state.isfirst.ref.update({first: "acpt"});
-                return (<InstructorPage exitInstructor={this.exitInstructor}/>)
-            }
-            else {
-                alert("אתה צריך לאשר");
-                this.setState({isLoggedIn: false});
-                return;
+            if (this.state.isfirst.data().first === "true") {
+                var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
+                if (con) {
+                    this.state.isfirst.ref.update({first: "acpt"});
+                    return (<InstructorPage exitInstructor={this.exitInstructor}/>)
+                } else {
+                    alert("אתה צריך לאשר");
+                    this.setState({isLoggedIn: false});
+                    return;
+                }
             }
         }
         else if(!this.state.isLoggedIn && this.state.end)
