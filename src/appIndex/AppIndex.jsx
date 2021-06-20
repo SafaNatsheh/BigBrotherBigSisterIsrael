@@ -115,13 +115,12 @@ class AppIndex extends Component {
                 var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
                 if (con) {
                     this.state.isfirst.ref.update({first: "acpt"});
-                    return (<InstructorPage exitInstructor={this.exitInstructor}/>)
                 } else {
                     alert("אתה צריך לאשר");
-                    this.setState({isLoggedIn: false});
-                    return;
+                    this.setState({isLoggedIn: false , end: true});
                 }
             }
+            return (<InstructorPage exitInstructor={this.exitInstructor}/>)
         }
         else if(!this.state.isLoggedIn && this.state.end)
             return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} funcret={this.myCallback}/>)
