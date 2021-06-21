@@ -19,7 +19,9 @@ class LinkUsers extends Component {
             lnkstudid: "",
             discon: false,
             numofpri:3,
-            didup:false
+            didup:false,
+            ret: "",
+            mins: 0
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -102,37 +104,59 @@ class LinkUsers extends Component {
         }
         else if (querySnapshot.empty) {
             alert("ה" + type + " לא קיים במערכת")
-            throw Error(500);
+            this.state.ret = "err"
+            return "err"
         }
-        querySnapshot.forEach(doc => {
-            if (doc.data().link_user != null && doc.data().link_user !== "" && this.state.discon === false) {
-                alert("המשתמש כבר מחובר");
-                throw Error(500);
-            }
-            if (type === "חניך")
-                this.setState({ studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName })
-            else if (type === "חונך")
-                this.setState({ mentorRef: doc.ref.id, mentorName: doc.data().fName + " " + doc.data().lName })
+         querySnapshot.forEach(doc => {
+             if (doc.data().link_user != null && doc.data().link_user !== "" && this.state.studentId !== "") {
+                 alert("המשתמש כבר מחובר");
+                 this.state.ret = "err"
+                 return "err"
+             }
+             else if (type === "חניך") {
+                 console.log(doc.data().link_user)
+                this.setState({studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName})
+             }
+             else if (type === "חונך") {
+                this.setState({mentorRef: doc.ref.id, mentorName: doc.data().fName + " " + doc.data().lName})
+                console.log("hi")
+             }
         });
     }
 
     verifyUsers = () => {
+        this.state.ret = ""
         var studentId = this.state.studentId;
         var mentorId = this.state.mentorId;
         this.usersRef.where('id', '==', studentId)
             .limit(1)
             .get()
             .then((querySnapshot) => {
+
                 this.isValid(querySnapshot, "חניך")
+                console.log(this.state.ret)
+                if (this.state.ret === "err") {
+                    console.log("hand")
+                    return
+                }
             })
             .then(() => {
-                this.usersRef.where('id', '==', mentorId).limit(1).get()
-                    .then((querySnapshot) =>
-                    {this.isValid(querySnapshot, "חונך")})
+                this.usersRef.where('id', '==', mentorId)
+                    .limit(1)
+                    .get()
+                    .then((querySnapshot) => {
+                        this.isValid(querySnapshot, "חונך")
+                        console.log(this.state.ret)
+                        if (this.state.ret === "err") {
+                            console.log("hand")
+                            return
+                        }
+                    })
                 })
             .then(async () => {
-                if (this.state.discon === false) {
-                var con = window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
+
+                if (this.state.discon === false && this.state.ret !== "err") {
+                    var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                 if (con) {
                     this.linkUser(studentId);
                     this.linkUser(mentorId);
@@ -154,7 +178,10 @@ class LinkUsers extends Component {
                 }
             }})
             .catch(() => {
-                console.log("Error in adding new user")});
+                console.log("Error in adding new user")
+                return
+            });
+
     }
 
     linkUser = (curr) => {
@@ -278,12 +305,12 @@ class LinkUsers extends Component {
                         <div className ='container__table1 new_radius'>
                         <table className="table table-bordered ">
                             <thead>
-                            <tr>
+                            {this.state.mins > 0 && <tr>
                                 <th>ת.ז</th>
                                 <th>שם</th>
                                 <th>דוא"ל</th>
                                 <th>בחר</th>
-                            </tr>
+                            </tr>}
                             </thead>
                             <tbody>
                             {this.renderSecondTable()}
@@ -309,22 +336,22 @@ class LinkUsers extends Component {
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
 
                             if (this.state.mentorId === "") {
-                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
+                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
                             else if (e.target.id === this.state.mentorId) {
-                                this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
+                                this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
                             else {
                                 document.getElementById(this.state.mentorId).checked = false;
-                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
+                                this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
                             if (this.state.lnkstudid !== "") {
                                 document.getElementById(this.state.lnkstudid).checked = false;
-                                this.setState({lnkstudid: "" , discon: false , mentorRef: ""});
+                                this.setState({lnkstudid: "" , discon: false , mentorRef: "" , didup: false , mins: 0});
                             }
                             if (this.state.studentId !== "") {
                                 document.getElementById(this.state.studentId).checked = false;
-                                this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
+                                this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
 
                         }
@@ -340,22 +367,22 @@ class LinkUsers extends Component {
                 <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
                     <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
                         if (this.state.mentorId === "") {
-                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
+                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                         }
                         else if (e.target.id === this.state.mentorId) {
-                            this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: ""});
+                            this.setState({mentorId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                         }
                         else {
                             document.getElementById(this.state.mentorId).checked = false;
-                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: ""});
+                            this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                         }
                         if (this.state.lnkstudid !== "") {
                             document.getElementById(this.state.lnkstudid).checked = false;
-                            this.setState({lnkstudid: "" , discon: false , mentorRef: ""})
+                            this.setState({lnkstudid: "" , discon: false , mentorRef: "" , didup: false , mins: 0})
                         }
                         if (this.state.studentId !== "") {
                             document.getElementById(this.state.studentId).checked = false;
-                            this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: ""})
+                            this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0})
                             }
                     }
                     } />
@@ -364,7 +391,6 @@ class LinkUsers extends Component {
             )))
     }
     renderSecondTable (){
-        console.log("rend")
         if (this.state.mentorId === "") {
             return null;
         }
@@ -385,7 +411,7 @@ class LinkUsers extends Component {
 
         var lists = [];
         var nwlst = 0;
-        var mins = 0;
+        this.state.mins = 0;
         for (var i = 0 ; i < this.state.numofpri ; i++) {
 
                 lists.push(<tr>
@@ -408,7 +434,7 @@ class LinkUsers extends Component {
                                 this.setState({studentId: e.target.id , discon: true});
                             }
                             else {
-                                this.setState({studentId: "" , discon: true});
+                                this.setState({studentId: "" , discon: true });
                             }
 
 
@@ -421,7 +447,7 @@ class LinkUsers extends Component {
             }
 
             if (nwlst > 0) {
-                mins = i+1
+                this.state.mins = i+1
                 nwlst = 0;
             }
 
@@ -440,7 +466,7 @@ class LinkUsers extends Component {
             }
             chk = null;
         }
-        lists=lists.slice(0,lists.length-((i*2) - (mins*2)))
+        lists=lists.slice(0,lists.length-((i*2) - (this.state.mins*2)))
         return (lists)
     }
 
