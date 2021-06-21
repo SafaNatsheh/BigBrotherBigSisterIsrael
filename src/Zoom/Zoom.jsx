@@ -1,8 +1,17 @@
 import './Zoom.css';
-import React   from 'react';
+import React, {Component} from 'react';
 // import { ZoomMtg } from '@zoomus/websdk'
 import {useEffect} from 'react'
+import firebase, {auth} from "../config/Firebase"
 import {yellow} from "@material-ui/core/colors";
+
+
+    //
+    // this.state = {
+    //     active: false,
+    //     zoom: Math.min(window.innerHeight / 620, window.innerWidth / 1536),
+    //     user_name: "",
+    // }
 
 
 const crypto = require('crypto') // crypto comes with Node.js
@@ -29,7 +38,8 @@ var apiSecret= 'X2Sx67Soi7O1U3OVF2p5j97Gyzou5wmKgZyf'
 
 var role = '0'
 var leaveUrl = 'http://localhost:3000'
-var userName = 'test'
+var userName = 'test';
+//firebase.firestore().collection().doc(this.fName)
 var userEmail = 'bbbs.personal.area@gmail.com'
 var signature =''
 

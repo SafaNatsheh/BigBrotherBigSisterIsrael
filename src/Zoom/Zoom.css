@@ -55,12 +55,28 @@ main button:hover {
 
 /*button Join*/
 .zm-btn{
-    width: 400px;
-    margin-right: 500px;
-    margin-left: 1px;
+    width: 20px;
+    height: 200px;
+    right: 90px;
+    margin-left: 65px;
     background-color: #0E71EB;
     border: none;
 }
+
+/*.joinWindowBtn {*/
+/*    height: 46px !important;*/
+/*    line-height: inherit !important;*/
+/*    color: white !important;*/
+/*    font-size: 1px !important;*/
+/*    text-align: center !important;*/
+/*    !*min-width: 200px !important;*!*/
+/*    margin-right: 2000px;*/
+/*    background-color: #2d8cff !important;*/
+/*    border-color: #2d8cff !important;*/
+
+/*}*/
+
+
 
 
 #mic-icon{
@@ -89,11 +105,13 @@ main button:hover {
 
 
 
-/*.zm-btn-legacy{*/
-/*    margin-right: 155px;*/
-/*    margin-top: -10px;*/
-/*}*/
+.zm-btn-legacy{
+    margin-right: -400px;
 
-/*.zm-btn--default{*/
-/*    margin-right: -150px;*/
-/*}*/
+    margin-top: -10px;
+    width: 90px
+}
+
+.zm-btn--default{
+    margin-right: -190px;
+}
