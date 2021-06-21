@@ -187,10 +187,12 @@ class matchQuestionstud extends Component {
                             <option value="2/">מזרח העיר</option>
                             <option value="3/">דרום העיר</option>
                             <option value="4/">מערב העיר</option>
+                            <option value="5/">מרכז העיר</option>
+                            <option value="6/">ללא העדפה</option>
                         </select>
                 </div>
                 <div className="form-group col-md-3">
-                        <label htmlFor="inputState"><h6>3.שפות מדוברות</h6></label>
+                        <label htmlFor="inputState"><h6>3.שפת האם</h6></label>
                         <select
                             required id="inputState"
                             className="form-control"
@@ -402,9 +404,8 @@ class matchQuestionstud extends Component {
                         />
                     </div>
                     <div className="form-group col-md-3">
-                        <label htmlFor="inputFirstName"><h6>שם בית הספר:</h6></label>
+                        <label htmlFor="inputFirstName"><h6>שם בית הספר</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -417,7 +418,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>כיתה</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -633,8 +633,8 @@ class matchQuestionstud extends Component {
                             className="form-control"
                             id="inputFirstName"
                             value={this.state.numBro}
-                            placeholder="טלפון סלולרי"
-                            title="טלפון סלולרי"
+                            placeholder="מספר ילדים במשפחה"
+                            title="מספר ילדים במשפחה"
                             onChange={(e) => this.setState({ numBro: e.target.value })}
                         />
                     </div>
@@ -642,7 +642,7 @@ class matchQuestionstud extends Component {
 
 
                 <div>
-                    <input type="checkbox" id="myCheck" className='check' />
+                    <input type="checkbox" id="myCheck" className='check' required />
                     <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות.</h6>
                 </div>
 
