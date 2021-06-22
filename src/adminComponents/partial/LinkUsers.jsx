@@ -34,16 +34,36 @@ class LinkUsers extends Component {
             }
 
         var people = [];
+
+           // this.usersRef.where('id', '==', this.state.mentorId)
+           //     .limit(1)
+           //     .get()
+           //     .then((querySnapshot) => {
+           //         querySnapshot.forEach((doc) => {
+           //                 if (this.state.mentorId === doc.data().id && this.state.discon === false && this.state.mentorRef !== doc.id) {
+           //                     this.setState({mentorRef: doc.id})
+           //                 }
+           //             }
+           //         );
+           //     })
+           //
+           //
         this.usersRef
             .get()
             .then(queryShot => {
                 queryShot.forEach(
                     (doc) => {
-                        people.push(doc.data())
+                        var p= {
+                            data:doc.data(),
+                            ref:doc.id
+                        }
+                        people.push(p)
+                        // people.push(doc.data())
 
                     }
                 )
             }).then(()=>{
+                console.log(people[0].ref)
             this.setState({ people: people })
         })
             .catch((e) => console.log(e.name));
@@ -95,10 +115,11 @@ class LinkUsers extends Component {
                 alert("עודכן בהצלחה!\n");
                 this.setState({ studentId: "" , mentorId: "" , mentorRef: "" , studentRef: ""});
                 this.fillpepl();
-
+                this.state.ret = "dn"
                 return;
             }
             else {
+                this.state.ret = "err"
                 return;
             }
         }
@@ -114,17 +135,16 @@ class LinkUsers extends Component {
                  return "err"
              }
              else if (type === "חניך") {
-                 console.log(doc.data().link_user)
                 this.setState({studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName})
              }
              else if (type === "חונך") {
                 this.setState({mentorRef: doc.ref.id, mentorName: doc.data().fName + " " + doc.data().lName})
-                console.log("hi")
              }
         });
     }
 
     verifyUsers = () => {
+
         this.state.ret = ""
         var studentId = this.state.studentId;
         var mentorId = this.state.mentorId;
@@ -134,7 +154,6 @@ class LinkUsers extends Component {
             .then((querySnapshot) => {
 
                 this.isValid(querySnapshot, "חניך")
-                console.log(this.state.ret)
                 if (this.state.ret === "err") {
                     console.log("hand")
                     return
@@ -146,7 +165,6 @@ class LinkUsers extends Component {
                     .get()
                     .then((querySnapshot) => {
                         this.isValid(querySnapshot, "חונך")
-                        console.log(this.state.ret)
                         if (this.state.ret === "err") {
                             console.log("hand")
                             return
@@ -155,7 +173,7 @@ class LinkUsers extends Component {
                 })
             .then(async () => {
 
-                if (this.state.discon === false && this.state.ret !== "err") {
+                if (this.state.ret !== "err" && this.state.ret !== "dn") {
                     var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                 if (con) {
                     this.linkUser(studentId);
@@ -185,6 +203,7 @@ class LinkUsers extends Component {
     }
 
     linkUser = (curr) => {
+        this.state.ret = ""
         var studentId = this.state.studentId;
         var mentorId = this.state.mentorId;
         var studentRef = this.state.studentRef;
@@ -270,9 +289,11 @@ class LinkUsers extends Component {
                     </h5>
 
 
-                        { this.state.mentorRef !== "" && this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
+                    {/*
 
-                            }
+                        this.state.mentorRef !== "" && this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
+
+                    */}
 
                         <br/>
                         <div className ='container__table new_radius'>
@@ -313,27 +334,33 @@ class LinkUsers extends Component {
                             </tr>}
                             </thead>
                             <tbody>
-                            {this.renderSecondTable()}
+
+                            {
+                                this.state.mentorId?
+                                    this.renderSecondTable():<tr></tr>
+                            }
                             </tbody>
                         </table>
                         </div>
 
                         <button type="submit" className="button-text">בצע פעולות</button>
-                        
+
                     </div>
                 </div>
             </form>
         );
     }
+
+
     renderFirstTable (){
         if (this.state.lnkstat === "1") {
 
             return (this.state.people
-                .filter(person => person.type ==="חונך" && person.first !== "true" && (person.link_user == null || person.link_user === "") ).filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
-                .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
+                .filter(person=> person.data.type ==="חונך" && person.data.first !== "true" && (person.data.link_user == null || person.data.link_user === "") ).filter(person => person.data.fName.indexOf(this.state.teachsrch)>-1)
+                .map((person,index) => (
+                    <tr key={index+"tg1"}><td>{person.data.id}</td><td>{person.data.fName +" "+ person.data.lName}</td><td>{person.data.email}</td>
 
-                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
+                        <td person_id={person.data.id}><input type='checkbox' id = {person.data.id} className='people_check' onChange={(e)=> {
 
                             if (this.state.mentorId === "") {
                                 this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
@@ -361,11 +388,12 @@ class LinkUsers extends Component {
                 )))
         }
         return (this.state.people
-            .filter(person => person.type ==="חונך" && person.first !== "true").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
-            .map((person) => (
+            .filter(person => person.data.type ==="חונך" && person.data.first !== "true")
+            .filter(person => person.data.fName.indexOf(this.state.teachsrch)>-1)
+            .map((person,index) => (
 
-                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
-                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
+                <tr key={index+"tg"}><td>{person.data.id}</td><td>{person.data.fName +" "+ person.data.lName}</td><td>{person.data.email}</td>
+                    <td person_id={person.data.id}><input type='checkbox' id = {person.data.id} className='people_check' onChange={(e)=> {
                         if (this.state.mentorId === "") {
                             this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                         }
@@ -391,21 +419,8 @@ class LinkUsers extends Component {
             )))
     }
     renderSecondTable (){
-        if (this.state.mentorId === "") {
-            return null;
-        }
+        this.state.mentorRef = this.getPeopleByid(this.state.mentorId).ref
 
-        this.usersRef.where('id', '==', this.state.mentorId)
-            .limit(1)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                         if (this.state.mentorId === doc.data().id && this.state.discon === false && this.state.mentorRef !== doc.id) {
-                             this.setState({mentorRef: doc.id})
-                         }
-                    }
-                );
-            })
 
         //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it || if there is an connected user that is not up to score priority change priority
 
@@ -414,7 +429,7 @@ class LinkUsers extends Component {
         this.state.mins = 0;
         for (var i = 0 ; i < this.state.numofpri ; i++) {
 
-                lists.push(<tr>
+                lists.push(<tr key={i+"r"}>
                     <td>  </td>
                     <td>  </td>
                     <td> {"עדיפות "+(i+1)} </td>
@@ -422,25 +437,48 @@ class LinkUsers extends Component {
                 </tr>)
 
             lists.push(this.state.people
-                .filter(person => person.type === "חניך" && person.first !== "true" && this.gtscor(person.first , person.birthDate) === i && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)) && (nwlst = 1) || ((person.link_user !== "") && (person.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.first , person.birthDate) && (this.state.numofpri = this.gtscor(person.first , person.birthDate) + 1) && console.log(person.fName))))
-                .map((person) => (
-                    <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
-                        <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
-                            if (this.state.studentId === "") {
-                                this.setState({studentId: e.target.id});
-                            }
-                            else if (e.target.id !== this.state.studentId) {
-                                document.getElementById(this.state.studentId).checked = false;
-                                this.setState({studentId: e.target.id , discon: true});
-                            }
-                            else {
-                                this.setState({studentId: "" , discon: true });
-                            }
+                .filter(person => person.data.type === "חניך" && person.data.first !== "true" && this.gtscor(person.data.first , person.data.birthDate) === i
+                    && (person.data.link_user === undefined
+                    || person.data.link_user === ""
+                    || ((person.data.link_user === this.state.mentorRef) && (this.state.discon === false))
+                    || (person.data.link_user === this.state.mentorRef))
+                    && (nwlst = 1)
 
+                    || ((person.data.link_user !== "") && (person.data.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate)))
+                        ).map((person, index) =>
+                {
+                    if ((person.data.link_user === this.state.mentorRef) && (this.state.discon === false) && this.state.didup === false) {
+                        this.setState({lnkstudid: person.data.id , studentId: person.data.id})
+                    }
+                    if ((person.data.link_user !== "") && (person.data.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate)) && this.state.didup === false) {
+                        this.setState({numofpri: this.gtscor(person.data.first , person.data.birthDate) + 1})
+                    }
+                    //ijpYSM7cKibH47RTeocnXkNx96Y2
+                    //wYGh1qi4vYXd9tcfKb3IRZJYP9y2
+                    return(
+                    <tr key={index+"t"}>
+                        <td>{person.data.id}</td>
+                        <td>{person.data.fName + " " + person.data.lName}</td>
+                        <td>{person.data.email}</td>
+                        <td person_id={person.data.id}>
+                            <input id={person.data.id} type='checkbox' className='people_check' checked={(person.data.link_user==this.state.mentorRef && this.state.discon == false) || (person.data.id == this.state.studentId)}
+                                                         onChange={(e) => {
+                                                             if (this.state.studentId === "") {
+                                                                 this.setState({studentId: e.target.id});
+                                                             } else if (e.target.id !== this.state.studentId) {
+                                                                 document.getElementById(this.state.studentId).checked = false;
+                                                                 this.setState({studentId: e.target.id, discon: true});
+                                                             } else {
+                                                                 this.setState({studentId: "", discon: true});
+                                                             }
+                                                            }
+                                                         }
+                            />
+                        </td>
+                    </tr>
+                )}
+                ))
 
-                        }
-                        }/></td></tr>
-                )))
 
             if (this.state.lnkstudid !== "" && this.state.didup === false) {
                 this.setState({didup: true});
@@ -453,7 +491,7 @@ class LinkUsers extends Component {
 
             let chk = lists.pop();
             if (chk == "") {
-                lists.push(<tr>
+                lists.push(<tr key={i+"tr"}>
                     <td>  </td>
                     <td>  </td>
                     <td> {"אין"} </td>
@@ -470,6 +508,24 @@ class LinkUsers extends Component {
         return (lists)
     }
 
+
+
+
+    getPeopleByid(id)
+    {
+        var guide=null
+        this.state.people.forEach((p)=>{
+            if(p.data.id===id)
+                guide=p;
+        })
+        return guide
+    }
+
+
+
+
+
+
     gtscor(studscr , date) {
         var menscr = "";
 
@@ -480,8 +536,8 @@ class LinkUsers extends Component {
         var scr = 0;
         this.state.people.forEach(person =>
             {
-                if(person.id === this.state.mentorId && person.first !== "true" && person.type === "חונך"){
-                    menscr = person.first
+                if(person.data.id === this.state.mentorId && person.data.first !== "true" && person.data.type === "חונך"){
+                    menscr = person.data.first
                 }
             })
 
