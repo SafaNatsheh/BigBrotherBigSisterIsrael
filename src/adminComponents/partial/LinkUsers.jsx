@@ -273,7 +273,7 @@ class LinkUsers extends Component {
                             required id="inputState"
                             className="new_design_link right_to "
                             value={this.state.numofpri}
-                            onChange={(e) => this.setState({ numofpri: parseInt(e.target.value , 10)})}>
+                            onChange={(e) => this.setState({ numofpri: parseInt(e.target.value , 10) , didup: false , mins: 0})}>
                             <option id="ff" disabled value="0">בחר תשובה</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -326,12 +326,18 @@ class LinkUsers extends Component {
                         <div className ='container__table1 new_radius'>
                         <table className="table table-bordered ">
                             <thead>
-                            {this.state.mins > 0 && <tr>
+                            {this.state.mins > 0? <tr>
                                 <th>ת.ז</th>
                                 <th>שם</th>
                                 <th>דוא"ל</th>
                                 <th>בחר</th>
-                            </tr>}
+                                </tr>:
+                                <tr>
+                                    <th>תבחר חונך</th>
+                                    <th>או</th>
+                                    <th>תגדיל</th>
+                                    <th>מס העדיפויות</th>
+                                </tr>}
                             </thead>
                             <tbody>
 
@@ -373,11 +379,15 @@ class LinkUsers extends Component {
                                 this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
                             if (this.state.lnkstudid !== "") {
-                                document.getElementById(this.state.lnkstudid).checked = false;
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.lnkstudid).checked = false;
+                                }
                                 this.setState({lnkstudid: "" , discon: false , mentorRef: "" , didup: false , mins: 0});
                             }
                             if (this.state.studentId !== "") {
-                                document.getElementById(this.state.studentId).checked = false;
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.studentId).checked = false;
+                                }
                                 this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                             }
 
@@ -405,11 +415,15 @@ class LinkUsers extends Component {
                             this.setState({mentorId: e.target.id , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0});
                         }
                         if (this.state.lnkstudid !== "") {
-                            document.getElementById(this.state.lnkstudid).checked = false;
+                            if (document.getElementById(this.state.lnkstudid) !== null) {
+                                document.getElementById(this.state.lnkstudid).checked = false;
+                            }
                             this.setState({lnkstudid: "" , discon: false , mentorRef: "" , didup: false , mins: 0})
                         }
                         if (this.state.studentId !== "") {
-                            document.getElementById(this.state.studentId).checked = false;
+                            if (document.getElementById(this.state.lnkstudid) !== null) {
+                                document.getElementById(this.state.studentId).checked = false;
+                            }
                             this.setState({studentId: "" , discon: false , mentorRef: "" , lnkstudid: "" , didup: false , mins: 0})
                             }
                     }
@@ -479,15 +493,15 @@ class LinkUsers extends Component {
                 )}
                 ))
 
-
-            if (this.state.lnkstudid !== "" && this.state.didup === false) {
-                this.setState({didup: true});
-            }
-
             if (nwlst > 0) {
                 this.state.mins = i+1
                 nwlst = 0;
             }
+
+            if ((this.state.mins > 0 || this.state.lnkstudid !== "") && this.state.didup === false) {
+                this.setState({didup: true});
+            }
+
 
             let chk = lists.pop();
             if (chk == "") {
