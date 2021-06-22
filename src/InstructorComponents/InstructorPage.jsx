@@ -1,3 +1,4 @@
+import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
 
 import UpdateUser from "../adminComponents/partial/UpdateUser"
@@ -119,6 +120,7 @@ class InstructorPage extends Component {
                             <Route path="/CreateChat">
                                 <CreateNewChat />
                             </Route>{" "}
+                            <Route exact path={"/zoom"} component={Zoom}/>
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -186,8 +188,8 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/VideoPage"
-                        activeStyle={activeTabStyle}
+                        to="/Zoom"
+
                     >שיחות וידאו
                     </NavLink>
                 </li>

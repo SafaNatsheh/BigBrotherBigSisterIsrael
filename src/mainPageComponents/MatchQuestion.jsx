@@ -203,7 +203,7 @@ class matchQuestion extends Component {
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
-                            <label htmlFor="inputState"><h6>אנא ציינ/י את השפות המדוברות שלך</h6></label>
+                            <label htmlFor="inputState"><h6>אנא ציינ/י את שפת האם שלך</h6></label>
                             <select
                                 required id="inputState"
                                 className="form-control"
@@ -421,7 +421,6 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-3">
                             <label htmlFor="inputFirstName"><h6>טלפון נוסף</h6></label>
                             <input
-                                required
                                 type="number"
                                 className="form-control"
                                 id="inputFirstName"
@@ -550,7 +549,6 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-6">
                             <label htmlFor="inputFirstName"><h6> שם הקרן/מלגה:</h6></label>
                             <input
-                                required
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -627,7 +625,7 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                                 <input
-                                    required
+
                                     type="text"
                                     className="form-control"
                                     id="inputFirstName"
@@ -640,7 +638,7 @@ class matchQuestion extends Component {
                             <label htmlFor="inputFirstName"></label>
                             <br/>
                             <input
-                                required
+
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -652,7 +650,7 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                             <input
-                                required
+
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -667,7 +665,7 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                             <input
-                                required
+
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -680,7 +678,7 @@ class matchQuestion extends Component {
                             <label htmlFor="inputFirstName"></label>
                             <br/>
                             <input
-                                required
+
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -692,7 +690,7 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                             <input
-                                required
+
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -707,7 +705,6 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                             <input
-                                required
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -720,7 +717,6 @@ class matchQuestion extends Component {
                             <label htmlFor="inputFirstName"></label>
                             <br/>
                             <input
-                                required
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -732,7 +728,6 @@ class matchQuestion extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputFirstName"></label>
                             <input
-                                required
                                 type="text"
                                 className="form-control"
                                 id="inputFirstName"
@@ -744,7 +739,7 @@ class matchQuestion extends Component {
                     </div>
                     <br/>
                     <div >
-                        <input type="checkbox" id="myCheck" className="check"/>
+                        <input type="checkbox" id="myCheck" className="check" required/>
                         <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות</h6>
                     </div>
 

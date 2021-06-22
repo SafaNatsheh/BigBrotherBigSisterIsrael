@@ -1,3 +1,4 @@
+import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
 import Home from "./Home"
 import UpdateUser from "../adminComponents/partial/UpdateUser"
@@ -124,6 +125,7 @@ class RakazPage extends Component {
                             <Route path="/CreateChat">
                                 <CreateNewChat />
                             </Route>{" "}
+                            <Route exact path={"/zoom"} component={Zoom}/>
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -203,14 +205,13 @@ class RakazPage extends Component {
                         activeStyle={activeTabStyle}
 
                     >
-                        יצור קבוצה{" "}
+                        יצירת קבוצה{" "}
                     </NavLink>{" "}
                 </li>{" "}
                 <li className="nav-item ">
                     <NavLink
                         className="tab"
-                        to="/VideoPage"
-                        activeStyle={activeTabStyle}
+                        to="/Zoom"
                     >
                         שיחת וידאו{" "}
                     </NavLink>{" "}
