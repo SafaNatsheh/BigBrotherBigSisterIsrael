@@ -12,7 +12,6 @@
     "create-react-app": "^4.0.3",
     "firebase": "^8.6.3",
     "mui-datatables": "^3.7.7",
-    "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-images-upload": "^1.2.8",
     "react-loader-spinner": "^3.1.14",
@@ -41,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "react": "^16.14.0"
   }
 }

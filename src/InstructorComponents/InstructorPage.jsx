@@ -5,6 +5,8 @@ import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
 import firebase from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
+//import AddMeeting from "../mainPageComponents/addMeeting"
+
 
 import {
     BrowserRouter as Router,
@@ -13,6 +15,7 @@ import {
     NavLink,
 } from "react-router-dom";
 import "./InstructorPage.css";
+
 
 
 class InstructorPage extends Component {
@@ -149,6 +152,15 @@ class InstructorPage extends Component {
                         activeStyle={activeTabStyle}
                     >
                         קביעת פגישה
+                    </NavLink>
+                </li>
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/AddMeeting"
+                        activeStyle={activeTabStyle}
+                    >
+                        הוספת פגישה
                     </NavLink>
                 </li>
             </ul>

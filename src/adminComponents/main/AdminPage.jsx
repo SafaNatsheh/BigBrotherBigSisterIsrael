@@ -6,6 +6,7 @@ import LinkUsers from "../partial/LinkUsers";
 import firebase from "../../config/Firebase";
 import Meetings from "../../rakazComponents/Meetings";
 import AddMeeting from "../../mainPageComponents/addMeeting"
+import ReportTable from "../../mainPageComponents/ReportTable"
 import Home from "../../rakazComponents/Home";
 import logo from '../../static_pictures/big_brothers_big_sisters.png';
 
@@ -121,7 +122,9 @@ class AdminPage extends Component {
               <Route path="/AddMeeting">
                 <AddMeeting />
              </Route>{" "}
-
+              <Route path="/ReportTable">
+                <ReportTable />
+              </Route>{" "}
               <Route path="/">
               <Home />
               </Route>
@@ -204,6 +207,15 @@ class AdminPage extends Component {
               הוספת פגישה
             </NavLink>
           </li>
+            <li className="nav-item text-center">
+                <NavLink
+                    className="tab"
+                    to="/ReportTable"
+                    activeStyle={activeTabStyle}
+                >
+                    הצג דוח שעות
+                </NavLink>
+            </li>
         </ul>
     )
   }
