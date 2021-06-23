@@ -61,7 +61,7 @@ class matchQuestion extends Component {
 
 
         if (this.props.refwin.data().gender === "זכר") {
-            this.setState({firQues: "1/"})
+            this.setState({firQues: "1/" , secQues: "1/"})
         }
         else {
             this.setState({firQues: "0/"})
@@ -141,9 +141,6 @@ class matchQuestion extends Component {
                     info19: this.state.info19,
 
                     gend: this.state.gend
-
-
-
 
 
 
