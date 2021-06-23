@@ -715,12 +715,13 @@ class LinkUsers extends Component {
 
             }
             else {
+
                 if (ln === 0 && menscr[ind2] === "1") {
                     return -1;
                 }
 
                 if (ln !== 8) {
-                    if (ln !== 0) {
+                    if ((ln !== 0) && (ln !== 3) || (ln === 3 && (menscr[ind2] !== "6" && studscr[ind] !== "6"))) {
                         scr++;
                     }
 

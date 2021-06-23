@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@zoomus/websdk": "^1.9.5",
     "bootstrap": "^4.5.0",
     "create-react-app": "^4.0.3",
     "firebase": "^8.6.3",
@@ -19,7 +20,6 @@
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
-    "@zoomus/websdk": "^1.9.5",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

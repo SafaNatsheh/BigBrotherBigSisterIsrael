@@ -246,7 +246,7 @@ class matchQuestionstud extends Component {
                                 value={this.state.elevQues}
                                 onChange={(e) => this.setState({ elevQues: e.target.value })}>
                                 <option id="ff" disabled value="">בחר תשובה</option>
-                                <option value="1/">גבוה</option>
+                                <option value="2/">גבוה</option>
                                 <option value="2/">בינוני</option>
                                 <option value="3/">נמוך</option>
                             </select>
