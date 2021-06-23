@@ -129,10 +129,6 @@ class matchQuestionstud extends Component {
 
 
 
-
-
-
-
                 })
         }
         else {

@@ -144,9 +144,6 @@ class matchQuestion extends Component {
 
 
 
-
-
-
                 })
 
         }
