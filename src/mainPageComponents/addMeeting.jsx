@@ -38,18 +38,10 @@ componentDidMount() {
 
  handleSubmit = async (event) => {
      event.preventDefault();
-
-     let isSure;
-
-     isSure = window.confirm(
-         "האם ברצונך להוסיף פגישה:\nבתאריך: " +
-         this.state.date +
-         "\nשהתחילה ב  : " +
-         this.state.startTime +
-         "\nוהסתימה ב : " +
-         this.state.endTime
-     );
-
+     if (this.state.description=="") {
+         alert("שדה של תיאור פגישה רק  ");
+         return;
+     }
      if (this.state.endTime< this.state.startTime) {
          alert("שעת סיום לא תקינה ");
          return;
@@ -67,6 +59,18 @@ componentDidMount() {
          return;
      }
 
+     let isSure;
+
+     isSure = window.confirm(
+         "האם ברצונך להוסיף פגישה:\nבתאריך: " +
+         this.state.date +
+         "\nשהתחילה ב  : " +
+         this.state.startTime +
+         "\nוהסתימה ב : " +
+         this.state.endTime
+     );
+
+
 
      if (isSure) {
 
@@ -82,12 +86,12 @@ componentDidMount() {
              console.log("Document successfully written!");
          });
 
-         // this.setState({ userId:"" });
-         // this.setState({  date: "" });
-         // this.setState({  startTime:"" });
-         // this.setState({ endTime:"" });
-         // this.setState({  travelTime:0 });
-         // this.setState({  description: "" });
+         this.setState({ userId:"" });
+         this.setState({  date: "" });
+         this.setState({  startTime:"" });
+         this.setState({ endTime:"" });
+         this.setState({  travelTime:60 });
+         this.setState({  description: "" });
 
      }
 
