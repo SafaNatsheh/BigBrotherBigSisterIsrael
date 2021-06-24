@@ -33,6 +33,7 @@ class Meetings extends Component {
         firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).get()
             .then((doc) => {
                 this.type = doc.data().type;
+                this.uid = doc.id;
                 // this.linkUser = doc.data().link_user;
                 // this.mateMeetingsRef = firebase.firestore().collection('Users').doc(this.linkUser).collection('Meetings');
             })
@@ -42,6 +43,7 @@ class Meetings extends Component {
 
                 this.people.push({
                     uid:doc.id,
+                    link_user : doc.data().link_user,
                     id: doc.data().id,
                     email: doc.data().email,
                     name: doc.data().fName + " " + doc.data().lName,
@@ -218,6 +220,7 @@ class Meetings extends Component {
 
     maketable(){
 
+      
         if (this.type === "רכז")
         {
             return (this.people
@@ -248,6 +251,7 @@ class Meetings extends Component {
                 .filter(person => person.type !== "רכז")
                 .filter(person => person.type !== "מדריך")
                 .filter(person => person.type !== "חונך")
+                .filter(person => person.link_user === this.uid )
                 .map((person) => (
                     <tr><td>{person.id}</td><td>{person.name}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
@@ -274,7 +278,7 @@ class Meetings extends Component {
     render() {
 
 
-
+       
 
         return (
             <div className="main-background" >
@@ -396,6 +400,11 @@ class Meetings extends Component {
                             type="checkbox"
                             className="form-check-input w-25"
                             id="scheduledMeeting"
+<<<<<<< Updated upstream
+=======
+                            style={{ float: "right" , marginTop:"258px" , marginRight:"380px"}}
+
+>>>>>>> Stashed changes
                             checked={this.state.scheduled}
                             onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
                         />

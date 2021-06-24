@@ -1,0 +1,99 @@
+div {
+    direction: rtl;
+}
+
+.app-page {
+    display: flex;
+    padding: 10px 20px;
+    direction: rtl;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #EAEADF;
+    padding-bottom: 210px;
+}
+
+/* Add a black background color to the top navigation */
+
+nav {
+    background-color: #343a40;
+    overflow: hidden;
+    height: 100px;
+}
+
+.nav {
+    width: 50%;
+    position: relative;
+    top: 20px;
+}
+
+.username-home{
+    position: relative;
+    color: #f2f2f2;
+    top:25px;
+    margin: auto;
+    font-size: 25px;
+    text-align: center;
+}
+.loader-element{
+
+    margin-top: 100px;
+    text-align: center;
+    direction: rtl;
+}
+
+.navbar-options{
+    position: relative;
+    display: inline-block;
+    width: 500px;
+    height: 100%;
+    bottom: 65px;
+}
+.tab{
+    color: white;
+}
+.sign-out-btn{
+    position: relative;
+    bottom: 44px;
+    left: 100px;
+    display: inline-block;
+}
+/* Style the links inside the navigation bar */
+
+nav .tab {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+/* Change the color of links on hover */
+
+nav .tab:hover {
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+}
+
+/* Add a color to the active/current link */
+
+nav .selected.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.MainLogo {
+    float: right;
+    margin: 8px;
+}
+.change-pwd-btn{
+    position: absolute;
+    left: 185px;
+    margin: auto;
+    top:67px;
+    height: 30px;
+    width: 120px;
+}
