@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./Post.css";
-import firebase from "../../../../config/Firebase"
+import firebase, {auth} from "../../../../config/Firebase"
 import logo from '../../../../static_pictures/no_profile_picture.png'
 
 export class Post extends React.Component {
@@ -13,8 +13,16 @@ export class Post extends React.Component {
   }
 
   componentDidMount() {
+    auth.onAuthStateChanged(user=>{
+      console.log(user)
+      if(!user)
+      {
+        window.location.href="/"
+        return
+      }
     if (this.props.img === "")
       this.setState({ hidePicture: true })
+  })
   }
 
   formatDate = (timeStamp, includeDate = true) => {

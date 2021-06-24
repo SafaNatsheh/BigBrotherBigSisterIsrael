@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Meetings.css";
-import firebase from "../../config/Firebase"
+import firebase, {auth} from "../../config/Firebase"
 import MeetingList from "./MeetingList"
 
 class Meeting extends Component {
@@ -56,7 +56,14 @@ class Meeting extends Component {
   }
 
   componentDidMount() {
-    this.getMeetings();
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      this.getMeetings();
+    })
   }
 
   updateTableAfterDelete = (meetingsArr) => {

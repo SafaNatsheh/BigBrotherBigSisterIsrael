@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../../config/Firebase"
+import firebase,{auth} from "../../config/Firebase"
 import "./LinkUsers.css";
 
 class LinkUsers extends Component {
@@ -17,111 +17,197 @@ class LinkUsers extends Component {
             chekstat: "",
             lnkstat: "0",
             lnkstudid: "",
-            discon: false
+            discon: false,
+            numofpri:3,
+            didup:false,
+            ret: "",
+            sectble:""
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
     componentDidMount() {
-        this.state.people = [];
+       auth.onAuthStateChanged(user=>{
+            if(!user)
+            {
+                window.location.href="/"
+                return
+            }
+
+        var people = [];
+
+           // this.usersRef.where('id', '==', this.state.mentorId)
+           //     .limit(1)
+           //     .get()
+           //     .then((querySnapshot) => {
+           //         querySnapshot.forEach((doc) => {
+           //                 if (this.state.mentorId === doc.data().id && this.state.discon === false && this.state.mentorRef !== doc.id) {
+           //                     this.setState({mentorRef: doc.id})
+           //                 }
+           //             }
+           //         );
+           //     })
+           //
+           //
         this.usersRef
             .get()
             .then(queryShot => {
                 queryShot.forEach(
                     (doc) => {
-                        this.setState({ people: [...this.state.people, doc.data()] })
+                        var p= {
+                            data:doc.data(),
+                            ref:doc.id
+                        }
+                        people.push(p)
+                        // people.push(doc.data())
+
                     }
                 )
-            })
+            }).then(()=>{
+                // console.log(people)
+            this.setState({ people: people })
+        })
             .catch((e) => console.log(e.name));
 
-
+       })
     }
+
     fillpepl() {
         setTimeout(function(){
-            window.location.reload(1);
-        }, 1000);
+        window.location.reload(1);
+        }, 1500);
 
     }
-    isValid = (querySnapshot, type) => {
-        if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
-            var con = window.confirm("האם אתה בטוח לבצונך לננתק את החניך ?")
-            if (con) {
-                this.usersRef.where('id', '==', this.state.mentorId)
-                    .limit(1)
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                                    doc.ref.update({ link_user: "" })
-                            }
-                        );
-                    }).catch((e) => console.log(e.name));
 
-                this.usersRef.where('id', '==', this.state.lnkstudid)
+    isValid = async (querySnapshot, type) => {
+
+        if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
+            this.state.ret = "dn"
+            var con = window.confirm("האם אתה בטוח לבצונך לנתק את החניך ?")
+            if (con) {
+
+                let querySnapshot = await
+                    this.usersRef.where('id', '==', this.state.mentorId)
                     .limit(1)
                     .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                                    doc.ref.update({ link_user: "" })
+                console.log(querySnapshot)
+                    if(querySnapshot && querySnapshot.docs.length>0) {
+                        querySnapshot.docs[0].ref.update({link_user: ""})
+                    }
+
+                 querySnapshot = await this.usersRef.where('id', '==', this.state.lnkstudid)
+                    .limit(1)
+                    .get()
+                   if(querySnapshot) {
+                       querySnapshot.forEach((doc) => {
+                               doc.ref.update({link_user: ""})
+                           }
+                       );
+                   }
+                querySnapshot = await firebase.firestore().collection('Chats').get()
+                    querySnapshot.docs.forEach(doc => {
+                        if (doc.data().type === "private") {
+                            // console.log(doc.data().members[0].id)
+                            // console.log(this.state.lnkstudid)
+                            if (doc.data().members[0].id === this.state.lnkstudid) {
+                                doc.ref.delete();
                             }
-                        );
-                    }).catch((e) => console.log(e.name));
+                        }
+                    });
+
+
                 console.log("המשתמשים עודכנו בהצלחה!");
                 alert("עודכן בהצלחה!\n");
-                this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: "" , lnkstudid: ""});
+                this.setState({ studentId: "" , mentorId: "" , mentorRef: "" , studentRef: ""});
                 this.fillpepl();
 
                 return;
             }
             else {
-                throw Error(500);
+                this.state.ret = "err"
+                return;
             }
         }
-        else if (querySnapshot.empty && this.state.discon === false) {
+        else if (querySnapshot.empty) {
             alert("ה" + type + " לא קיים במערכת")
-            throw Error(500);
+            this.state.ret = "err"
+            return "err"
         }
-        querySnapshot.forEach(doc => {
-            if (doc.data().type !== type) {
-                alert("המשתמש אינו " + type);
-                throw Error(500);
-            }
-            if (doc.data().link_user != null && doc.data().link_user !== "") {
-                alert("המשתמש כבר מחובר");
-                throw Error(500);
-            }
-            if (type === "חניך")
-                this.setState({ studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName })
-            else if (type === "חונך")
-                this.setState({ mentorRef: doc.ref.id, mentorName: doc.data().fName + " " + doc.data().lName })
+         querySnapshot.forEach(doc => {
+             if (doc.data().link_user != null && doc.data().link_user !== "" && this.state.studentId !== "") {
+                 alert("המשתמש כבר מחובר");
+                 this.state.ret = "err"
+                 return "err"
+             }
+             else if (type === "חניך") {
+                this.setState({studentRef: doc.ref.id, studentName: doc.data().fName + " " + doc.data().lName})
+             }
+             else if (type === "חונך") {
+                this.setState({mentorRef: doc.ref.id, mentorName: doc.data().fName + " " + doc.data().lName})
+             }
         });
     }
 
     verifyUsers = () => {
+
+        this.state.ret = ""
         var studentId = this.state.studentId;
         var mentorId = this.state.mentorId;
         this.usersRef.where('id', '==', studentId)
             .limit(1)
             .get()
-            .then((querySnapshot) => this.isValid(querySnapshot, "חניך"))
-            .then(() => this.usersRef.where('id', '==', mentorId)
-                .limit(1)
-                .get()
-                .then((querySnapshot) => this.isValid(querySnapshot, "חונך")))
-            .then(() => {
-                var con = window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
-                if (con) {
-                    this.linkUser(studentId);
-                    this.linkUser(mentorId);
-                    console.log("המשתמשים עודכנו בהצלחה!");
-                    alert("עודכן בהצלחה!\n" + this.state.mentorName + " הוא החונך של " + this.state.studentName + ".");
-                    this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
-                    this.fillpepl();
+            .then((querySnapshot) => {
+
+                this.isValid(querySnapshot, "חניך")
+                if (this.state.ret === "err") {
+                    console.log("hand")
+                    return
                 }
             })
-            .catch(() => console.log("Error in adding new user"));
+            .then(() => {
+                this.usersRef.where('id', '==', mentorId)
+                    .limit(1)
+                    .get()
+                    .then((querySnapshot) => {
+                        this.isValid(querySnapshot, "חונך")
+                        if (this.state.ret === "err") {
+                            console.log("hand")
+                            return
+                        }
+                    }).then(async () => {
+
+                    if (this.state.ret !== "err" && this.state.ret !== "dn") {
+                        var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
+                        if (con) {
+                            this.linkUser(studentId);
+                            this.linkUser(mentorId);
+
+                            var map1 ={id: studentId,name: this.state.studentName}
+                            var map2 ={id: mentorId,name: this.state.mentorName}
+                            const arr=[map1,map2]
+                            await firebase.firestore().collection('Chats').add(
+                                {
+                                    name: "שיחה חניך חניך",
+                                    type: "private",
+                                    members: arr,
+                                })
+
+                            console.log("המשתמשים עודכנו בהצלחה!");
+                            alert("עודכן בהצלחה!\n" + this.state.mentorName + " הוא החונך של " + this.state.studentName + ".");
+                            this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
+                            this.fillpepl();
+                        }
+                    }})
+                    .catch(() => {
+                        console.log("Error in adding new user")
+                        return
+                    })
+                })
+            ;
+
     }
 
     linkUser = (curr) => {
+        this.state.ret = ""
         var studentId = this.state.studentId;
         var mentorId = this.state.mentorId;
         var studentRef = this.state.studentRef;
@@ -150,25 +236,25 @@ class LinkUsers extends Component {
             <form className="ad-user-form" onSubmit={this.addLink}>
                 <header className="title">
                     <h1 className="add-user-h">
-                        <u> קישור חניך לחונך</u>
+                        <u> קישור חונך לחניך</u>
                     </h1>
                 </header>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label className="first-link-input-btn" htmlFor="inputLinkFirstName">תעודת זהות חניך</label>
+                        <label className="first-link-input-btn new_Name" htmlFor="inputLinkFirstName"><h5>שם החונך</h5></label>
 
                         <input
                             type="text"
-                            className="form-control"
+                            className="new_design_link"
                             id="inputLinkFirstName"
                             value={this.state.teachsrch}
-                            placeholder="תעודת זהות חניך"
+                            placeholder="חיפוש"
                             title="שם פרטי"
                             onChange={(e) => this.setState({ teachsrch: e.target.value })}
                         />
                         <h5>
-                            ללא קישור
-                            <input type='checkbox' className='people_check' onChange={(e)=> {
+
+                            <input type='checkbox' className=' new_design_checkbox' onChange={(e)=> {
                                 if (this.state.lnkstat === "0"){
                                     this.setState({ lnkstat: "1" });
                                 }
@@ -177,21 +263,41 @@ class LinkUsers extends Component {
                                 }
                                 if (this.state.mentorId !== "") {
                                     document.getElementById(this.state.mentorId).checked = false;
-                                    this.state.mentorId = "";
-                                    this.state.studentId = "";
+                                    this.setState({mentorId: "" , studentId: ""})
                                 }
-                                this.state.lnkstudid = "";
+                                this.setState({lnkstudid: ""})
                             }
                         } />
+                        ללא קישור
+
                         </h5>
+                        <br></br>
+                        <h5 className="right_to_right">מספר עדיפויות
+                        <select
+                            required id="inputState"
+                            className="new_design_link right_to "
+                            value={this.state.numofpri}
+                            onChange={(e) => { this.state.numofpri= parseInt(e.target.value , 10);this.setState({sectble: this.renderSecondTable(this.state.mentorId)})}}>
+                            <option id="ff" disabled value="0">בחר תשובה</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </h5>
 
-                        { this.state.mentorRef !== "" && this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
 
-                            }
+
 
                         <br/>
-                        <div className ='container__table'>
-                        <table className="table table-bordered">
+                        <div className ='container__table new_radius'>
+                        <table className="table table-bordered ">
                             <thead>
                             <tr>
                                 <th>ת.ז</th>
@@ -200,12 +306,12 @@ class LinkUsers extends Component {
                                 <th>בחר</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {this.renderFirstTable()}
-                            </tbody>
+                            <tbody>{this.renderFirstTable()}</tbody>
                         </table>
                         </div>
                     </div>
+
+
                     <div className="form-group col-md-6">
 
                         <br/>
@@ -213,145 +319,373 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
                         <br></br>
-                        <div className ='container__table1'>
-                        <table className="table table-bordered">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
+                        <div className ='container__table1 new_radius'>
+                        <table className="table table-bordered ">
                             <thead>
-                            <tr>
-                                <th>ת.ז</th>
-                                <th>שם</th>
-                                <th>דוא"ל</th>
-                                <th>בחר</th>
-                            </tr>
+                            {
+                               this.state.mins > 0?
+                               <tr>
+                                   <th></th>
+                                   <th>ת.ז</th>
+                                   <th>שם</th>
+                                   <th>דוא"ל</th>
+                                   <th>עדיפות</th>
+                                   <th>בחר</th>
+                               </tr>
+                                :this.state.mentorId.length>0?
+                                <tr>
+                                    <th>נא להגדיל מס עדיפות</th>
+                                </tr> :
+                                    <tr>
+                                <th>נא לבחור חונך</th>
+                                {/*<th>נבחר</th>*/}
+                                {/*<th>חונך</th>*/}
+                                {/*<th></th>*/}
+                                </tr>
+                            }
                             </thead>
-                            <tbody>
-                            {this.renderSecondTable()}
-                            </tbody>
+                            <tbody>{
+                                this.state.mentorId?
+                                    this.state.sectble:<tr></tr>
+                            }</tbody>
                         </table>
                         </div>
+                        <button type="submit" className="button-text">בצע פעולות</button>
 
-                        <button type="submit" className="btn btn-primary link-users-btn"
-                        style={{   marginTop:"300px"  }}
-                        >
-                        
-                            בצע פעולות
-                        </button>
-                        
                     </div>
                 </div>
             </form>
         );
     }
-    renderFirstTable (){
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.state.lnkstudid !== "" &&  this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
+    }
+
+    renderFirstTable () {
         if (this.state.lnkstat === "1") {
-
             return (this.state.people
-                .filter(person => person.type ==="חונך" && person.first !== "true" && (person.link_user == null || person.link_user === "")).filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
-                .map((person) => (
+                .filter(person => person.data.type === "חונך" && person.data.first !== "true" && (person.data.link_user == null || person.data.link_user === "")).filter(person => person.data.fName.indexOf(this.state.teachsrch) > -1)
+                .map((person, index) => (
 
-                    <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
+                    <tr key={index + "tg"}>
+                        <td>{person.data.id}</td>
+                        <td>{person.data.fName + " " + person.data.lName}</td>
+                        <td>{person.data.email}</td>
+                        <td person_id={person.data.id}><input type='checkbox' id={person.data.id}
+                                                              className='people_check' onChange={(e) => {
 
-                        <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
 
-                            if (this.state.mentorId === "") {
-                                this.setState({mentorId: e.target.id});
-                            }
-                            else if (e.target.id === this.state.mentorId) {
-                                this.setState({mentorId: ""});
-                            }
-                            else {
-                                document.getElementById(this.state.mentorId).checked = false;
-                                this.setState({mentorId: e.target.id});
-                            }
                             if (this.state.lnkstudid !== "") {
-                                document.getElementById(this.state.lnkstudid).checked = false;
-                                this.state.lnkstudid = "";
+
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.lnkstudid).checked = false;
+                                }
                             }
+                            if (this.state.mentorId === "") {
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else if (e.target.id === this.state.mentorId) {
+                                this.setState({mentorId: ""})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else {
+                                document.getElementById(this.state.mentorId).checked = false;
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            }
+
                             if (this.state.studentId !== "") {
-                                document.getElementById(this.state.studentId).checked = false;
-                                this.state.studentId = "";
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.studentId).checked = false;
+                                }
                             }
-                            this.state.mentorRef = "";
-                            this.state.lnkstudid = "";
-                            this.setState({discon: false});
                         }
-                        } />
+                        }/>
                         </td>
                     </tr>
                 )))
         }
-        return (this.state.people
-            .filter(person => person.type ==="חונך" && person.first !== "true").filter(person => person.fName.indexOf(this.state.teachsrch)>-1)
-            .map((person) => (
+        else {
+            return (this.state.people
+                .filter(person => person.data.type === "חונך" && person.data.first !== "true")
+                .filter(person => person.data.fName.indexOf(this.state.teachsrch) > -1)
+                .map((person, index) => (
 
-                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
-                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e)=> {
-                        if (this.state.mentorId === "") {
-                            this.setState({mentorId: e.target.id});
+                    <tr key={index + "tg"}>
+                        <td>{person.data.id}</td>
+                        <td>{person.data.fName + " " + person.data.lName}</td>
+                        <td>{person.data.email}</td>
+                        <td person_id={person.data.id}><input type='checkbox' id={person.data.id}
+                                                              className='people_check' onChange={(e) => {
+
+
+                            if (this.state.lnkstudid !== "") {
+
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.lnkstudid).checked = false;
+                                }
+                            }
+                            if (this.state.mentorId === "") {
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else if (e.target.id === this.state.mentorId) {
+                                this.setState({mentorId: ""})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else {
+                                document.getElementById(this.state.mentorId).checked = false;
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            }
+
+                            if (this.state.studentId !== "") {
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.studentId).checked = false;
+                                }
+                            }
                         }
-                        else if (e.target.id === this.state.mentorId) {
-                            this.setState({mentorId: ""});
-                        }
-                        else {
-                            document.getElementById(this.state.mentorId).checked = false;
-                            this.setState({mentorId: e.target.id});
-                        }
-                        if (this.state.lnkstudid !== "") {
-                            document.getElementById(this.state.lnkstudid).checked = false;
-                            this.state.lnkstudid = "";
-                        }
-                        if (this.state.studentId !== "") {
-                            document.getElementById(this.state.studentId).checked = false;
-                            this.state.studentId = "";
-                        }
-                        this.state.mentorRef = "";
-                        this.state.lnkstudid = "";
-                        this.setState({discon: false});
-                    }
-                    } />
-                    </td>
-                </tr>
-            )))
-    }
-    renderSecondTable (){
-        this.usersRef.where('id', '==', this.state.mentorId)
-            .limit(1)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                         if (this.state.mentorId === doc.data().id && this.state.discon === false) {
-                             this.setState({mentorRef: doc.id})
-                         }
-                    }
-                );
-            })
-        if (this.state.mentorId === "") {
-            return null;
+                        }/>
+                        </td>
+                    </tr>
+                )))
         }
-        //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it
-        return (this.state.people
-            .filter(person => person.type === "חניך" && person.first !== "true" && (person.link_user === undefined || person.link_user === "" || ((person.link_user === this.state.mentorRef) && (this.state.discon === false) && (this.state.lnkstudid = person.id) && (this.state.studentId = person.id)) || (person.link_user === this.state.mentorRef)))
-            .map((person) => (
-                <tr><td>{person.id}</td><td>{person.fName +" "+ person.lName}</td><td>{person.email}</td>
-                    <td person_id={person.id}><input id = {person.id} type='checkbox' className='people_check' onChange={(e)=> {
-                        if (this.state.studentId === "") {
-                            this.setState({studentId: e.target.id});
-                        }
-                        else if (e.target.id !== this.state.studentId) {
-                            document.getElementById(this.state.studentId).checked = false;
-                            this.setState({studentId: e.target.id});
-                            this.setState({discon: true});
-                        }
-                        else {
-                            this.setState({studentId: ""});
-                            this.setState({discon: true});
-                            console.log(this.state.lnkstudid);
-                        }
-
-
-                    }
-                    }/></td></tr>
-            )))
     }
+    renderSecondTable (mentid){
+        this.setState({lnkstudid: "", studentId: ""})
+        this.state.mentorId = mentid
+        if (mentid === "") {
+            return (<tr></tr>)
+        }
+        this.state.mentorRef = this.getPeopleByid(mentid).ref
+        // console.log("guid")
+        // console.log(this.state.mentorId)
+
+
+        //display second table either not connected or || already connected to mentor selected if yes && select this student || if it hase been unselected only display it || if there is an connected user that is not up to score priority change priority
+
+        var lists = [];
+        var nwlst = 0;
+        this.state.mins = 0;
+        // for (var i = 0 ; i < this.state.numofpri ; i++) {
+
+                // lists.push(<tr key={i+"r"}>
+                //     <td>  </td>
+                //     <td>  </td>
+                //     <td> {"עדיפות "+(i+1)} </td>
+                //     <td>  </td>
+                // </tr>)
+
+            let filter = this.state.people
+                .filter(person => person.data.type === "חניך"
+                    && person.data.first !== "true"
+                     && this.gtscor(person.data.first , person.data.birthDate) <= this.state.numofpri
+                     && (person.data.link_user === undefined || person.data.link_user === "" || ((person.data.link_user === this.state.mentorRef)
+                         && (this.state.discon === false)
+                         && (this.state.lnkstudid = person.data.id)
+                         && (this.state.studentId = person.data.id)) || (person.data.link_user === this.state.mentorRef))
+                        || ((person.link_user !== "")
+                        && (person.data.link_user === this.state.mentorRef)
+                        && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate)
+                             && (this.state.numofpri = this.gtscor(person.data.first , person.data.birthDate))))
+                )
+        filter.map((person, index) =>
+                {
+
+                    if ((person.data.link_user === this.state.mentorRef) && (this.state.discon === false)) {
+                        this.setState({lnkstudid: person.data.id , studentId: person.data.id})
+                    }
+
+                })
+
+        lists=this.showLines(this.state.mentorRef,filter)
+        this.state.mins=lists.length
+        lists.forEach(row => {if(row.props.children[5].props.person_id === this.state.lnkstudid) {
+
+        }});
+
+        return (lists)
+    }
+
+
+
+
+    getPeopleByid(id)
+    {
+        var guide=null
+        this.state.people.forEach((p)=>{
+            if(p.data.id===id)
+                guide=p;
+        })
+        return guide
+    }
+
+
+
+    showLines(guide,lists) {
+        var table = []
+        var sorted = []
+        lists.map((person) => {
+                let score = this.gtscor(person.data.first, person.data.birthDate)
+                sorted.push({score: score, person: person})
+            }
+        )
+
+        sorted.sort((a, b) => (a.score > b.score) ? 1 : -1)
+        sorted.map((line, index) => {
+            let person = line.person
+            table.push(
+                <tr key={index + "t"}>
+                    <td>{index + 1}</td>
+                    <td>{person.data.id}</td>
+                    <td>{person.data.fName + " " + person.data.lName}</td>
+                    <td>{person.data.email}</td>
+                    <td>{line.score}</td>
+                    <td person_id={person.data.id}>
+                        <input id={person.data.id} type='checkbox' className='people_check'
+                               onChange={(e) => {
+
+                                   if (this.state.studentId === "") {
+                                       this.setState({studentId: e.target.id});
+                                   } else if (e.target.id !== this.state.studentId) {
+                                       document.getElementById(this.state.studentId).checked = false;
+                                       this.setState({studentId: e.target.id, discon: true});
+                                   } else {
+                                       this.setState({studentId: "", discon: true});
+                                   }
+
+                               }
+                               }/></td>
+                </tr>
+            )
+        })
+        return table;
+    }
+
+
+
+
+    gtscor(studscr , date) {
+        var menscr = "";
+
+        if (studscr === undefined) {
+            return 0;
+        }
+
+        var scr = 0;
+        this.state.people.forEach(person =>
+            {
+                if(person.data.id === this.state.mentorId && person.data.first !== "true" && person.data.type === "חונך"){
+                    menscr = person.data.first
+                }
+            })
+
+
+        if (menscr === "") {
+            console.log(this.state.mentorId)
+            console.log("error in database")
+            return -1;
+        }
+
+        var ind  = 0
+        var ind2 = 0
+        for (var ln  = 0 ; ln < 12 ; ) {
+            if (studscr[ind] === "/") {
+                ln++;
+                ind++;
+                while (menscr[ind2] !== "/") {
+                    ind2++
+                }
+                ind2++;
+                continue;
+            }
+
+            else if (menscr[ind2] === "/") {
+                ln++;
+                ind2++;
+                while (studscr[ind] !== "/") {
+                    ind++
+                }
+                ind++;
+                continue;
+            }
+            if (studscr[ind] === menscr[ind2] && studscr[ind+1] === "/" && menscr[ind2+1] === "/") {
+                //console.log(studscr[ind] +" "+ ind +" "+ ind2+"match"+" "+ln)
+                ind++;
+                ind2++;
+
+            }
+            else {
+
+                if (ln === 0 && menscr[ind2] === "1") {
+                    return -1;
+                }
+
+                if (ln !== 8) {
+                    if ((ln !== 0) && (ln !== 3) || (ln === 3 && (menscr[ind2] !== "6" && studscr[ind] !== "6"))) {
+                        scr++;
+                    }
+
+                }
+                else {
+                    let newDate = new Date();
+                    let year = newDate.getFullYear();
+                    let number = parseInt(date.substring(0,4) , 10 );
+                    if (menscr[ind2] === "1" && ((year - number) < 5 || (year - number) > 12)) {
+                        scr++;
+                    }
+                    else if (menscr[ind2] === "2" && ((year - number) < 12 || (year - number) > 18)) {
+                        scr++;
+                    }
+                    else if (menscr[ind2] === "3" && (year - number) < 18) {
+                        scr++;
+                    }
+                }
+
+                while (menscr[ind2] !== "/") {
+                    ind2++
+                }
+                while (studscr[ind] !== "/") {
+                    ind++
+                }
+
+            }
+
+        }
+
+        // console.log("scr")
+        // console.log(scr)
+        return scr;
+    }
+
 
 }
 

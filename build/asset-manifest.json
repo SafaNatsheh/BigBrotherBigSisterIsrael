@@ -1,27 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.de9e6017.chunk.css",
-    "main.js": "/static/js/main.4315e27c.chunk.js",
-    "main.js.map": "/static/js/main.4315e27c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.ac026786.js",
-    "runtime-main.js.map": "/static/js/runtime-main.ac026786.js.map",
-    "static/css/2.f134a1eb.chunk.css": "/static/css/2.f134a1eb.chunk.css",
-    "static/js/2.0c11e39b.chunk.js": "/static/js/2.0c11e39b.chunk.js",
-    "static/js/2.0c11e39b.chunk.js.map": "/static/js/2.0c11e39b.chunk.js.map",
+    "main.css": "/static/css/main.df123e44.chunk.css",
+    "main.js": "/static/js/main.81062c93.chunk.js",
+    "main.js.map": "/static/js/main.81062c93.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.80996b86.js",
+    "runtime-main.js.map": "/static/js/runtime-main.80996b86.js.map",
+    "static/css/2.314b620a.chunk.css": "/static/css/2.314b620a.chunk.css",
+    "static/js/2.193fc58c.chunk.js": "/static/js/2.193fc58c.chunk.js",
+    "static/js/2.193fc58c.chunk.js.map": "/static/js/2.193fc58c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.0262676d5788b3e0218d35e3a743c956.js": "/precache-manifest.0262676d5788b3e0218d35e3a743c956.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.f134a1eb.chunk.css.map": "/static/css/2.f134a1eb.chunk.css.map",
-    "static/css/main.de9e6017.chunk.css.map": "/static/css/main.de9e6017.chunk.css.map",
-    "static/js/2.0c11e39b.chunk.js.LICENSE.txt": "/static/js/2.0c11e39b.chunk.js.LICENSE.txt",
-    "static/media/UploadIcon.svg": "/static/media/UploadIcon.1cedb6e9.svg",
-    "static/media/chat_background.jpg": "/static/media/chat_background.9879f4df.jpg"
+    "static/css/2.314b620a.chunk.css.map": "/static/css/2.314b620a.chunk.css.map",
+    "static/css/main.df123e44.chunk.css.map": "/static/css/main.df123e44.chunk.css.map",
+    "static/js/2.193fc58c.chunk.js.LICENSE.txt": "/static/js/2.193fc58c.chunk.js.LICENSE.txt",
+    "static/media/UploadIcon.svg": "/static/media/UploadIcon.469126df.svg",
+    "static/media/big_brothers_big_sisters.1f24f53e.png": "/static/media/big_brothers_big_sisters.1f24f53e.png",
+    "static/media/Conversation.css": "/static/media/chat_background.977b2794.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ac026786.js",
-    "static/css/2.f134a1eb.chunk.css",
-    "static/js/2.0c11e39b.chunk.js",
-    "static/css/main.de9e6017.chunk.css",
-    "static/js/main.4315e27c.chunk.js"
+    "static/js/runtime-main.80996b86.js",
+    "static/css/2.314b620a.chunk.css",
+    "static/js/2.193fc58c.chunk.js",
+    "static/css/main.df123e44.chunk.css",
+    "static/js/main.81062c93.chunk.js"
   ]
 }

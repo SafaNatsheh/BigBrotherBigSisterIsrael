@@ -36,8 +36,9 @@ class LoginForm extends React.Component {
   }
 
   componentDidUpdate(prevProp) {
-    if (this.props.isLoggedIn !== prevProp.isLoggedIn)
-      this.setState({ loading: false });
+    if (this.props.isLoggedIn !== prevProp.isLoggedIn) {
+      this.setState({loading: false});
+    }
   }
 
   onLoginFail() {
@@ -55,10 +56,11 @@ class LoginForm extends React.Component {
       alert("אנא הכנס סיסמא");
       return;
     }
-
+console.log(this.state)
     const username = this.state.username;
     const password = this.state.password;
     this.setState({ loading: true });
+    this.props.funcret(password)
     firebase
       .auth()
       .signInWithEmailAndPassword(username, password)

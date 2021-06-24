@@ -1,15 +1,50 @@
-.questions{
+.ques{
     background-color: #928392;
     border: 5px solid rgb(76, 175, 80) ;
-    border-radius: 20px;
-    width: 50%;
-    height: 700px;
+    border-radius: 0px;
+    width: 900px;
+    height: 1550px;
     margin-top: 10px;
-    margin-right: 25%;
+    margin-right: 300px;
+    margin-left: 300px;
     padding: 20px;
     text-align: center;
 }
 
+.options{
+    border-radius: 20px;
+}
 
+.q{
+    background-color: White;
+    width: 100%;
+    height: 100%;
+}
+.bot1{
+    margin-right: 800px;
+    width: 100px;
+    background-color: darkmagenta;
+}
+
+.logo{
+    margin-top: 10px;
+}
+.row_R2{
+    margin-right: 0px;
+}
+
+.row_R3{
+    margin-right: 0px;
+}
+.check{
+
+margin-left: 5px;
+
+
+}
+
+.right{
+    text-align: right;
+}
 
 
