@@ -453,31 +453,36 @@ class matchQuestionstud extends Component {
                     </div>
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>דת</h6></label>
-                        <input
-                            required
-                            type="text"
+                        <select
+                            required id="inputState"
                             className="form-control"
-                            id="inputFirstName"
                             value={this.state.religion1}
-                            placeholder="דת"
-                            title="דת"
-                            onChange={(e) => this.setState({ religion1: e.target.value })}
-                        />
+                            onChange={(e) => this.setState({ religion1: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">יהודי/ה</option>
+                            <option value="2\">מוסלמי/ת</option>
+                            <option value="3\">נוצרי/ת</option>
+                            <option value="4\">אחר</option>
+                        </select>
                     </div>
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>זיקה לדת</h6></label>
-                        <input
-                            required
-                            type="text"
+                        <select
+                            required id="inputState"
                             className="form-control"
-                            id="inputFirstName"
                             value={this.state.religion2}
-                            placeholder="דת"
-                            title="דת"
-                            onChange={(e) => this.setState({ religion2: e.target.value })}
-                        />
+                            onChange={(e) => this.setState({ religion2: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">חילוני/ה</option>
+                            <option value="2\">דתי/ה</option>
+                            <option value="3\">מסורתי/ה</option>
+                            <option value="4\" >אחר</option>
+
+
+                        </select>
                     </div>
-                </div>
+
+                    </div>
 
               <br/>
               <h5 className="right">פרטי הורה/ים:</h5>

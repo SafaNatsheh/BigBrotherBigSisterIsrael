@@ -8,19 +8,25 @@
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@zoomus/websdk": "^1.9.5",
     "bootstrap": "^4.5.0",
     "create-react-app": "^4.0.3",
     "firebase": "^8.6.3",
     "mailjs": "^0.1.9",
     "mui-datatables": "^3.7.7",
-    "react": "^17.0.2",
+    "react": "^17.0.1",
     "react-dom": "^17.0.2",
     "react-images-upload": "^1.2.8",
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
-    "web-vitals": "^1.1.2"
+    "@zoomus/websdk": "^1.9.5",
+    "web-vitals": "^1.1.2",
+    "add": "^2.0.6",
+    "peerjs": "^1.3.1",
+    "react-copy-to-clipboard": "^5.0.3",
+    "simple-peer": "^9.9.3",
+    "socket.io-client": "^3.1.1",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,8 +51,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "jquery": "^3.6.0"
   }
+
 }

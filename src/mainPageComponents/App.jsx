@@ -1,4 +1,5 @@
 import Zoom from "../Zoom/Zoom"
+import Video from "../Video/Video";
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
 import Chat from "../Chat/Chat"
@@ -19,6 +20,7 @@ import {
   NavLink,
   Redirect,
 } from "react-router-dom";
+import Home from "../rakazComponents/Home";
 
 class App extends Component {
   constructor(props) {
@@ -242,7 +244,7 @@ class App extends Component {
       .catch((e) => console.log(e.name));
   }
 
-  changeProfilePictue = (url) => {
+  changeProfilePicture = (url) => {
     this.setState({ profilePicture: url });
   }
 
@@ -384,6 +386,25 @@ class App extends Component {
       return (
         <Switch>
 
+          {/*<Route path="/HomePage">*/}
+          {/*  <HomePage*/}
+          {/*      myDetails={this.state.userDetails}*/}
+          {/*      linkedDetails={this.state.linkedUserDetails}*/}
+          {/*      directVid={this.directVid}*/}
+          {/*      newVideo={this.state.newVideo}*/}
+          {/*      otherUserConnection={this.state.otherUserConnection}*/}
+          {/*      otherUserLastOnline={this.state.otherUserLastOnline}*/}
+          {/*      next_meeting={this.state.next_meeting}*/}
+          {/*      getNextMeeting={this.getNextMeeting}*/}
+          {/*      loadingNextMeeting={this.state.loadingNextMeeting}*/}
+          {/*      routeToWall={this.getWallRouteStatus}*/}
+          {/*      routeToMeeting={this.getMeetingRouteStatus}*/}
+          {/*      myProfilePic={this.state.profilePicture}*/}
+          {/*      friendProfilePic={this.state.friendProfile}*/}
+          {/*      changeProfilePicture={this.changeProfilePicture}*/}
+          {/*  /></Route>*/}
+
+
           <Route path="/Wall">
             <div className="app-page">
               <Profile
@@ -418,8 +439,9 @@ class App extends Component {
               routeToMeeting={this.getMeetingRouteStatus}
               myProfilePic={this.state.profilePicture}
               friendProfilePic={this.state.friendProfile}
-              changeProfilePictue={this.changeProfilePictue}
+              changeProfilePicture={this.changeProfilePicture}
             />
+
             {this.routeToWall()}
             {this.routeToVideo()}
             {this.routeToMeeting()}
@@ -431,7 +453,8 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
-          <Route exact path={"/zoom"} component={Zoom}/>
+          {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
+          <Route exact path={"/video"} component={Video}/>
         </Switch>
       );
   }
@@ -453,22 +476,24 @@ class App extends Component {
 
   render() {
 
+
     const activeTabStyle = {
       fontWeight: "bold",
       backgroundColor: "#4CAF50",
     };
 
-    /*
-      <li className="nav-item ">
-                  <NavLink
-                    className="tab"
-                    to="/Wall"
-                    activeStyle={activeTabStyle}
-                    onClick={(event) => this.checkIfVideo(event)}
-                  >
-                    קיר{" "}
-                  </NavLink>{" "}
-                </li>{" "}
+
+      // <li className="nav-item ">
+      //             <NavLink
+      //               className="tab"
+      //               to="/Wall"
+      //               activeStyle={activeTabStyle}
+      //               onClick={(event) => this.checkIfVideo(event)}
+      //             >
+      //               קיר{" "}
+      //             </NavLink>{" "}
+      // </li>{" "}
+                /*
                 <li className="nav-item ">
                   <NavLink
                     className="tab"
@@ -504,15 +529,27 @@ class App extends Component {
                     בית{" "}
                   </NavLink>{" "}
                 </li>{" "}
+                {/*<li className="nav-item ">*/}
+                {/*  <NavLink*/}
+                {/*      className="tab"*/}
+                {/*      to="/Zoom"*/}
+                {/*     */}
+                {/*  >*/}
+                {/*    שיחת וידאו{" "}*/}
+                {/*  </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
+
+
                 <li className="nav-item ">
                   <NavLink
                       className="tab"
-                      to="/Zoom"
-                     
+                      to="/Video"
+
                   >
                     שיחת וידאו{" "}
                   </NavLink>{" "}
                 </li>{" "}
+
 
                 <li className="nav-item">
                   <NavLink
