@@ -100,13 +100,13 @@ export class HomePage extends React.Component {
     this.myProfilePicturesRef.delete()
       .then(() => {
         console.log("Deleted profile picture successfully")
-        this.props.changeProfilePictue("")
+        this.props.changeProfilePicture("")
       })
       .catch((e) => console.log(e.name));
   }
 
   setProfilePicture = (pictures, url) => {
-    this.props.changeProfilePictue(url);
+    this.props.changeProfilePicture(url);
     this.myProfilePicturesRef.put(pictures[0]);
   };
 
