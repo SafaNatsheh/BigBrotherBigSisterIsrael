@@ -17,7 +17,10 @@ class AppIndex extends Component {
             isRakaz: false,
             isInstructor : false,
             isfirst : "",
-            filled: false
+            filled: false,
+            end:false,
+            oldusr:"",
+            passwrd:""
         };
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -65,7 +68,7 @@ class AppIndex extends Component {
                 .then(doc => {
                     if (doc.exists) {
                         userType = doc.data().type;
-                        this.state.isfirst = doc;
+                        this.setState({isfirst: doc , oldusr: user})
                     }
                         else {
                         userType = "";
@@ -73,13 +76,18 @@ class AppIndex extends Component {
                 })
                 .then(() => {
                     this.determineIfAdmin(userType);
+
                 })
-                .then(() => this.setState({ isLoggedIn: true }))
+                .then(() => this.setState({ isLoggedIn: true,end:true }))
                 .catch((e) => console.log(e.name));
         }
         else
             // No user is signed in.
-            this.setState({ isLoggedIn: false });
+            this.setState({ isLoggedIn: false ,end:true});
+    }
+
+    myCallback = (dataFromChild) => {
+        this.setState({passwrd: dataFromChild})
     }
 
     componentDidMount() {
@@ -89,7 +97,6 @@ class AppIndex extends Component {
     renderContent() {
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor ) {
             if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חונך" && this.state.filled === false) {
-
                 return (<Quest refwin = {this.state.isfirst} complt = {this.filled}/>)
             }
             else if (this.state.isfirst.data().first === "true" && this.state.isfirst.data().type === "חניך" && this.state.filled === false) {
@@ -98,29 +105,26 @@ class AppIndex extends Component {
             return (<App/>)
         }
         if (this.state.isLoggedIn && this.state.isAdmin && !this.state.isRakaz && !this.state.isInstructor) {
-            return (<AdminPage exitAdmin={this.exitAdmin}/>)
+            return (<AdminPage exitAdmin={this.exitAdmin} oldusr = {this.state.oldusr} oldpass = {this.state.passwrd}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && this.state.isRakaz && !this.state.isInstructor) {
-            var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
-            if (con) {
-                this.state.isfirst.ref.update({first: "acpt"});
-                return (<RakazPage exitRakaz={this.exitRakaz}/>)
-            }
-            else {
-                alert("אתה צריך לאשר");
-                this.setState({isLoggedIn: false});
-                return;
-            }
-
-            return (<RakazPage exitRakaz={this.exitRakaz}/>)
+            return (<RakazPage exitRakaz={this.exitRakaz} oldusr = {this.state.oldusr} oldpass = {this.state.passwrd}/>)
         }
         if (this.state.isLoggedIn && !this.state.isAdmin && !this.state.isRakaz && this.state.isInstructor) {
-
+            if (this.state.isfirst.data().first === "true") {
+                var con = window.confirm("אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות")
+                if (con) {
+                    this.state.isfirst.ref.update({first: "acpt"});
+                } else {
+                    alert("אתה צריך לאשר");
+                    this.setState({isLoggedIn: false , end: true});
+                }
+            }
             return (<InstructorPage exitInstructor={this.exitInstructor}/>)
         }
-        else
-
-            return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} />)
+        else if(!this.state.isLoggedIn && this.state.end)
+            return (<LoginForm determineIfAdmin={this.determineIfAdmin} isLoggedIn={this.state.isLoggedIn} funcret={this.myCallback}/>)
+        return <div></div>
     }
 
     render() {

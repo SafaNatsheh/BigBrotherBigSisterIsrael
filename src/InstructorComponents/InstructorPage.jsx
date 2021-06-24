@@ -1,9 +1,10 @@
+import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
 
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
-import firebase from "../config/Firebase";
+import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
 //import AddMeeting from "../mainPageComponents/addMeeting"
 
@@ -15,6 +16,8 @@ import {
     NavLink,
 } from "react-router-dom";
 import "./InstructorPage.css";
+import Chat from "../Chat/Chat";
+import CreateNewChat from "../adminComponents/partial/CreateNewChat";
 
 
 
@@ -30,16 +33,23 @@ class InstructorPage extends Component {
         this.uid = firebase.auth().currentUser.uid;
     }
     componentDidMount() {
-        var webSiteWidth = 1280;
-        var webScale = window.screen.width / webSiteWidth
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+            var webSiteWidth = 1280;
+            var webScale = window.screen.width / webSiteWidth
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
 
-        window.addEventListener("resize", this.resizeWin);
-        this.usersRef.doc(this.uid).get()
-            .then((doc) => {
-                this.setState({ user_name: doc.data().fName });
-            })
-            .catch((e) => console.log(e.name));
+            window.addEventListener("resize", this.resizeWin);
+            this.usersRef.doc(this.uid).get()
+                .then((doc) => {
+                    this.setState({user_name: doc.data().fName});
+                })
+                .catch((e) => console.log(e.name));
+        })
     }
 
     resizeWin = (e) => {
@@ -107,6 +117,13 @@ class InstructorPage extends Component {
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/Chat">
+                                <Chat />
+                            </Route>{" "}
+                            <Route path="/CreateChat">
+                                <CreateNewChat />
+                            </Route>{" "}
+                            <Route exact path={"/zoom"} component={Zoom}/>
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -124,34 +141,59 @@ class InstructorPage extends Component {
         return(
             <ul className="nav">
                 <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/Home"
-                activeStyle={activeTabStyle}
-            >
-              <div className= "bait">
-              דף הבית 
-              </div>
-            </NavLink>
-          </li>
+                   <NavLink
+                     className="tab"
+                     to="/Home"
+                     activeStyle={activeTabStyle}
+                   >
+                   <div className= "bait">
+                   דף הבית
+                   </div>
+                   </NavLink>
+                </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/UpdateUser"
                         activeStyle={activeTabStyle}
-                    >
-                        עדכון פרטי משתמש
+                    >עדכון פרטי משתמש
                     </NavLink>
                 </li>
-             
-               
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
                         activeStyle={activeTabStyle}
-                    >
-                        קביעת פגישה
+                    >קביעת פגישות
+                    </NavLink>
+                </li>
+
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/Chat"
+                        activeStyle={activeTabStyle}
+                    >שיחות
+                    </NavLink>
+                </li>
+
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/CreateChat"
+                        activeStyle={activeTabStyle}
+                    >יצירת קבוצה
+                    </NavLink>
+                </li>
+
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/Zoom"
+
+                    >שיחות וידאו
                     </NavLink>
                 </li>
                 <li className="nav-item text-center">

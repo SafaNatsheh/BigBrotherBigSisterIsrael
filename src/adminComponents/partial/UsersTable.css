@@ -55,7 +55,7 @@
     margin-right: 510px;
 
 }
-.button-text{
+.button-text-t{
     color:#fff;
     font-weight: bold;
 
@@ -82,4 +82,21 @@
     position: relative;
     left: 500px;
     top:100px;
+}
+.buttDetails{
+    width:60px;
+    height: 48px;
+    margin-right:20px;
+
+}
+
+.detailsButt{
+    background-color: white;
+}
+
+.ser-design{
+    margin-right: 225px;
+    display:block;
+    border-radius: 5px;
+    border-color: black;
 }

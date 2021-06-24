@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./AdminUser.css";
-import firebase from "../../config/Firebase"
+import firebase, {auth,CreateNewUser,db} from "../../config/Firebase"
 
 class AdminUser extends Component {
   constructor(props) {
     super(props);
-    this.usersRef = firebase.firestore().collection('Users');
+    this.usersRef = db.collection('Users');
     this.state = {
       firstName: "",
       lastName: "",
@@ -18,46 +18,97 @@ class AdminUser extends Component {
       birthDate: "",
       type: "",
       first: "",
-      addOnce: true
+      addOnce: true,
+      changeUser:false,
+      passwrd:"",
+      isauthed: false
     };
+
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.usersRef.doc(user.uid).get().then(doc => {
-          if (!doc.exists && this.state.addOnce) {
-            this.setState({ addOnce: false });
-            let newUser = {
-              fName: this.state.firstName,
-              lName: this.state.lastName,
-              id: this.state.id,
-              email: this.state.email,
-              phone: this.state.phone,
-              area: this.state.area,
-              gender: this.state.gender,
-              type: this.state.type,
-              first: "true",
-              birthDate: this.state.birthDate
-            }
-            if (this.state.address !== "")
-              newUser.address = this.state.address;
-            if (this.state.addOnce === false && this.state.id !== "") {
-              this.usersRef.doc(user.uid).set(newUser)
-                .then(() => {
-                  alert("המשתמש נוסף למערכת בהצלחה!");
-                  this.setState({
-                    addOnce: true,
-                    firstName: "", lastName: "", id: "",
-                    email: "", phone: "", address: "", area: "",
-                    gender: "", birthDate: "", type: ""
+  onLoginFail() {
+    alert("שם משתמש או סיסמא שגויים");
+  }
+
+    onLoginSuccess() {
+      this.props.funcret(this.state.passwrd)
+      this.setState({isauthed:true })
+      this.usersRef.get()
+          .then(querySnap => querySnap.forEach(doc => {
+              if (doc.data().id === this.state.id || doc.data().email === this.state.email) {
+                  alert("כבר קיים משתמש במערכת עם מספר תעודת זהות זהה.");
+                  throw Error(500);
+              }
+          }))
+          .then(() => {
+              CreateNewUser(this.state.email, this.state.id)
+                  .catch(() => {
+                      alert("בעיה בהוספת משתמש חדש למערכת. ייתכן והסיסמא שהוכנסה קצרה או חלשה מדי או שהאימייל שהוכנס כבר קיים במערכת.");
                   })
-                })
-                .catch((e) => console.log(e.name))
-            }
-          }
-        })
+          })
+          .catch(() => console.log("נוצרה בעיה בהוספת משתמש חדש למערכת."))
+  }
+
+
+
+  componentDidMount() {
+    if (this.props.oldpass !== "") {
+
+      this.setState({passwrd: this.props.oldpass , isauthed:true})
+    }
+    firebase.auth().onAuthStateChanged(user=> {
+      if (!user) {
+        window.location.href = "/"
+        return
       }
+
+      if (user.email === this.props.oldusr.email && this.state.isauthed === false && this.state.passwrd !== "") {
+
+      }
+
+       if (this.state.isauthed === true) {
+
+      this.usersRef.doc(user.uid).get().then(doc => {
+            if (!doc.exists && this.state.addOnce) {
+              this.setState({addOnce: false});
+              let newUser = {
+                fName: this.state.firstName,
+                lName: this.state.lastName,
+                id: this.state.id,
+                email: this.state.email,
+                phone: this.state.phone,
+                area: this.state.area,
+                gender: this.state.gender,
+                type: this.state.type,
+                first: "true",
+                birthDate: this.state.birthDate
+              }
+              if (this.state.address !== "")
+                newUser.address = this.state.address;
+              if (this.state.addOnce === false && this.state.id !== "") {
+
+                this.usersRef.doc(user.uid).set(newUser)
+                    .then(() => {
+                      console.log(user.uid)
+                      alert("המשתמש נוסף למערכת בהצלחה!");
+                    }).then(()=>{
+                  auth.signInWithEmailAndPassword(this.props.oldusr.email, this.state.passwrd).then(()=>{
+                    this.setState({
+                      addOnce: true,
+                      firstName: "", lastName: "", id: "",
+                      email: "", phone: "", address: "", area: "",
+                      gender: "", birthDate: "", type: "", first: "true"
+                    })
+                  })
+                }).catch((e) => console.log(e.name))
+
+              }
+            }
+
+
+          }
+      )
+    }
     })
   }
 
@@ -74,20 +125,20 @@ class AdminUser extends Component {
         alert("מספר טלפון לא תקין");
         return;
     }
-    this.usersRef.get()
-      .then(querySnap => querySnap.forEach(doc => {
-        if (doc.data().id === this.state.id && doc.data().email === this.state.email) {
-          alert("כבר קיים משתמש במערכת עם מספר תעודת זהות זהה.");
-          throw Error(500);
-        }
-      }))
-      .then(() => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.id)
-          .catch(() => {
-            alert("בעיה בהוספת משתמש חדש למערכת. ייתכן והסיסמא שהוכנסה קצרה או חלשה מדי או שהאימייל שהוכנס כבר קיים במערכת.");
-          })
-      })
-      .catch(() => console.log("נוצרה בעיה בהוספת משתמש חדש למערכת."))
+    let newDate = new Date();
+    let year = newDate.getFullYear();
+
+    if (year - (parseInt(this.state.birthDate.substring(0,4) , 10 )) < 6) {
+      alert("תאריך לידה לא תקין");
+      return;
+    }
+    if (this.state.isauthed === true) {
+      this.onLoginSuccess()
+    }
+    else {
+      auth.signInWithEmailAndPassword(this.props.oldusr.email, this.state.passwrd).then(this.onLoginSuccess.bind(this))
+          .catch(this.onLoginFail.bind(this));
+    }
   }
 
   render() {
@@ -237,6 +288,19 @@ class AdminUser extends Component {
           </div>
         </div>
 
+        {this.state.isauthed === false && <div className="form-group col-md-4">
+          <h3>אמות סיסמת אדמין</h3>
+          <input
+              required
+              type="text"
+              className="form-control"
+              id="password"
+              value={this.state.passwrd}
+              placeholder="סיסמת אדמין"
+              onChange={(e) => this.setState({passwrd: e.target.value})}
+          />
+        </div>
+        }
         <button type="submit" className="btn btn-success add-new-user-btn">
           הוסף משתמש חדש
         </button>

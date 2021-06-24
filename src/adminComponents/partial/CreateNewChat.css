@@ -1,0 +1,28 @@
+.button-text-f{
+    color: #fff;
+    font-weight: normal;
+}
+
+.but-new-design{
+
+    float: right;
+    margin-right: 780px;
+    margin-top: 0px;
+    color:#dc3545;
+}
+
+.search-design{
+    margin-right: 425px;
+    display:block;
+    margin-top: -30px;
+    border-radius: 5px;
+    border-color: black;
+
+}
+.group-design{
+    margin-right: 225px;
+    display:block;
+    /*margin-top: -30px;*/
+    border-radius: 5px;
+    border-color: black;
+}

@@ -1,3 +1,4 @@
+import Zoom from "../Zoom/Zoom"
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
 import Chat from "../Chat/Chat"
@@ -8,7 +9,7 @@ import VideoPage from "../navBarComponents/videoComponents/main/VideoPage";
 import ChangePassword from "./ChangePassword"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import firebase from "../config/Firebase"
+import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
 //import AddMeeting from "./addMeeting"
@@ -189,7 +190,7 @@ class App extends Component {
     });
   }
 
-  removeDocs = () => {
+  removeDocs = () => {/*
     var ref = this.usersRef
       .doc(this.state.userDetails.link_user)
       .collection('Rooms');
@@ -217,7 +218,7 @@ class App extends Component {
       })
       .catch(() => {
         console.log("Problem in removing Doc")
-      })
+      })*/
   }
 
   updateDisconnection = () => {
@@ -248,13 +249,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    var webSiteWidth = 1280;
-    var webScale = window.screen.width / webSiteWidth
-    document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
+    auth.onAuthStateChanged(user=> {
+      console.log(user)
+      if (!user) {
+        window.location.href = "/"
+        return
+      }
+      var webSiteWidth = 1280;
+      var webScale = window.screen.width / webSiteWidth
+      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
 
-    window.addEventListener("resize", this.resizeWin);
-    this.getUserName();
-    this.getProfilePictures();
+      window.addEventListener("resize", this.resizeWin);
+      this.getUserName();
+      this.getProfilePictures();
+    })
   }
 
   componentDidUpdate(prevProp, prevState) {
@@ -320,11 +328,11 @@ class App extends Component {
       e.preventDefault();
   }
 
-  routeToVideo = () => {
+  routeToVideo = () => {/*
     if (this.state.directVid)
       return (<Redirect push to="/VideoPage" ></Redirect>);
     return null;
-  }
+  */}
 
   getWallRouteStatus = () => {
     this.setState({ routeToWall: true })
@@ -349,19 +357,8 @@ class App extends Component {
     }
     return null;
   }
-
-  waitUntilPageIsLoaded = () => {
-    if (this.state.loadingUser || this.state.loadingLinkedUser)
-      return (
-        <div className="loader-element">
-          <h1>אנא המתן... </h1>
-          <Loader color="#776078" width="300px" height="300px" type="Bars" />
-        </div>
-      );
-    else
-      return (
-        <Switch>
-          <Route path="/VideoPage">
+  /*
+    <Route path="/VideoPage">
             <VideoPage
               userName={this.state.userDetails.fName}
               linkedName={this.state.linkedUserDetails.fName}
@@ -376,6 +373,19 @@ class App extends Component {
             />
 
           </Route>{" "}
+  */
+  waitUntilPageIsLoaded = () => {
+    if (this.state.loadingUser || this.state.loadingLinkedUser)
+      return (
+        <div className="loader-element">
+          <h1>אנא המתן... </h1>
+          <Loader color="#776078" width="300px" height="300px" type="Bars" />
+        </div>
+      );
+    else
+      return (
+        <Switch>
+
           <Route path="/Wall">
             <div className="app-page">
               <Profile
@@ -423,7 +433,7 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
-          <Redirect push to="/HomePage" ></Redirect>
+          <Route exact path={"/zoom"} component={Zoom}/>
         </Switch>
       );
   }
@@ -450,6 +460,27 @@ class App extends Component {
       backgroundColor: "#4CAF50",
     };
 
+    /*
+      <li className="nav-item ">
+                  <NavLink
+                    className="tab"
+                    to="/Wall"
+                    activeStyle={activeTabStyle}
+                    onClick={(event) => this.checkIfVideo(event)}
+                  >
+                    קיר{" "}
+                  </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item ">
+                  <NavLink
+                    className="tab"
+                    to="/VideoPage"
+                    activeStyle={activeTabStyle}
+                  >
+                    שיחת וידאו{" "}
+                  </NavLink>{" "}
+                </li>{" "}
+     */
     return (
       <div className="main-page-app" style={{ zoom: this.state.zoom }}>
         <Router>
@@ -477,23 +508,14 @@ class App extends Component {
                 </li>{" "}
                 <li className="nav-item ">
                   <NavLink
-                    className="tab"
-                    to="/Wall"
-                    activeStyle={activeTabStyle}
-                    onClick={(event) => this.checkIfVideo(event)}
-                  >
-                    קיר{" "}
-                  </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item ">
-                  <NavLink
-                    className="tab"
-                    to="/VideoPage"
-                    activeStyle={activeTabStyle}
+                      className="tab"
+                      to="/Zoom"
+                     
                   >
                     שיחת וידאו{" "}
                   </NavLink>{" "}
                 </li>{" "}
+
                 <li className="nav-item">
                   <NavLink
                     className="tab"

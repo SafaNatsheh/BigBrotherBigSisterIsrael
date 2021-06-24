@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./Meetings.css";
-
-
-import firebase from "../config/Firebase"
+import firebase, {auth} from "../config/Firebase"
 import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
 
 class Meetings extends Component {
@@ -81,7 +79,15 @@ class Meetings extends Component {
     }
 
     componentDidMount() {
-        this.getMeetings();
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+
+            this.getMeetings();
+        })
     }
 
     updateTableAfterDelete = (meetingsArr) => {
@@ -173,7 +179,7 @@ class Meetings extends Component {
                     description: this.state.description
                 })
                 newMeetingObj.push({});
-                let docRef= await this.myMeetingsRef.add(newMeetings[i])
+                let docRef=  this.myMeetingsRef.add(newMeetings[i])
                 this.newDocId = docRef.id;
                 // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
@@ -288,8 +294,7 @@ class Meetings extends Component {
                             className="fLabels"
                             style={{ float: "right" }}
                             htmlFor="date"
-                        >
-                            תאריך הפגישה
+                        ><h6>תאריך הפגישה</h6>
                         </label>
                         <input
                             onChange={(e) => this.setState({ date: e.target.value })}
@@ -307,8 +312,7 @@ class Meetings extends Component {
                             className="fLabels"
                             style={{ float: "right" }}
                             htmlFor="hour"
-                        >
-                            שעת הפגישה
+                        ><h6>שעת הפגישה</h6>
                         </label>
                         <input
                             onChange={(e) => this.setState({ time: e.target.value })}
@@ -326,8 +330,7 @@ class Meetings extends Component {
                             className="fLabels"
                             style={{ float: "right" }}
                             htmlFor="place"
-                        >
-                            מיקום הפגישה
+                        ><h6>מיקום הפגישה</h6>
                         </label>
                         <input
                             onChange={(e) => this.setState({ place: e.target.value })}
@@ -341,12 +344,10 @@ class Meetings extends Component {
                     </div>
                     <div className="descrip">
                         <label
-                            className="fLabels"
+                            className="fLabels "
                             style={{ float: "right" }}
                             htmlFor="description"
-                        >
-                            {/* <!-description--> */}
-                            תיאור
+                        ><h6>תיאור</h6>
                         </label>
                         <input
                             onChange={(e) => this.setState({ description: e.target.value })}
@@ -357,20 +358,22 @@ class Meetings extends Component {
                             placeholder="תיאור"
                         />
                     </div>
+
+
+
                     <div className="form-group">
-                                 <div className= "table-w">
+                        <div className= "table-w">
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
                             htmlFor="description"
                         >
-
-
                         </label>
                         <h6>משתתפים</h6>
                         <input
+                            className="radius_to"
                             type="text"
-                            placeholder="search"
+                            placeholder="חיפוש"
                             onChange={(e) => this.setState({ search: e.target.value })}
                         />
                         </div>
@@ -398,6 +401,9 @@ class Meetings extends Component {
                             </div>
                         </table>
                     </div>
+
+
+
                     <div className="form-group">
                         <input
                             type="checkbox"

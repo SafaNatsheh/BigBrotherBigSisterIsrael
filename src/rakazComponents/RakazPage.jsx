@@ -1,8 +1,9 @@
+import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
 import Home from "./Home"
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Meetings from "./Meetings";
-import firebase from "../config/Firebase";
+import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
 
 import {
@@ -13,6 +14,9 @@ import {
 } from "react-router-dom";
 import "./RakazPage.css";
 import RakazUser from "./RakazUser";
+import Chat from "../Chat/Chat";
+import CreateNewChat from "../adminComponents/partial/CreateNewChat";
+import UsersTable from "../adminComponents/partial/UsersTable";
 
 class RakazPage extends Component {
     constructor(props) {
@@ -26,16 +30,23 @@ class RakazPage extends Component {
         this.uid = firebase.auth().currentUser.uid;
     }
     componentDidMount() {
-        var webSiteWidth = 1280;
-        var webScale = window.screen.width / webSiteWidth
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
+        auth.onAuthStateChanged(user=> {
+            console.log(user)
+            if (!user) {
+                window.location.href = "/"
+                return
+            }
+            var webSiteWidth = 1280;
+            var webScale = window.screen.width / webSiteWidth
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=' + webSiteWidth + ', initial-scale=' + webScale + '');
 
-        window.addEventListener("resize", this.resizeWin);
-        this.usersRef.doc(this.uid).get()
-            .then((doc) => {
-                this.setState({ user_name: doc.data().fName });
-            })
-            .catch((e) => console.log(e.name));
+            window.addEventListener("resize", this.resizeWin);
+            this.usersRef.doc(this.uid).get()
+                .then((doc) => {
+                    this.setState({user_name: doc.data().fName});
+                })
+                .catch((e) => console.log(e.name));
+        })
     }
 
     resizeWin = (e) => {
@@ -102,9 +113,19 @@ class RakazPage extends Component {
                             <Route path="/Home">
                                 <Home />
                             </Route>
+                            <Route path="/UsersTable">
+                                <UsersTable />
+                            </Route>{" "}
                             <Route path="/Meetings">
                                 <Meetings />
                             </Route>{" "}
+                            <Route path="/Chat">
+                                <Chat />
+                            </Route>{" "}
+                            <Route path="/CreateChat">
+                                <CreateNewChat />
+                            </Route>{" "}
+                            <Route exact path={"/zoom"} component={Zoom}/>
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -140,16 +161,24 @@ class RakazPage extends Component {
                         הוספת משתמש חדש
                     </NavLink>
                 </li>
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/UpdateUser"*/}
+                {/*        activeStyle={activeTabStyle}*/}
+                {/*    >*/}
+                {/*        עדכון פרטי משתמש*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
                 <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/UpdateUser"
-                        activeStyle={activeTabStyle}
-                    >
-                        עדכון פרטי משתמש
-                    </NavLink>
+                <NavLink
+                    className="tab"
+                    to="/UsersTable"
+                    activeStyle={activeTabStyle}
+                >
+                    רשימת משתמשים
+                </NavLink>
                 </li>
-               
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
@@ -159,6 +188,34 @@ class RakazPage extends Component {
                         קביעת פגישה
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/Chat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        שיחות{" "}
+                    </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item">
+                    <NavLink
+                        className="tab"
+                        to="/CreateChat"
+                        activeStyle={activeTabStyle}
+
+                    >
+                        יצירת קבוצה{" "}
+                    </NavLink>{" "}
+                </li>{" "}
+                <li className="nav-item ">
+                    <NavLink
+                        className="tab"
+                        to="/Zoom"
+                    >
+                        שיחת וידאו{" "}
+                    </NavLink>{" "}
+                </li>{" "}
             </ul>
         )
     }
