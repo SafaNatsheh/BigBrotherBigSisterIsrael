@@ -13,8 +13,12 @@
     "firebase": "^8.6.3",
     "mailjs": "^0.1.9",
     "mui-datatables": "^3.7.7",
+
+    "react-dom": "^16.13.1",
+
     "react": "^17.0.1",
     "react-dom": "^17.0.2",
+
     "react-images-upload": "^1.2.8",
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
@@ -51,6 +55,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+
+  },
+  "devDependencies": {
+    "jquery": "^3.6.0",
+    "react": "^16.14.0"
+
   }
 
 }
