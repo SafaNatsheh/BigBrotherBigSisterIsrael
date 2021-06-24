@@ -107,7 +107,7 @@ class RakazPage extends Component {
                             { <Route path="/RakazUser">
                                 <RakazUser />
                             </Route> }
-                            <Route path="/UpdateUser">
+                            <Route path="/UpdateUser/:personId">
                                 <UpdateUser />
                             </Route>
                             <Route path="/Home">
