@@ -130,6 +130,9 @@ class RakazPage extends Component {
                             <Route path="/ReportTable">
                                 <ReportTable />
                             </Route>{" "}
+                            <Route path="/ReportTable/:personId">
+                                <ReportTable />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>

@@ -24,6 +24,10 @@ class ReportTable extends Component {
 	}
 
 	componentDidMount() {
+		if(window.location.href.split("ReportTable/")[1] !== undefined)
+		{
+			this.setState({ searchTerm: window.location.href.split("ReportTable/")[1] })
+		}
 		console.log("in1")
 		console.log(this.MeetingsListRef)
 		//get all the meetings and put them on an array

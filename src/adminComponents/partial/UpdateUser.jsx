@@ -32,7 +32,9 @@ class UpdateUser extends Component {
     }
 
     componentDidMount() {
-        this.setState({ id: window.location.href.split("UpdateUser/")[1] })
+        if(window.location.href.split("UpdateUser/")[1] !== undefined){
+            this.setState({ id: window.location.href.split("UpdateUser/")[1] })
+        }
     }
 
     getUserByEmailOrId(event) {

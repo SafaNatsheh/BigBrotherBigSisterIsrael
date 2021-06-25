@@ -120,6 +120,9 @@ class AdminPage extends Component {
               <Route path="/AdminUser">
                 <AdminUser oldusr={this.props.oldusr} oldpass={this.state.passwrd} funcret={this.myCallback}/>
               </Route>
+                <Route path="/UpdateUser">
+                    <UpdateUser />
+                </Route>
               <Route path="/UpdateUser/:personId">
                 <UpdateUser />
               </Route>
@@ -142,6 +145,9 @@ class AdminPage extends Component {
                     {/*<UserDetails />*/}
                 </Route>{" "}
                 <Route path="/ReportTable">
+                    <ReportTable />
+                </Route>{" "}
+                <Route path="/ReportTable/:personId">
                     <ReportTable />
                 </Route>{" "}
                 <Route path="/addMeeting">
