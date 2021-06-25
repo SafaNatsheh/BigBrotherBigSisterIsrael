@@ -109,7 +109,7 @@ export class NewsList extends React.Component {
     renderNextMeeting = () => {
         if (this.props.next_meeting !== null)
             return (
-                <table className="table table-hover h4 table-dark rounded text-white w-75 table-sm next-meeting-table">
+                <table className="table table-hover h4 table-dark rounded text-white w-75 table-sm next-meeting-table" style={{left:"90px"}}>
                     <tbody>
                         <tr>
                             <td className="align-middle">{this.formatDate(this.props.next_meeting.date, false)}</td>
@@ -133,15 +133,15 @@ export class NewsList extends React.Component {
                     <li className="list-group-item active header-list"><h3>מה התחדש לאחרונה</h3></li>
                     {this.renderNewVideo()}
                     {this.renderNewPost()}
-                    <li className="list-group-item list-group-item-dark">
+                    <li className="list-group-item list-group-item-dark ">
                         פגישה קרובה:
                         {this.renderNextMeeting()}
-                        <button
-                            hidden={!this.props.next_meeting}
-                            className="btn btn-danger rounded-pill meeting-btn"
-                            onClick={this.props.routeToMeeting}
-                        >צפה ביומן הפגישות!
-                        </button>
+                        {/*<button*/}
+                        {/*    hidden={!this.props.next_meeting}*/}
+                        {/*    className="btn btn-danger rounded-pill meeting-btn"*/}
+                        {/*    onClick={this.props.routeToMeeting}*/}
+                        {/*>צפה ביומן הפגישות!*/}
+                        {/*</button>*/}
                     </li>
                     {this.connectionStatus()}
                 </ul>

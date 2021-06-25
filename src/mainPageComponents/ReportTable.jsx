@@ -221,7 +221,7 @@ class ReportTable extends Component {
 				className="button-print"
 				onClick={this.handleSubmit}
 			>
-				<div className="button-text-new">
+				<div className="button-text-New">
 					הדפס דוח שעות
 				</div>
 			</button>
