@@ -88,6 +88,17 @@ class UsersTable extends Component {
          }
         return
     }
+    getTable(person) {
+        if (person.type === "מדריך" || person.type === "חונך")
+        {
+            window.location.href = "/ReportTable/"+person.id;
+        }
+        else
+        {
+            alert("אין דוח");
+        }
+
+    }
 
 
 
@@ -191,6 +202,7 @@ class UsersTable extends Component {
                             <th>דוא"ל</th>
                             <th>סוג משתמש</th>
                             <th>פרטים</th>
+                            <th>דוחות</th>
                             <th>בחר</th>
                         </tr>
                         </thead>
@@ -231,6 +243,7 @@ class UsersTable extends Component {
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td className='buttDetails'><input className='detailsButt' value="הצג פרטים" type ='button' onClick={(event)=>this.getDetails(person)}/></td>
+                        <td className='buttDetails'><input className='detailsButt' value="הצג דוח" type ='button' onClick={(event)=>this.getTable(person)}/></td>
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
                 )))
         }
@@ -241,6 +254,7 @@ class UsersTable extends Component {
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td className='buttDetails'><input className='detailsButt' value="הצג פרטים" type ='button' onClick={(event)=>this.getDetails(person)}/></td>
+                        <td className='buttDetails'><input className='detailsButt' value="הצג דוח" type ='button' onClick={(event)=>this.getTable(person)}/></td>
                         <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(e) => { if (e.target.checked) {this.state.checkedList.push(person.id); } else {this.state.checkedList.pop(person.id); }}}/></td></tr>
                 )))
         }
