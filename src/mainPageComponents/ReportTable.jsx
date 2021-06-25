@@ -99,64 +99,74 @@ class ReportTable extends Component {
 
 		return (
 
-			<div className="main-background" >
+			<div className="MAIN-background" >
 				{/*<form className="report-form" onSubmit={this.handleSubmit}>*/}
 				<br />
-				<div className="form-group">
-					<h1 className="report-title"><u>הצג דוח פגישות </u></h1>
-
+				<div className="forms-groups title-design">
+					<h1><u className="title-design2">הצג דוח פגישות </u></h1>
+					<div className="right-all-div">
+					<label
+						className="FLabels"
+						style={{ float: "right" }}
+						htmlFor="date"
+					>
+						חיפוש לפי מס' תעודת זהות
 					<input type="text"
-						   placeholder="חיפוש לפי מס' תעודת זהות "
+						   className="new-design-to-input form-control"
+						   placeholder="תעודת זהות "
 						   value={this.state.searchTerm}
 						   onChange={(e) => this.setState({ searchTerm: e.target.value })}
-						   style={{ marginRight: "225px",width: "50%" ,display:"block" }}/>
+						  />
 
-
+					</label>
 					<label
-						className="fLabels"
+						className="FLabels "
 						style={{ float: "right" }}
 						htmlFor="date"
 					>
 						בחר טווח תארכים  מתאריך:
-					</label>
+
 					<input
 						onChange={(e) => {
 							let t=new Date(e.target.value)
 							console.log(t)
 							this.setState({searchTerm:"56789876", fromDate: new Date(e.target.value) })}}
 						type="date"
-						className="form-control"
+						className="new-design-to-input form-control"
 						id="fromDate"
 						placeholder="מתאריך"
 						//value={this.state.fromDate}
 						required
 					/>
+					</label>
 					<label
-						className="fLabels"
+						className="right-input3"
 						style={{ float: "right" }}
 						htmlFor="date"
 					>
-						:עד תאריך
-					</label>
+						עד תאריך:
+
 					<input
 						onChange={(e) => this.setState({ toDate:new Date(e.target.value) })}
 						type="date"
-						className="form-control"
+						className="new-design-to-input form-control"
 						id="toDate"
 						placeholder="עד תאריך"
 						//	value={this.state.toDate}
 						required
 					/>
+				    </label>
 
 
 					<button
 						className="btn btn-success setup-meeting-btn"
-						style={{ float: "right", marginRight: "700px" }}
+						style={{ float: "right", marginRight: "1230px", marginTop:"-46px", width:"230px" }}
 						onClick={()=>{
 							this.handleSubmit()}}
 					>
 						הצג דוח שעות
 					</button>
+				</div>
 				</div>
 				{/*</form>*/}
 				<div>
@@ -173,29 +183,27 @@ class ReportTable extends Component {
 
 	renderHeader(){
 		return(
-			<div>
-				<table className="table table-bordered">
+			<div className="form-group">
+			<div className="now-table">
 
+				<table className="table table-bordered">
 					<thead>
-					<tr>
-						<th>תאריך</th>
-						<th>זמן התחלה </th>
-						<th>זמן סיום </th>
-						<th>זמן נסיעה </th>
-						<th>תיאור פגישה </th>
-						<th>אורך פגישה כולל זמן נסיעה </th>
+					<tr className="new-color">
+						<th className="table-lay">תאריך</th>
+						<th className="table-lay">זמן התחלה </th>
+						<th className="table-lay">זמן סיום </th>
+						<th className="table-lay">זמן נסיעה </th>
+						<th className="table-lay">תיאור פגישה </th>
+						<th className="table-lay">אורך פגישה כולל זמן נסיעה </th>
 					</tr>
 					</thead>
 
 					<tbody>
-
 					{ this.renderTable()}
 					</tbody>
-					<tfoot>
-					<tr>
-						<td>
-							ס"ה שעות
-						</td>
+					<tfoot className="background-footer">
+					<tr >
+						<td>ס"ה שעות</td>
 						<td>
 							{
 								this.state.meetingsArr.length >0 ?
@@ -206,20 +214,18 @@ class ReportTable extends Component {
 					</tfoot>
 				</table>
 
-
-
-				<div className="button">
-					<br />
-					<button
-						className="button-de"
-						style={{ float: "right", marginRight: "780px" ,marginTop:"0px", color:"#dc3545"  }}
-						onClick={this.handleSubmit}
-					>
-						<div className="button-text">
-							הדפס דוח שעות
-						</div>
-					</button>
+			</div>
+		    <div className="Button-Print">
+			<br />
+			<button
+				className="button-print"
+				onClick={this.handleSubmit}
+			>
+				<div className="button-text-new">
+					הדפס דוח שעות
 				</div>
+			</button>
+		</div>
 			</div>
 		);
 	}
@@ -248,7 +254,7 @@ class ReportTable extends Component {
 			this.state.meetingsArr
 				.map((meeting,index) => (
 
-					<tr key={index}>
+					<tr className="new-color2" key={index}>
 						<td>{this.test(meeting)}
 						</td>
 						<td>{meeting.startTime}</td>

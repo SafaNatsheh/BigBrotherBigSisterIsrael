@@ -7,9 +7,10 @@ import UsersTable from "../partial/UsersTable"
 import LinkUsers from "../partial/LinkUsers";
 import firebase, {auth} from "../../config/Firebase";
 import Meetings from "../../rakazComponents/Meetings";
-import AddMeeting from "../../mainPageComponents/addMeeting"
+//import AddMeeting from "../../mainPageComponents/addMeeting"
 import ReportTable from "../../mainPageComponents/ReportTable"
 import Home from "../../rakazComponents/Home";
+
 import logo from '../../static_pictures/big_brothers_big_sisters.png';
 
 import {
@@ -21,7 +22,6 @@ import {
 import "./AdminPage.css";
 import CreateNewChat from "../partial/CreateNewChat";
 //import UserDetails from "../partial/UserDetails";
-//import addMeeting from "../partial/addMeeting";
 //import ReportTable from "../partial/ReportTable";
 class AdminPage extends Component {
   constructor(props) {
@@ -135,9 +135,9 @@ class AdminPage extends Component {
               <Route path="/Meetings">
                 <Meetings />
               </Route>
-              <Route path="/AddMeeting">
-                <AddMeeting />
-             </Route>{" "}
+             {/* <Route path="/AddMeeting">*/}
+             {/*   <AddMeeting />*/}
+             {/*</Route>{" "}*/}
 
               <Route path="/ReportTable">
                 <ReportTable />
@@ -154,9 +154,6 @@ class AdminPage extends Component {
                 </Route>{" "}
                 <Route path="/ReportTable">
                     {/*} <ReportTable />*/}
-                </Route>{" "}
-                <Route path="/addMeeting">
-                    {/*<addMeeting />*/}
                 </Route>{" "}
 
                 <Route exact path={"/zoom"} component={Zoom}/>
@@ -245,15 +242,16 @@ class AdminPage extends Component {
             </NavLink>
           </li>
 
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/AddMeeting"
-                activeStyle={activeTabStyle}
-            >
-              הוספת פגישה
-            </NavLink>
-          </li>
+          {/*<li className="nav-item text-center">*/}
+          {/*  <NavLink*/}
+          {/*      className="tab"*/}
+          {/*      to="/AddMeeting"*/}
+          {/*      activeStyle={activeTabStyle}*/}
+          {/*  >*/}
+          {/*    הוספת פגישה*/}
+          {/*  </NavLink>*/}
+          {/*</li>*/}
+
             <li className="nav-item text-center">
                 <NavLink
                     className="tab"
