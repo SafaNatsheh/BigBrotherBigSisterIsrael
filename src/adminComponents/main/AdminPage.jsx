@@ -9,7 +9,6 @@ import firebase, {auth} from "../../config/Firebase";
 import Meetings from "../../rakazComponents/Meetings";
 import Home from "../../rakazComponents/Home";
 import logo from '../../static_pictures/big_brothers_big_sisters.png';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,7 +19,7 @@ import "./AdminPage.css";
 import CreateNewChat from "../partial/CreateNewChat";
 //import UserDetails from "../partial/UserDetails";
 //import addMeeting from "../partial/addMeeting";
-//import ReportTable from "../partial/ReportTable";
+import ReportTable from "../../mainPageComponents/ReportTable";
 class AdminPage extends Component {
   constructor(props) {
     super(props);
@@ -143,7 +142,7 @@ class AdminPage extends Component {
                     {/*<UserDetails />*/}
                 </Route>{" "}
                 <Route path="/ReportTable">
-                    {/*} <ReportTable />*/}
+                    <ReportTable />
                 </Route>{" "}
                 <Route path="/addMeeting">
                     {/*<addMeeting />*/}
@@ -242,6 +241,15 @@ class AdminPage extends Component {
                 >יצירת קבוצה
                 </NavLink>
             </li>
+
+            <li className="nav-item text-center">
+                <NavLink
+                    className="tab"
+                    to="/ReportTable"
+                >
+                    הצג דוח שעות
+                </NavLink>
+            </li>{" "}
 
             <li className="nav-item ">
                 <NavLink
