@@ -175,6 +175,7 @@ class Meetings extends Component {
                     date: dates[i],
                     send_list: this.state.checkList,
                     timeStamp: time_stamp,
+                    time: this.state.time,
                     place: this.state.place,
                     description: this.state.description
                 })

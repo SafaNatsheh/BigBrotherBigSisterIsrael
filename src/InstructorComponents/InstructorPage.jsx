@@ -1,12 +1,11 @@
 import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
-
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
 import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
-
+import AddMeeting from "../mainPageComponents/addMeeting"
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,6 +15,7 @@ import {
 import "./InstructorPage.css";
 import Chat from "../Chat/Chat";
 import CreateNewChat from "../adminComponents/partial/CreateNewChat";
+
 
 
 class InstructorPage extends Component {
@@ -121,6 +121,9 @@ class InstructorPage extends Component {
                                 <CreateNewChat />
                             </Route>{" "}
                             <Route exact path={"/zoom"} component={Zoom}/>
+                            <Route path="/AddMeeting">
+                                <AddMeeting />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -191,6 +194,14 @@ class InstructorPage extends Component {
                         to="/Zoom"
 
                     >שיחות וידאו
+                    </NavLink>
+                </li>
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/AddMeeting"
+                    >
+                        הוספת פגישה
                     </NavLink>
                 </li>
             </ul>

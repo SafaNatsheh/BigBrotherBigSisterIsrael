@@ -254,7 +254,7 @@ class LinkUsers extends Component {
                         />
                         <h5>
 
-                            <input type='checkbox' className=' new_design_checkbox' onChange={(e)=> {
+                            <input type='checkbox' className='new_design_checkbox' onChange={(e)=> {
                                 if (this.state.lnkstat === "0"){
                                     this.setState({ lnkstat: "1" });
                                 }
@@ -296,7 +296,7 @@ class LinkUsers extends Component {
 
 
                         <br/>
-                        <div className ='container__table new_radius'>
+                        <div className ='container__table'>
                         <table className="table table-bordered ">
                             <thead>
                             <tr>
@@ -323,7 +323,7 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
 
-                        <div className ='container__table1 new_radius'>
+                        <div className ='container__table1'>
                         <table className="table table-bordered ">
                             <thead>
                             {
@@ -354,7 +354,7 @@ class LinkUsers extends Component {
                             }</tbody>
                         </table>
                         </div>
-                        <button type="submit" className="button-text">בצע פעולות</button>
+                        <button type="submit" className="btn btn-success button-text-new">בצע פעולות</button>
 
                     </div>
                 </div>
