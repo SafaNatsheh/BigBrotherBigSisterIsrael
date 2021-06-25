@@ -14,7 +14,6 @@ class CreateNewChat extends Component {
             searchTerm: "",
             groupName: "",
             people:[],
-            pathToStorage:"profile_pictures/"
         }
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid;
@@ -147,13 +146,34 @@ class CreateNewChat extends Component {
     }
     renderTable() {
 
-
-        return (this.state.people
-                .filter(person => person.fName.indexOf(this.state.searchTerm)>-1)
+        if (this.state.type === "אדמין")
+        {
+            return (this.state.people
+                .filter( person =>  person.fName.indexOf(this.state.searchTerm)>-1)
                 .map((person) => (
                     <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push({id: person.id,name: person.fName + " " + person.lName})}/></td></tr>
                 )))
+        }
+        else if(this.state.type === "רכז")
+        {
+            return (this.state.people
+                .filter( person => person.type !== "אדמין" && person.fName.indexOf(this.state.searchTerm)>-1)
+                .map((person) => (
+                    <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push({id: person.id,name: person.fName + " " + person.lName})}/></td></tr>
+                )))
+        }
+        else
+        {
+            return (this.state.people
+                .filter( person => person.type !== "אדמין" && person.type !== "רכז" && person.fName.indexOf(this.state.searchTerm)>-1)
+                .map((person) => (
+                    <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => this.state.checkedList.push({id: person.id,name: person.fName + " " + person.lName})}/></td></tr>
+                )))
+        }
+
 
     }
 
