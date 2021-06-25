@@ -5,23 +5,16 @@ import {firestore} from "firebase";
 import firebase from "../config/Firebase";
 function Sidebar(){
     const [id,setId] = useState("");
-    //const [linkedId,setLinkedId] = useState("");
     const [rooms,setRooms] = useState([]);
     const [searchTerm,setSearchTerm] = useState("");
     const db = firebase.firestore().collection('Chats');
-   // const userRef =firebase.firestore().collection('Users');
     const uid = firebase.auth().currentUser.uid;
-    //const [linkedUid,setLinked] = useState("");
-    const [bool,setBool] =useState(false);
-    //firebase.firestore().collection('Users').doc(uid).onSnapshot(snapshot => (setLinked(snapshot.data().link_user)))
     firebase.firestore().collection('Users').get().then((querySnapshot)=>{
         querySnapshot.docs.forEach((doc) => {
             if(doc.id === uid){
                 setId(doc.data().id);
 
-            }/*
-            if(doc.id === linkedUid)
-                setLinkedId(doc.data().id);*/
+            }
 
         });
     });
@@ -38,13 +31,6 @@ function Sidebar(){
 
     },[]);
 
-    /*firebase.firestore().collection('Chats').get().then((querySnapshot) => {
-        querySnapshot.docs.forEach(doc => {
-            if((doc.data().members.length ==2)&&(arrayContainsID(id,doc.data().members))&&(arrayContainsID(linkedId,doc.data().members)))
-                setBool(true);
-
-        });
-    })*/
     function arrayContainsID(id,arr){
         for(let i=0;i<arr.length;i++)
         {

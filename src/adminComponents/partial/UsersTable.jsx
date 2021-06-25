@@ -81,7 +81,7 @@ class UsersTable extends Component {
             "\n כתובת: "+person.address+"\n אֵזוֹר: " + person.area + " \n\nהאם אתה רוצה לעדקן מידע המשתמש הזה? ");
          if (nwalr) {
 
-             window.location.href = "/UpdateUser";
+             window.location.href = "/UpdateUser/"+person.id;
          }
          else{
                  console.log("error")
