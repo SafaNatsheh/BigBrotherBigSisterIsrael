@@ -13,6 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
+//import AddMeeting from "./addMeeting"
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,7 +22,7 @@ import {
   NavLink,
   Redirect,
 } from "react-router-dom";
-import Home from "../rakazComponents/Home";
+
 
 class App extends Component {
   constructor(props) {
@@ -386,23 +388,23 @@ class App extends Component {
       return (
         <Switch>
 
-          {/*<Route path="/HomePage">*/}
-          {/*  <HomePage*/}
-          {/*      myDetails={this.state.userDetails}*/}
-          {/*      linkedDetails={this.state.linkedUserDetails}*/}
-          {/*      directVid={this.directVid}*/}
-          {/*      newVideo={this.state.newVideo}*/}
-          {/*      otherUserConnection={this.state.otherUserConnection}*/}
-          {/*      otherUserLastOnline={this.state.otherUserLastOnline}*/}
-          {/*      next_meeting={this.state.next_meeting}*/}
-          {/*      getNextMeeting={this.getNextMeeting}*/}
-          {/*      loadingNextMeeting={this.state.loadingNextMeeting}*/}
-          {/*      routeToWall={this.getWallRouteStatus}*/}
-          {/*      routeToMeeting={this.getMeetingRouteStatus}*/}
-          {/*      myProfilePic={this.state.profilePicture}*/}
-          {/*      friendProfilePic={this.state.friendProfile}*/}
-          {/*      changeProfilePicture={this.changeProfilePicture}*/}
-          {/*  /></Route>*/}
+          <Route exact path="/">
+            <HomePage
+                myDetails={this.state.userDetails}
+                linkedDetails={this.state.linkedUserDetails}
+                directVid={this.directVid}
+                newVideo={this.state.newVideo}
+                otherUserConnection={this.state.otherUserConnection}
+                otherUserLastOnline={this.state.otherUserLastOnline}
+                next_meeting={this.state.next_meeting}
+                getNextMeeting={this.getNextMeeting}
+                loadingNextMeeting={this.state.loadingNextMeeting}
+                routeToWall={this.getWallRouteStatus}
+                routeToMeeting={this.getMeetingRouteStatus}
+                myProfilePic={this.state.profilePicture}
+                friendProfilePic={this.state.friendProfile}
+                changeProfilePicture={this.changeProfilePicture}
+            /></Route>
 
 
           <Route path="/Wall">
@@ -568,7 +570,7 @@ class App extends Component {
                       activeStyle={activeTabStyle}
 
                   >
-                    Chat{" "}
+                    שיחות{" "}
                   </NavLink>{" "}
                 </li>{" "}
               </ul>{" "}

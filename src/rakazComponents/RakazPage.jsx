@@ -5,7 +5,6 @@ import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Meetings from "./Meetings";
 import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,6 +16,8 @@ import RakazUser from "./RakazUser";
 import Chat from "../Chat/Chat";
 import CreateNewChat from "../adminComponents/partial/CreateNewChat";
 import UsersTable from "../adminComponents/partial/UsersTable";
+import ReportTable from "../mainPageComponents/ReportTable";
+import '../mainPageComponents/ReportTable.css';
 
 class RakazPage extends Component {
     constructor(props) {
@@ -126,6 +127,9 @@ class RakazPage extends Component {
                                 <CreateNewChat />
                             </Route>{" "}
                             <Route exact path={"/zoom"} component={Zoom}/>
+                            <Route path="/ReportTable">
+                                <ReportTable />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -185,7 +189,7 @@ class RakazPage extends Component {
                         to="/Meetings"
                         activeStyle={activeTabStyle}
                     >
-                        קביעת פגישה
+                        קביעת פגישות
                     </NavLink>
                 </li>
                 <li className="nav-item">
@@ -208,14 +212,25 @@ class RakazPage extends Component {
                         יצירת קבוצה{" "}
                     </NavLink>{" "}
                 </li>{" "}
+
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/ReportTable"
+                    >
+                        הצג דוח שעות
+                    </NavLink>
+                </li>{" "}
+
+
                 <li className="nav-item ">
                     <NavLink
                         className="tab"
                         to="/Zoom"
-                    >
-                        שיחת וידאו{" "}
+                    >שיחת וידאו{" "}
                     </NavLink>{" "}
                 </li>{" "}
+
             </ul>
         )
     }

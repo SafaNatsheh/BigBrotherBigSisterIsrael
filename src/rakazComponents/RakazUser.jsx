@@ -14,6 +14,7 @@ class RakazUser extends Component {
             phone: "",
             address: "",
             area: "",
+            gender: "",
             birthDate: "",
             type: "",
             addOnce: true
@@ -37,6 +38,7 @@ class RakazUser extends Component {
                         email: this.state.email,
                         phone: this.state.phone,
                         area: this.state.area,
+                        gender: this.state.gender,
                         type: this.state.type,
                         birthDate: this.state.birthDate
                     }
@@ -50,7 +52,7 @@ class RakazUser extends Component {
                                     addOnce: true,
                                     firstName: "", lastName: "", id: "",
                                     email: "", phone: "", address: "", area: "",
-                                    birthDate: "", type: ""
+                                    gender: "", birthDate: "", type: ""
                                 })
                             })
                             .catch((e) => console.log(e.name))
@@ -170,17 +172,46 @@ class RakazUser extends Component {
                         />
                     </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="inputAddress2">כתובת מגורים</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="inputAddress2"
-                        value={this.state.address}
-                        placeholder="כתובת מגורים"
-                        onChange={(e) => this.setState({ address: e.target.value })}
-                    />
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label htmlFor="inputAddress">כתובת מגורים</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="inputAddress"
+                            value={this.state.address}
+                            placeholder="כתובת מגורים"
+                            onChange={(e) => this.setState({ address: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="form-group col-md-6">
+                        <label htmlFor="inputState">מין</label>
+                        <select
+                            required id="inputState"
+                            className="form-control"
+                            value={this.state.gender}
+                            onChange={(e) => this.setState({ gender: e.target.value })}>
+                            <option id="ff" disabled value=""> בחר מין</option>
+                            <option >זכר</option>
+                            <option >נקבה</option>
+                        </select>
+                    </div>
+
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 <div className="form-row">
 
                     <div className="form-group col-md-6">
