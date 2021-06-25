@@ -6,9 +6,7 @@ import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
 import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
-//import AddMeeting from "../mainPageComponents/addMeeting"
-
-
+import AddMeeting from "../mainPageComponents/addMeeting"
 import {
     BrowserRouter as Router,
     Switch,
@@ -124,6 +122,9 @@ class InstructorPage extends Component {
                                 <CreateNewChat />
                             </Route>{" "}
                             <Route exact path={"/zoom"} component={Zoom}/>
+                            <Route path="/AddMeeting">
+                                <AddMeeting />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -200,7 +201,6 @@ class InstructorPage extends Component {
                     <NavLink
                         className="tab"
                         to="/AddMeeting"
-                        activeStyle={activeTabStyle}
                     >
                         הוספת פגישה
                     </NavLink>
