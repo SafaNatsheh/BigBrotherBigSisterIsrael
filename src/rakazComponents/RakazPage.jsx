@@ -189,7 +189,7 @@ class RakazPage extends Component {
                         to="/Meetings"
                         activeStyle={activeTabStyle}
                     >
-                        קביעת פגישה
+                        קביעת פגישות
                     </NavLink>
                 </li>
                 <li className="nav-item">

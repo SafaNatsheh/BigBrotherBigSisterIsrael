@@ -1,6 +1,5 @@
 import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
-
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
