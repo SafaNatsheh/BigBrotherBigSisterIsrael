@@ -268,11 +268,11 @@ class LinkUsers extends Component {
                                 this.setState({lnkstudid: ""})
                             }
                         } />
-                        ללא קישור
+                           חונך לא מקושר לחניך
 
                         </h5>
                         <br></br>
-                        <h5 className="right_to_right">מספר עדיפויות
+                        <h5 className="right_to_right">  מספר עדיפויות לבחירת חניך
                         <select
                             required id="inputState"
                             className="new_design_link right_to "
@@ -296,7 +296,7 @@ class LinkUsers extends Component {
 
 
                         <br/>
-                        <div className ='container__table'>
+                        <div className ='container__table new_design_Table'>
                         <table className="table table-bordered ">
                             <thead>
                             <tr>

@@ -10,7 +10,7 @@
 .place{
     width: 180px;
     position: absolute;
- padding-right: 5px;
+    padding-right: 5px;
     margin-top: 80px;
 }
 .descrip{
@@ -18,6 +18,16 @@
     position: absolute;
     margin-right: 190px;
     margin-top: 80px;
+}
+.link-Zoom{
+    width: 320px;
+    position: absolute;
+    margin-right: 5px;
+    margin-top: 155px;
+}
+.width-link-Zoom{
+    width: 120px;
+
 }
 .time{
     width: 180px;
@@ -44,6 +54,7 @@
 }
 .table-w{
     padding-right: 5px;
+    margin-top: 80px;
 }
 .meeting-form{
     width: 500px;
