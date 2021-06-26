@@ -63,6 +63,19 @@ class matchQuestionstud extends Component {
         firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
             .get()
             .then((doc) => {
+                this.setState({firQues : doc.data().firQues});
+                this.setState({secQues : doc.data().secQues});
+                this.setState({thiQues : doc.data().thiQues});
+                this.setState({forQues : doc.data().forQues});
+                this.setState({fifQues : doc.data().fifQues});
+                this.setState({sixQues : doc.data().sixQues});
+                this.setState({sevQues : doc.data().sevQues});
+                this.setState({eigQues : doc.data().eigQues});
+                this.setState({ninQues : doc.data().ninQues});
+                this.setState({tenQues : doc.data().tenQues});
+                this.setState({elevQues : doc.data().elevQues});
+                this.setState({twlvQues : doc.data().twlvQues});
+                this.setState({thrtQues : doc.data().thrtQues});
                 this.setState({fName: doc.data().fName});
                 this.setState({sName: doc.data().sName});
                 this.setState({numID: doc.data().numID});
@@ -103,6 +116,19 @@ class matchQuestionstud extends Component {
             this.props.complt();
             firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers").set(
                 {
+                    firQues: this.state.firQues,
+                    secQues: this.state.secQues,
+                    thiQues: this.state.thiQues,
+                    forQues: this.state.forQues,
+                    fifQues: this.state.fifQues,
+                    sixQues: this.state.sixQues,
+                    sevQues: this.state.sevQues,
+                    eigQues: this.state.eigQues,
+                    ninQues: this.state.ninQues,
+                    tenQues: this.state.tenQues,
+                    elevQues: this.state.elevQues,
+                    twlvQues: this.state.twlvQues,
+                    thrtQues: this.state.thrtQues,
                     fName: this.state.fName,
                     sName: this.state.sName,
                     numID: this.state.numID,
