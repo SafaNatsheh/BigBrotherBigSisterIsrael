@@ -95,7 +95,7 @@ class UsersTable extends Component {
         }
         else
         {
-            alert("אין דוח");
+            alert("אין דוח למשתמש הזה");
         }
 
     }

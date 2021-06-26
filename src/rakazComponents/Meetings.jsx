@@ -15,6 +15,7 @@ class Meetings extends Component {
             place: "",
             search: "",
             description: "",
+            linkZoom: "",
             people:[],
             filterFn : { fn: items => { return items; } },
             loadingFromFirebase: true,
@@ -177,6 +178,7 @@ class Meetings extends Component {
                     timeStamp: time_stamp,
                     time: this.state.time,
                     place: this.state.place,
+                    linkZoom: this.state.linkZoom,
                     description: this.state.description
                 })
                 newMeetingObj.push({});
@@ -308,7 +310,7 @@ class Meetings extends Component {
                         />
                     
                     </div>
-                        <div className = 'time'>
+                    <div className = 'time'>
                         <label
                             className="fLabels"
                             style={{ float: "right" }}
@@ -359,6 +361,23 @@ class Meetings extends Component {
                             placeholder="תיאור"
                         />
                     </div>
+                    <div className="link-Zoom">
+                        <label
+                            className="fLabels ="
+                            style={{ float: "right" }}
+                            htmlFor="linkZoom"
+                        ><h6>קישור זום</h6>
+                        </label>
+                        <input
+                            onChange={(e) => this.setState({ linkZoom: e.target.value })}
+                            type="text"
+                            className="form-control"
+                            style={{width: "505px"}}
+                            id="linkZoom"
+                            value={this.state.linkZoom}
+                            placeholder="קישור זום"
+                        />
+                    </div>
 
 
 
@@ -379,8 +398,6 @@ class Meetings extends Component {
                         />
                         </div>
                         <table className="table table-bordered"  >
-
-
 
                             <div className ='container__table'>
                                 <thead>

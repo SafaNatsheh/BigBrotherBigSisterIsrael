@@ -24,6 +24,14 @@ class MeetingList extends Component {
                 <td className="align-middle">{data.time}</td>
                 <td className="align-middle">{data.place}</td>
                 <td className="align-middle">{data.description}</td>
+                <td className="align-middle">
+                    <button
+                    className="btn-linkZoom"
+                    onClick={() => {window.location.href = data.linkZoom}}
+                    >
+                    קישור
+                    </button>
+                </td>
                 <td className="align-middle"><button
                     className="btn btn-danger delete-meeting"
                     onClick={() => { this.deleteMeeting(data.doc_id) }}
@@ -34,6 +42,7 @@ class MeetingList extends Component {
             </tr >
         ));
     }
+
 
     deleteMeeting = async (data) => {
         var tempArr = [];
@@ -74,19 +83,20 @@ class MeetingList extends Component {
             return (
                 <table className="table table-striped table-dark w-50 table-responsive meeting-table" >
                     <thead>
-                        <tr><th colSpan="5" className="table-title">רשימת פגישות קרובות</th></tr>
+                        <tr><th colSpan="6" className="table-title">רשימת פגישות קרובות</th></tr>
                         <tr className="table-cols">
                             <th className="align-middle">מועד הפגישה</th>
                             <th className="align-middle">שעת הפגישה</th>
                             <th className="align-middle">מיקום הפגישה</th>
                             <th className="align-middle">תיאור הפגישה</th>
+                            <th className="align-middle">קישור הזום</th>
                             <th className="align-middle">מחיקה</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.renderTable()}
                         <tr className="table-cols">
-                            <td className="align-middle" colSpan="5">
+                            <td className="align-middle" colSpan="6">
                                 <button
                                     disabled={this.props.loadedAll}
                                     className="btn btn-primary load-past-meetings"

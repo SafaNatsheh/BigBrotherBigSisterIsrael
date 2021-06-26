@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
 import Queststud from "../../mainPageComponents/MatchQuestionstud";
-
+import QuestTeach from "../../mainPageComponents/MatchQuestion";
 
 class UpdateUser extends Component {
     constructor(props) {
@@ -349,7 +349,8 @@ class UpdateUser extends Component {
         </button>
             </form>
 
-                {(this.state.loaded && (this.state.type === "חונך" || this.state.type === "חניך")) ? <Queststud   refwin={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חניך")) ? <Queststud   refwin={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חונך")) ? <QuestTeach   refwin={this.state.prsn} complt={null} />: <div></div>}
 
             </div>
         );

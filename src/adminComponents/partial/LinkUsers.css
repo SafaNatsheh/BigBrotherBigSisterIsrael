@@ -32,20 +32,16 @@
     border-radius: 5px;
     font-weight: normal;
     margin-top: 320px;
-    margin-right: 50px;
+    margin-right: 90px;
     color: #fff;
     background-color: #4caf50;
     border-color: #4caf50;
     position: relative;
 
-
-    /*left: 100px;*/
-    /*top: 30px;*/
-
 }
 
-.new_radius{
-    border-radius: 20px;
+.new_design_Table{
+    margin-right: 40px;
 }
 
 .link-users-btn{
