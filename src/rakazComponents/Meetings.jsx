@@ -8,6 +8,7 @@ class Meetings extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            type: "",
             meetings: [],
             date: "",
             time: "",
@@ -25,7 +26,13 @@ class Meetings extends Component {
             scheduled: false
 
         };
-
+        this.usersRef = firebase.firestore().collection('Users');
+        this.uid = firebase.auth().currentUser.uid
+        this.usersRef.doc(this.uid).get()
+            .then((doc) => {
+                this.setState({ type: doc.data().type });
+            })
+            .catch((e) => console.log(e.name));
         this.newDocId = "";
 
         this.myMeetingsRef = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid).collection('Meetings');
@@ -44,7 +51,8 @@ class Meetings extends Component {
                     id: doc.data().id,
                     email: doc.data().email,
                     name: doc.data().fName + " " + doc.data().lName,
-                    type:  doc.data().type
+                    type:  doc.data().type,
+                    link_user: doc.data().link_user
                 });
                 return null;
             });
@@ -223,42 +231,93 @@ class Meetings extends Component {
             return 1;
         return 0;
     }
+    renderCheckBox(){
+        if(this.state.type ===  "אדמין" || this.state.type === "רכז"  || this.state.type === "מדריך" ){
+            return(
+                <input
+                    type="checkbox"
+                    className="form-check-input w-25"
+                    id="scheduledMeeting"
+                    style={{ float: "right" , marginTop:"258px" , marginRight:"40px" }}
 
-    maketable(){
+                    checked={this.state.scheduled}
+                    onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
+                />
+            )
+        }
+        else if(this.state.type ===  "חניך" || this.state.type === "חונך"){
+            return(
+                <input
+                    type="checkbox"
+                    className="form-check-input w-25"
+                    id="scheduledMeeting"
+                    style={{ float: "right" , marginTop:"258px" , marginRight:"-100px" }}
 
-        if (this.type === "רכז")
-        {
+                    checked={this.state.scheduled}
+                    onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
+                />
+            )
+        }
+
+    }
+    maketable() {
+
+        if (this.type === "רכז") {
             return (this.state.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type !== "אדמין")
                 .map((person) => (
-                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>{
-                            this.state.checkList.push(person)}}/></td></tr>
+                    <tr>
+                        <td>{person.name}</td>
+                        <td>{person.id}</td>
+                        <td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => {
+                            this.state.checkList.push(person)
+                        }}/></td>
+                    </tr>
                 )))
-        }
-        else if (this.type === "מדריך")
-        {
+        } else if (this.type === "מדריך") {
             return (this.state.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
+                .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type !== "אדמין")
                 .filter(person => person.type !== "רכז")
                 .map((person) => (
-                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                    <tr>
+                        <td>{person.name}</td>
+                        <td>{person.id}</td>
+                        <td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                    </tr>
                 )))
-        }
-        else if (this.type === "חונך")
+        } else if (this.type === "חונך") {
+            return (this.state.people
+                .filter(person => person.name.indexOf(this.state.search) > -1)
+                .filter(person => person.type === "חניך")
+                .filter(person => person.link_user === this.uid )
+                .map((person) => (
+                    <tr>
+                        <td>{person.name}</td>
+                        <td>{person.id}</td>
+                        <td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                    </tr>
+                )))
+        } else if (this.type === "חניך")
         {
             return (this.state.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .filter(person => person.type !== "אדמין")
-                .filter(person => person.type !== "רכז")
-                .filter(person => person.type !== "מדריך")
-                .filter(person => person.type !== "חונך")
+                .filter(person => person.name.indexOf(this.state.search) > -1)
+                .filter(person => person.type === "חונך")
+                .filter(person => person.link_user === this.uid )
                 .map((person) => (
-                    <tr><td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>this.state.checkList.push(person)}/></td></tr>
+                    <tr>
+                        <td>{person.name}</td>
+                        <td>{person.id}</td>
+                        <td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                    </tr>
                 )))
         }
         else
@@ -406,15 +465,7 @@ class Meetings extends Component {
 
 
                     <div className="form-group">
-                        <input
-                            type="checkbox"
-                            className="form-check-input w-25"
-                            id="scheduledMeeting"
-                            style={{ float: "right" , marginTop:"258px" , marginRight:"40px" }}
-
-                            checked={this.state.scheduled}
-                            onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
-                        />
+                        {this.renderCheckBox()}
                         <div className = "meeting-thi">
                         <label
                             className="form-check-label check-meeting-lbl w-75"
