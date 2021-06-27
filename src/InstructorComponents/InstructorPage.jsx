@@ -152,19 +152,20 @@ class InstructorPage extends Component {
                    </NavLink>
                 </li>
 
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/UpdateUser"
-                        activeStyle={activeTabStyle}
-                    >עדכון פרטי משתמש
-                    </NavLink>
-                </li>
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/UpdateUser"*/}
+                {/*        activeStyle={activeTabStyle}*/}
+                {/*    >עדכון פרטי משתמש*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
 
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
+                        style ={{marginRight:"10px"}}
                         activeStyle={activeTabStyle}
                     >קביעת פגישות
                     </NavLink>
@@ -173,16 +174,8 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Chat"
-                        activeStyle={activeTabStyle}
-                    >שיחות
-                    </NavLink>
-                </li>
-
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
                         to="/CreateChat"
+                        style ={{marginRight:"20px"}}
                         activeStyle={activeTabStyle}
                     >יצירת קבוצה
                     </NavLink>
@@ -191,15 +184,28 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Zoom"
-
-                    >שיחות וידאו
+                        to="/Chat"
+                        style ={{marginRight:"55px"}}
+                        activeStyle={activeTabStyle}
+                    >שיחות
                     </NavLink>
                 </li>
+
+
+
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/Zoom"*/}
+
+                {/*    >שיחות וידאו*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/AddMeeting"
+                        style ={{marginRight:"10px"}}
                     >
                         הוספת פגישה
                     </NavLink>

@@ -186,7 +186,7 @@ class LinkUsers extends Component {
                             const arr=[map1,map2]
                             await firebase.firestore().collection('Chats').add(
                                 {
-                                    name: "שיחה חניך חניך",
+                                    name: "שיחת חונך חניך",
                                     type: "private",
                                     members: arr,
                                 })

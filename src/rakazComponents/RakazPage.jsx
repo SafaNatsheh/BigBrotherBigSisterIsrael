@@ -158,20 +158,21 @@ class RakazPage extends Component {
                         to="/Home"
                         activeStyle={activeTabStyle}
                     >
-                        <div className= "bait">
+                      <div className= "bait">
                      דף הבית 
                       </div>
                     </NavLink>
                 </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/RakazUser"
                         activeStyle={activeTabStyle}
-                    >
-                        הוספת משתמש חדש
+                    >הוספת משתמש חדש
                     </NavLink>
                 </li>
+
                 {/*<li className="nav-item text-center">*/}
                 {/*    <NavLink*/}
                 {/*        className="tab"*/}
@@ -181,6 +182,7 @@ class RakazPage extends Component {
                 {/*        עדכון פרטי משתמש*/}
                 {/*    </NavLink>*/}
                 {/*</li>*/}
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
@@ -189,62 +191,63 @@ class RakazPage extends Component {
                     >קישור חונך לחניך
                     </NavLink>
                 </li>
+
                 <li className="nav-item text-center">
                 <NavLink
                     className="tab"
                     to="/UsersTable"
                     activeStyle={activeTabStyle}
-                >
-                    רשימת משתמשים
+                >רשימת משתמשים
                 </NavLink>
                 </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
+                        style ={{marginRight:"10px"}}
                         activeStyle={activeTabStyle}
-                    >
-                        קביעת פגישות
+                    >קביעת פגישות
                     </NavLink>
                 </li>
-                <li className="nav-item">
-                    <NavLink
-                        className="tab"
-                        to="/Chat"
-                        activeStyle={activeTabStyle}
-
-                    >
-                        שיחות{" "}
-                    </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item">
-                    <NavLink
-                        className="tab"
-                        to="/CreateChat"
-                        activeStyle={activeTabStyle}
-
-                    >
-                        יצירת קבוצה{" "}
-                    </NavLink>{" "}
-                </li>{" "}
 
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/ReportTable"
-                    >
-                        הצג דוח שעות
-                    </NavLink>
-                </li>{" "}
+                        to="/CreateChat"
+                        style ={{marginRight:"20px"}}
+                        activeStyle={activeTabStyle}
+                    > יצירת קבוצה{" "}
+                    </NavLink>{" "}
+                </li>
 
-
-                <li className="nav-item ">
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Zoom"
-                    >שיחת וידאו{" "}
+                        to="/Chat"
+                        style ={{marginRight:"55px"}}
+                        activeStyle={activeTabStyle}
+                    > שיחות{" "}
                     </NavLink>{" "}
-                </li>{" "}
+                </li>
+
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/ReportTable"*/}
+                {/*    >*/}
+                {/*        הצג דוח שעות*/}
+                {/*    </NavLink>*/}
+                {/*</li>{" "}*/}
+
+
+                {/*<li className="nav-item ">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/Zoom"*/}
+                {/*    >שיחת וידאו{" "}*/}
+                {/*    </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
 
             </ul>
         )
