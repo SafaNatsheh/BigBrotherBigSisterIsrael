@@ -14,6 +14,7 @@ import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
 //import AddMeeting from "./addMeeting"
+import AddMeeting from "../mainPageComponents/addMeeting"
 
 import {
   BrowserRouter as Router,
@@ -455,6 +456,9 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
+          <Route path="/AddMeeting">
+            <AddMeeting />
+          </Route>{" "}
           {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
           <Route exact path={"/video"} component={Video}/>
         </Switch>
@@ -475,7 +479,20 @@ class App extends Component {
     else
       return null;
   }
-
+  renderAddMeeting() {
+    if(this.state.userDetails.type=== "חונך") {
+      return(
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/AddMeeting"
+            >
+              הוספת פגישה
+            </NavLink>
+          </li>
+      );
+    }
+  }
   render() {
 
 
@@ -506,6 +523,9 @@ class App extends Component {
                   </NavLink>{" "}
                 </li>{" "}
      */
+
+
+
     return (
       <div className="main-page-app" style={{ zoom: this.state.zoom }}>
         <Router>
@@ -573,6 +593,7 @@ class App extends Component {
                     שיחות{" "}
                   </NavLink>{" "}
                 </li>{" "}
+                {this.renderAddMeeting()}
               </ul>{" "}
               <div className="navbar-options">
                 <button onClick={this.changePassword} className="btn btn-outline-info change-pwd-btn"><h6>שינוי סיסמא</h6></button>
