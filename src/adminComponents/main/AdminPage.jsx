@@ -225,6 +225,7 @@ class AdminPage extends Component {
             <NavLink
                 className="tab"
                 to="/Meetings"
+                style ={{marginRight:"10px"}}
                 activeStyle={activeTabStyle}
             >קביעת פגישות
             </NavLink>
