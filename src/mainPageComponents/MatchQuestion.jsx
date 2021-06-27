@@ -281,23 +281,23 @@ class matchQuestion extends Component {
                                 value={this.state.val}
                                 onChange={(e) => {
                                     if (e.target.value === "1/") {
-                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "1/", thrtQues: "2/"})
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "1/", thrtQues: "2/", val: e.target.value})
                                     }
                                     else if (e.target.value === "2/") {
-                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "1/"})
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "1/", val: e.target.value})
                                     }
                                     else if (e.target.value === "3/") {
                                         document.getElementById("age").value = "3/";
-                                        this.setState({ninQues: "3/" , tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" , thrtQues: "2/"})
+                                        this.setState({ninQues: "3/" , tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" , thrtQues: "2/", val: e.target.value})
                                     }
                                     else if (e.target.value === "4/") {
-                                        this.setState({tenQues:"2/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                        this.setState({tenQues:"2/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/", val: e.target.value})
                                     }
                                     else if (e.target.value === "5/") {
-                                        this.setState({tenQues:"1/" , elevQues: "3/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                        this.setState({tenQues:"1/" , elevQues: "3/" , twlvQues: "2/" ,thrtQues: "2/", val: e.target.value})
                                     }
                                     else {
-                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/"})
+                                        this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "2/" ,thrtQues: "2/", val: e.target.value})
                                     }
                                 }
                                 }>
