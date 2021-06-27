@@ -50,7 +50,8 @@ class matchQuestion extends Component {
             info18: "",
             info19: "",
 
-            gend:""
+            gend:"",
+            val:"6/"
 
 
         };
@@ -277,7 +278,7 @@ class matchQuestion extends Component {
                             <select
                                 required id="inputState"
                                 className="form-control"
-                                value={"6/"}
+                                value={this.state.val}
                                 onChange={(e) => {
                                     if (e.target.value === "1/") {
                                         this.setState({tenQues:"1/" , elevQues: "2/" , twlvQues: "1/", thrtQues: "2/"})
