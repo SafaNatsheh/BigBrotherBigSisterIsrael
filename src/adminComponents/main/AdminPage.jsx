@@ -230,40 +230,42 @@ class AdminPage extends Component {
             </NavLink>
           </li>
 
-          <li className="nav-item text-center">
-            <NavLink
-                className="tab"
-                to="/Chat"
-                activeStyle={activeTabStyle}
-            >שיחות
-            </NavLink>
-          </li>
-
             <li className="nav-item text-center">
                 <NavLink
                     className="tab"
                     to="/CreateChat"
+                    style ={{marginRight:"20px"}}
                     activeStyle={activeTabStyle}
                 >יצירת קבוצה
                 </NavLink>
             </li>
 
             <li className="nav-item text-center">
-                <NavLink
-                    className="tab"
-                    to="/ReportTable"
-                >
-                    הצג דוח שעות
-                </NavLink>
-            </li>{" "}
-
-            <li className="nav-item ">
-                <NavLink
-                    className="tab"
-                    to="/Zoom"
-                >שיחות וידאו
-                </NavLink>
+            <NavLink
+                className="tab"
+                to="/Chat"
+                style ={{marginRight:"55px"}}
+                activeStyle={activeTabStyle}
+            >שיחות
+            </NavLink>
             </li>
+
+
+            {/*<li className="nav-item text-center">*/}
+            {/*    <NavLink*/}
+            {/*        className="tab"*/}
+            {/*        to="/ReportTable"*/}
+            {/*    >הצג דוח שעות*/}
+            {/*    </NavLink>*/}
+            {/*</li>{" "}*/}
+
+            {/*<li className="nav-item ">*/}
+            {/*    <NavLink*/}
+            {/*        className="tab"*/}
+            {/*        to="/Zoom"*/}
+            {/*    >שיחות וידאו*/}
+            {/*    </NavLink>*/}
+            {/*</li>*/}
 
         </ul>
     )

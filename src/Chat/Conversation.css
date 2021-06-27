@@ -1,7 +1,6 @@
 .conversation{
     width: 75%;
     height: 100%;
-
 }
 .conversationHeader{
     height: 35px;
@@ -9,7 +8,9 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgray;
-}.message{
+
+}
+.message{
     position: relative;
     font-size: 16px;
     padding: 10px;
@@ -42,6 +43,8 @@
      height: 57px;
      border-top: 1px solid lightgray;
      background-color: lightgray;
+     width: 910px;
+     margin-right: 225px;
  }
  .conversationFooter >form{
      flex: 1;

@@ -42,11 +42,7 @@ function Conversation(){
     return(
         <div className="conversation">
             <div className="conversationHeader">
-
                     <h3>{chatName}</h3>
-
-
-
             </div>
             <div className="conversationBody">
                 {messages.map((message) =>(
