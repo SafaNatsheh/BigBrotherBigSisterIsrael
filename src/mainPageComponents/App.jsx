@@ -460,7 +460,7 @@ class App extends Component {
             <AddMeeting />
           </Route>{" "}
           {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
-          <Route exact path={"/video"} component={Video}/>
+          {/*<Route exact path={"/video"} component={Video}/>*/}
         </Switch>
       );
   }
@@ -562,15 +562,15 @@ class App extends Component {
                 {/*</li>{" "}*/}
 
 
-                <li className="nav-item ">
-                  <NavLink
-                      className="tab"
-                      to="/Video"
+                {/*<li className="nav-item ">*/}
+                {/*  <NavLink*/}
+                {/*      className="tab"*/}
+                {/*      to="/Video"*/}
 
-                  >
-                    שיחת וידאו{" "}
-                  </NavLink>{" "}
-                </li>{" "}
+                {/*  >*/}
+                {/*    שיחת וידאו{" "}*/}
+                {/*  </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
 
 
                 <li className="nav-item">
