@@ -508,6 +508,7 @@ class LinkUsers extends Component {
                 .filter(person => person.data.type === "חניך"
                     && person.data.first !== "true"
                      && this.gtscor(person.data.first , person.data.birthDate) <= this.state.numofpri
+                     && this.gtscor(person.data.first , person.data.birthDate) !== -1
                      && (person.data.link_user === undefined || person.data.link_user === "" || ((person.data.link_user === this.state.mentorRef)
                          && (this.state.discon === false)
                          && (this.state.lnkstudid = person.data.id)
@@ -617,7 +618,7 @@ class LinkUsers extends Component {
 
         var ind  = 0
         var ind2 = 0
-        for (var ln  = 0 ; ln < 12 ; ) {
+        for (var ln = 0 ; ln < 12 ; ) {
             if (studscr[ind] === "/") {
                 ln++;
                 ind++;
