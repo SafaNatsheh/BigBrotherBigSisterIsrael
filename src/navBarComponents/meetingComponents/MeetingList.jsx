@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../../rakazComponents/Meetings.css";
 import "./MeetingList.css";
 import Loader from 'react-loader-spinner'
-import {db} from "../../config/Firebase"
+import firebase, {db} from "../../config/Firebase"
 
 class MeetingList extends Component {
     formatDate = (timeStamp) => { // formatting date to [DD/MM/YYYY]
@@ -16,7 +16,26 @@ class MeetingList extends Component {
             return "מחר";
         return newDate.getDate() + "/" + (parseInt(newDate.getMonth()) + 1) + "/" + newDate.getFullYear();
     }
+    handleDelete (data) {
+        this.uid = firebase.auth().currentUser.uid;
+        var docRef = db.collection("Users").doc(this.uid);
 
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                console.log(doc.data().type);
+                if(doc.data().type === "חונך" || doc.data().type === "אדמין" || doc.data().type === "רכז" || doc.data().type === "מדריך")
+                {
+                    this.deleteMeeting(data.doc_id)
+                }
+                else{
+                    alert("אין לכה הרשאות למחוק הפגישה");
+                }
+
+            }
+        })
+
+
+    }
     renderTable = () => {
         return (this.props.meetingsArr.map((data, index) =>
             <tr key={"row" + index} className="table-cols">
@@ -34,7 +53,7 @@ class MeetingList extends Component {
                 </td>
                 <td className="align-middle"><button
                     className="btn btn-danger delete-meeting"
-                    onClick={() => { this.deleteMeeting(data.doc_id) }}
+                    onClick={(event)=> this.handleDelete(data)}
                 >
                     מחק
                     </button>
