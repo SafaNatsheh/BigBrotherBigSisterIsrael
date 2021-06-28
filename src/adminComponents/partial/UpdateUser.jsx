@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./UpdateUser.css";
 import firebase from "../../config/Firebase"
-import Queststud from "../../mainPageComponents/MatchQuestionstud";
-
+import QuestStud from "../../mainPageComponents/MatchQuestionstud";
+import QuestTeach from "../../mainPageComponents/MatchQuestion";
 
 class UpdateUser extends Component {
     constructor(props) {
@@ -15,6 +15,7 @@ class UpdateUser extends Component {
             phone: "",
             address: "",
             area: "",
+            gender: "",
             birthDate: "",
             type: "",
             transferEnable: false,
@@ -32,7 +33,9 @@ class UpdateUser extends Component {
     }
 
     componentDidMount() {
-
+        if(window.location.href.split("UpdateUser/")[1] !== undefined){
+            this.setState({ id: window.location.href.split("UpdateUser/")[1] })
+        }
     }
 
     getUserByEmailOrId(event) {
@@ -65,6 +68,7 @@ class UpdateUser extends Component {
                                 phone: doc.data().phone,
                                 address: doc.data().address,
                                 area: doc.data().area,
+                                gender: doc.data().gender,
                                 birthDate: doc.data().birthDate,
                                 type: doc.data().type,
                                 transferEnable: true,
@@ -96,6 +100,7 @@ class UpdateUser extends Component {
                                 phone: doc.data().phone,
                                 address: doc.data().address,
                                 area: doc.data().area,
+                                gender: doc.data().gender,
                                 birthDate: doc.data().birthDate,
                                 type: doc.data().type,
                                 transferEnable: true,
@@ -123,7 +128,7 @@ class UpdateUser extends Component {
             this.setState({
                 firstName: "", lastName: "", id: "",
                 email: "", phone: "", address: "", area: "",
-                birthDate: "", type: "",
+                gender: "", birthDate: "", type: "",
                 transferEnable: false
             })
 
@@ -134,7 +139,7 @@ class UpdateUser extends Component {
             this.setState({
                 firstName: "", lastName: "", id: "",
                 email: "", phone: "", address: "", area: "",
-                birthDate: "", type: "",
+                gender: "", birthDate: "", type: "",
                 transferEnable: false
             })
 
@@ -152,6 +157,7 @@ class UpdateUser extends Component {
             lName: this.state.lastName,
             phone: this.state.phone,
             area: this.state.area,
+            gender: this.state.gender,
             type: this.state.type,
             birthDate: this.state.birthDate
         }
@@ -163,7 +169,7 @@ class UpdateUser extends Component {
                 this.setState({
                     firstName: "", lastName: "", id: "",
                     email: "", phone: "", address: "", area: "",
-                    birthDate: "", type: "",
+                    gender: "", birthDate: "", type: "",
                     transferEnable: false
                 })
             })
@@ -347,7 +353,8 @@ class UpdateUser extends Component {
         </button>
             </form>
 
-                {(this.state.loaded && (this.state.type === "חונך" || this.state.type === "חניך")) ? <Queststud   refwin={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חניך")) ? <QuestStud   refwin={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חונך")) ? <QuestTeach   refwin={this.state.prsn} complt={null} />: <div></div>}
 
             </div>
         );

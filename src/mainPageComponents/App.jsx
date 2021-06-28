@@ -1,4 +1,5 @@
-import Zoom from "../Zoom/Zoom"
+//import Zoom from "../Zoom/Zoom"
+//import Video from "../Video/Video";
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
 import Chat from "../Chat/Chat"
@@ -12,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
-//import AddMeeting from "./addMeeting"
+import AddMeeting from "../mainPageComponents/addMeeting"
 
 import {
   BrowserRouter as Router,
@@ -21,6 +22,7 @@ import {
   NavLink,
   Redirect,
 } from "react-router-dom";
+
 
 class App extends Component {
   constructor(props) {
@@ -244,7 +246,7 @@ class App extends Component {
       .catch((e) => console.log(e.name));
   }
 
-  changeProfilePictue = (url) => {
+  changeProfilePicture = (url) => {
     this.setState({ profilePicture: url });
   }
 
@@ -386,6 +388,25 @@ class App extends Component {
       return (
         <Switch>
 
+          <Route exact path="/">
+            <HomePage
+                myDetails={this.state.userDetails}
+                linkedDetails={this.state.linkedUserDetails}
+                directVid={this.directVid}
+                newVideo={this.state.newVideo}
+                otherUserConnection={this.state.otherUserConnection}
+                otherUserLastOnline={this.state.otherUserLastOnline}
+                next_meeting={this.state.next_meeting}
+                getNextMeeting={this.getNextMeeting}
+                loadingNextMeeting={this.state.loadingNextMeeting}
+                routeToWall={this.getWallRouteStatus}
+                routeToMeeting={this.getMeetingRouteStatus}
+                myProfilePic={this.state.profilePicture}
+                friendProfilePic={this.state.friendProfile}
+                changeProfilePicture={this.changeProfilePicture}
+            /></Route>
+
+
           <Route path="/Wall">
             <div className="app-page">
               <Profile
@@ -420,8 +441,9 @@ class App extends Component {
               routeToMeeting={this.getMeetingRouteStatus}
               myProfilePic={this.state.profilePicture}
               friendProfilePic={this.state.friendProfile}
-              changeProfilePictue={this.changeProfilePictue}
+              changeProfilePicture={this.changeProfilePicture}
             />
+
             {this.routeToWall()}
             {this.routeToVideo()}
             {this.routeToMeeting()}
@@ -433,7 +455,11 @@ class App extends Component {
           <Route path="/Chat">
             <Chat />
           </Route>{" "}
-          <Route exact path={"/zoom"} component={Zoom}/>
+          <Route path="/AddMeeting">
+            <AddMeeting />
+          </Route>{" "}
+          {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
+          {/*<Route exact path={"/video"} component={Video}/>*/}
         </Switch>
       );
   }
@@ -452,25 +478,40 @@ class App extends Component {
     else
       return null;
   }
-
+  renderAddMeeting() {
+    if(this.state.userDetails.type=== "חונך") {
+      return(
+          <li className="nav-item text-center">
+            <NavLink
+                className="tab"
+                to="/AddMeeting"
+            >
+              הוספת פגישה
+            </NavLink>
+          </li>
+      );
+    }
+  }
   render() {
+
 
     const activeTabStyle = {
       fontWeight: "bold",
       backgroundColor: "#4CAF50",
     };
 
-    /*
-      <li className="nav-item ">
-                  <NavLink
-                    className="tab"
-                    to="/Wall"
-                    activeStyle={activeTabStyle}
-                    onClick={(event) => this.checkIfVideo(event)}
-                  >
-                    קיר{" "}
-                  </NavLink>{" "}
-                </li>{" "}
+
+      // <li className="nav-item ">
+      //             <NavLink
+      //               className="tab"
+      //               to="/Wall"
+      //               activeStyle={activeTabStyle}
+      //               onClick={(event) => this.checkIfVideo(event)}
+      //             >
+      //               קיר{" "}
+      //             </NavLink>{" "}
+      // </li>{" "}
+                /*
                 <li className="nav-item ">
                   <NavLink
                     className="tab"
@@ -481,6 +522,9 @@ class App extends Component {
                   </NavLink>{" "}
                 </li>{" "}
      */
+
+
+
     return (
       <div className="main-page-app" style={{ zoom: this.state.zoom }}>
         <Router>
@@ -506,15 +550,27 @@ class App extends Component {
                     בית{" "}
                   </NavLink>{" "}
                 </li>{" "}
-                <li className="nav-item ">
-                  <NavLink
-                      className="tab"
-                      to="/Zoom"
-                     
-                  >
-                    שיחת וידאו{" "}
-                  </NavLink>{" "}
-                </li>{" "}
+                {/*<li className="nav-item ">*/}
+                {/*  <NavLink*/}
+                {/*      className="tab"*/}
+                {/*      to="/Zoom"*/}
+                {/*     */}
+                {/*  >*/}
+                {/*    שיחת וידאו{" "}*/}
+                {/*  </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
+
+
+                {/*<li className="nav-item ">*/}
+                {/*  <NavLink*/}
+                {/*      className="tab"*/}
+                {/*      to="/Video"*/}
+
+                {/*  >*/}
+                {/*    שיחת וידאו{" "}*/}
+                {/*  </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
+
 
                 <li className="nav-item">
                   <NavLink
@@ -533,9 +589,10 @@ class App extends Component {
                       activeStyle={activeTabStyle}
 
                   >
-                    Chat{" "}
+                    שיחות{" "}
                   </NavLink>{" "}
                 </li>{" "}
+                {this.renderAddMeeting()}
               </ul>{" "}
               <div className="navbar-options">
                 <button onClick={this.changePassword} className="btn btn-outline-info change-pwd-btn"><h6>שינוי סיסמא</h6></button>

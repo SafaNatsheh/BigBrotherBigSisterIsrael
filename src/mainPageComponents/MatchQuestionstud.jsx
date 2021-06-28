@@ -63,6 +63,19 @@ class matchQuestionstud extends Component {
         firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
             .get()
             .then((doc) => {
+                this.setState({firQues : doc.data().firQues});
+                this.setState({secQues : doc.data().secQues});
+                this.setState({thiQues : doc.data().thiQues});
+                this.setState({forQues : doc.data().forQues});
+                this.setState({fifQues : doc.data().fifQues});
+                this.setState({sixQues : doc.data().sixQues});
+                this.setState({sevQues : doc.data().sevQues});
+                this.setState({eigQues : doc.data().eigQues});
+                this.setState({ninQues : doc.data().ninQues});
+                this.setState({tenQues : doc.data().tenQues});
+                this.setState({elevQues : doc.data().elevQues});
+                this.setState({twlvQues : doc.data().twlvQues});
+                this.setState({thrtQues : doc.data().thrtQues});
                 this.setState({fName: doc.data().fName});
                 this.setState({sName: doc.data().sName});
                 this.setState({numID: doc.data().numID});
@@ -103,6 +116,19 @@ class matchQuestionstud extends Component {
             this.props.complt();
             firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers").set(
                 {
+                    firQues: this.state.firQues,
+                    secQues: this.state.secQues,
+                    thiQues: this.state.thiQues,
+                    forQues: this.state.forQues,
+                    fifQues: this.state.fifQues,
+                    sixQues: this.state.sixQues,
+                    sevQues: this.state.sevQues,
+                    eigQues: this.state.eigQues,
+                    ninQues: this.state.ninQues,
+                    tenQues: this.state.tenQues,
+                    elevQues: this.state.elevQues,
+                    twlvQues: this.state.twlvQues,
+                    thrtQues: this.state.thrtQues,
                     fName: this.state.fName,
                     sName: this.state.sName,
                     numID: this.state.numID,
@@ -322,7 +348,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>שם פרטי</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -335,7 +360,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>שם משפחה</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -348,7 +372,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>ת.ז ילד/ה</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -361,7 +384,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>כתובת ילד/ה</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -376,7 +398,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>ארץ לידה</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -389,7 +410,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>שנת עלייה</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -429,7 +449,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>בעל/ת בעיות בריאות</h6></label>
                         <select
-                            required id="inputState"
                             className="form-control"
                             value={this.state.problem}
                             onChange={(e) => this.setState({ problem: e.target.value })}>
@@ -442,7 +461,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputCity"><h6>תאריך לידה</h6></label>
                         <input
-                            required
                             type="date"
                             className="form-control"
                             id="inputBirthDate"
@@ -453,31 +471,34 @@ class matchQuestionstud extends Component {
                     </div>
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>דת</h6></label>
-                        <input
-                            required
-                            type="text"
+                        <select
                             className="form-control"
-                            id="inputFirstName"
                             value={this.state.religion1}
-                            placeholder="דת"
-                            title="דת"
-                            onChange={(e) => this.setState({ religion1: e.target.value })}
-                        />
+                            onChange={(e) => this.setState({ religion1: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">יהודי/ה</option>
+                            <option value="2\">מוסלמי/ת</option>
+                            <option value="3\">נוצרי/ת</option>
+                            <option value="4\">אחר</option>
+                        </select>
                     </div>
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>זיקה לדת</h6></label>
-                        <input
-                            required
-                            type="text"
+                        <select
                             className="form-control"
-                            id="inputFirstName"
                             value={this.state.religion2}
-                            placeholder="דת"
-                            title="דת"
-                            onChange={(e) => this.setState({ religion2: e.target.value })}
-                        />
+                            onChange={(e) => this.setState({ religion2: e.target.value })}>
+                            <option id="ff" disabled value="">בחר תשובה</option>
+                            <option value="1\">חילוני/ה</option>
+                            <option value="2\">דתי/ה</option>
+                            <option value="3\">מסורתי/ה</option>
+                            <option value="4\" >אחר</option>
+
+
+                        </select>
                     </div>
-                </div>
+
+                    </div>
 
               <br/>
               <h5 className="right">פרטי הורה/ים:</h5>
@@ -486,7 +507,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>שם האם</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -499,7 +519,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>ת.ז</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -512,7 +531,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>טלפון סלולרי</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -525,7 +543,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>עיסוק</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -540,7 +557,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>שם האב</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -553,7 +569,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>ת.ז</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -566,7 +581,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>טלפון סלולרי</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"
@@ -579,7 +593,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>עיסוק</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -598,7 +611,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>סטטוס הורים</h6></label>
                         <input
-                            required
                             type="text"
                             className="form-control"
                             id="inputFirstName"
@@ -611,7 +623,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                             <label htmlFor="inputFirstName"><h6>רמת הכנסה של המשפחה</h6></label>
                             <select
-                                required id="inputState"
                                 className="form-control"
                                 value={this.state.leve}
                                 onChange={(e) => this.setState({ leve: e.target.value })}>
@@ -624,7 +635,6 @@ class matchQuestionstud extends Component {
                     <div className="form-group col-md-3">
                         <label htmlFor="inputFirstName"><h6>מספר ילדים במשפחה</h6></label>
                         <input
-                            required
                             type="number"
                             className="form-control"
                             id="inputFirstName"

@@ -249,7 +249,7 @@ class AdminUser extends Component {
                 className="form-control"
                 value={this.state.gender}
                 onChange={(e) => this.setState({ gender: e.target.value })}>
-              <option id="ff" disabled value=""> בחר המין</option>
+              <option id="ff" disabled value=""> בחר מין</option>
               <option >זכר</option>
               <option >נקבה</option>
             </select>

@@ -81,8 +81,10 @@ class LinkUsers extends Component {
     isValid = async (querySnapshot, type) => {
 
         if (type === "חניך" && querySnapshot.empty && this.state.discon === true && this.state.lnkstudid !== "") {
+            this.state.ret = "dn"
             var con = window.confirm("האם אתה בטוח לבצונך לנתק את החניך ?")
             if (con) {
+
                 let querySnapshot = await
                     this.usersRef.where('id', '==', this.state.mentorId)
                     .limit(1)
@@ -117,7 +119,7 @@ class LinkUsers extends Component {
                 alert("עודכן בהצלחה!\n");
                 this.setState({ studentId: "" , mentorId: "" , mentorRef: "" , studentRef: ""});
                 this.fillpepl();
-                this.state.ret = "dn"
+
                 return;
             }
             else {
@@ -171,36 +173,36 @@ class LinkUsers extends Component {
                             console.log("hand")
                             return
                         }
+                    }).then(async () => {
+
+                    if (this.state.ret !== "err" && this.state.ret !== "dn") {
+                        var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
+                        if (con) {
+                            this.linkUser(studentId);
+                            this.linkUser(mentorId);
+
+                            var map1 ={id: studentId,name: this.state.studentName}
+                            var map2 ={id: mentorId,name: this.state.mentorName}
+                            const arr=[map1,map2]
+                            await firebase.firestore().collection('Chats').add(
+                                {
+                                    name: "שיחת חונך חניך",
+                                    type: "private",
+                                    members: arr,
+                                })
+
+                            console.log("המשתמשים עודכנו בהצלחה!");
+                            alert("עודכן בהצלחה!\n" + this.state.mentorName + " הוא החונך של " + this.state.studentName + ".");
+                            this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
+                            this.fillpepl();
+                        }
+                    }})
+                    .catch(() => {
+                        console.log("Error in adding new user")
+                        return
                     })
                 })
-            .then(async () => {
-
-                if (this.state.ret !== "err" && this.state.ret !== "dn") {
-                    var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
-                if (con) {
-                    this.linkUser(studentId);
-                    this.linkUser(mentorId);
-
-                    var map1 ={id: studentId,name: this.state.studentName}
-                    var map2 ={id: mentorId,name: this.state.mentorName}
-                    const arr=[map1,map2]
-                    await firebase.firestore().collection('Chats').add(
-                        {
-                            name: "שיחה חניך חניך",
-                            type: "private",
-                            members: arr,
-                        })
-
-                    console.log("המשתמשים עודכנו בהצלחה!");
-                    alert("עודכן בהצלחה!\n" + this.state.mentorName + " הוא החונך של " + this.state.studentName + ".");
-                    this.setState({ studentId: "" , mentorId: "" , discon: false , mentorRef: "" , studentRef: ""});
-                    this.fillpepl();
-                }
-            }})
-            .catch(() => {
-                console.log("Error in adding new user")
-                return
-            });
+            ;
 
     }
 
@@ -252,7 +254,7 @@ class LinkUsers extends Component {
                         />
                         <h5>
 
-                            <input type='checkbox' className=' new_design_checkbox' onChange={(e)=> {
+                            <input type='checkbox' className='new_design_checkbox' onChange={(e)=> {
                                 if (this.state.lnkstat === "0"){
                                     this.setState({ lnkstat: "1" });
                                 }
@@ -266,16 +268,16 @@ class LinkUsers extends Component {
                                 this.setState({lnkstudid: ""})
                             }
                         } />
-                        ללא קישור
+                           חונך לא מקושר לחניך
 
                         </h5>
                         <br></br>
-                        <h5 className="right_to_right">מספר עדיפויות
+                        <h5 className="right_to_right">  מספר עדיפויות לבחירת חניך
                         <select
                             required id="inputState"
                             className="new_design_link right_to "
                             value={this.state.numofpri}
-                            onChange={(e) => this.setState({ numofpri: parseInt(e.target.value , 10) , didup: false , sectble: this.renderSecondTable})}>
+                            onChange={(e) => { this.state.numofpri= parseInt(e.target.value , 10);this.setState({sectble: this.renderSecondTable(this.state.mentorId)})}}>
                             <option id="ff" disabled value="0">בחר תשובה</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -294,7 +296,7 @@ class LinkUsers extends Component {
 
 
                         <br/>
-                        <div className ='container__table new_radius'>
+                        <div className ='container__table new_design_Table'>
                         <table className="table table-bordered ">
                             <thead>
                             <tr>
@@ -308,11 +310,8 @@ class LinkUsers extends Component {
                         </table>
                         </div>
                     </div>
-                    {
 
-                    //console.log(this.state.mentorRef)&&this.state.lnkstudid !== "" &&  this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
 
-                    }
                     <div className="form-group col-md-6">
 
                         <br/>
@@ -324,7 +323,7 @@ class LinkUsers extends Component {
                         <br></br>
                         <br></br>
 
-                        <div className ='container__table1 new_radius'>
+                        <div className ='container__table1'>
                         <table className="table table-bordered ">
                             <thead>
                             {
@@ -355,8 +354,7 @@ class LinkUsers extends Component {
                             }</tbody>
                         </table>
                         </div>
-
-                        <button type="submit" className="button-text">בצע פעולות</button>
+                        <button type="submit" className="btn btn-success button-text-new">בצע פעולות</button>
 
                     </div>
                 </div>
@@ -364,65 +362,60 @@ class LinkUsers extends Component {
         );
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.state.lnkstudid !== "" &&  this.state.discon === false && document.getElementById(this.state.lnkstudid) !== null && (document.getElementById(this.state.lnkstudid).checked = true)
+    }
 
     renderFirstTable () {
         if (this.state.lnkstat === "1") {
             return (this.state.people
                 .filter(person => person.data.type === "חונך" && person.data.first !== "true" && (person.data.link_user == null || person.data.link_user === "")).filter(person => person.data.fName.indexOf(this.state.teachsrch) > -1)
                 .map((person, index) => (
-                    <tr key={index + "tg1"}>
+
+                    <tr key={index + "tg"}>
                         <td>{person.data.id}</td>
                         <td>{person.data.fName + " " + person.data.lName}</td>
                         <td>{person.data.email}</td>
-
                         <td person_id={person.data.id}><input type='checkbox' id={person.data.id}
                                                               className='people_check' onChange={(e) => {
 
-                            if (this.state.mentorId === "") {
-                                this.setState({
-                                    mentorId: e.target.id,
-                                    discon: false,
-                                    mentorRef: "",
-                                    lnkstudid: "",
-                                    didup: false
-                                });
-                            } else if (e.target.id === this.state.mentorId) {
-                                this.setState({
-                                    mentorId: "",
-                                    discon: false,
-                                    mentorRef: "",
-                                    lnkstudid: "",
-                                    didup: false
-                                });
-                            } else {
-                                document.getElementById(this.state.mentorId).checked = false;
-                                this.setState({
-                                    mentorId: e.target.id,
-                                    discon: false,
-                                    mentorRef: "",
-                                    lnkstudid: "",
-                                    didup: false
-                                });
-                            }
+
                             if (this.state.lnkstudid !== "") {
+
                                 if (document.getElementById(this.state.lnkstudid) !== null) {
                                     document.getElementById(this.state.lnkstudid).checked = false;
                                 }
-                                this.setState({lnkstudid: "", discon: false, mentorRef: "", didup: false});
                             }
+                            if (this.state.mentorId === "") {
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else if (e.target.id === this.state.mentorId) {
+                                this.setState({mentorId: ""})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            } else {
+                                document.getElementById(this.state.mentorId).checked = false;
+                                this.setState({mentorId: e.target.id})
+                                this.setState({
+                                    discon: false,
+                                    mentorRef: "",
+                                    didup: false,
+
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
+                            }
+
                             if (this.state.studentId !== "") {
                                 if (document.getElementById(this.state.lnkstudid) !== null) {
                                     document.getElementById(this.state.studentId).checked = false;
                                 }
-                                this.setState({
-                                    studentId: "",
-                                    discon: false,
-                                    mentorRef: "",
-                                    lnkstudid: "",
-                                    didup: false
-                                });
                             }
-
                         }
                         }/>
                         </td>
@@ -441,52 +434,43 @@ class LinkUsers extends Component {
                         <td>{person.data.email}</td>
                         <td person_id={person.data.id}><input type='checkbox' id={person.data.id}
                                                               className='people_check' onChange={(e) => {
+
+
+                            if (this.state.lnkstudid !== "") {
+
+                                if (document.getElementById(this.state.lnkstudid) !== null) {
+                                    document.getElementById(this.state.lnkstudid).checked = false;
+                                }
+                            }
                             if (this.state.mentorId === "") {
                                 this.setState({mentorId: e.target.id})
                                 this.setState({
                                     discon: false,
                                     mentorRef: "",
-                                    lnkstudid: "",
                                     didup: false,
-                                    sectble: this.renderSecondTable(e.target.id)
-                                });
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
                             } else if (e.target.id === this.state.mentorId) {
                                 this.setState({mentorId: ""})
                                 this.setState({
                                     discon: false,
                                     mentorRef: "",
-                                    lnkstudid: "",
                                     didup: false,
-                                    sectble: this.renderSecondTable(e.target.id)
-                                });
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
                             } else {
                                 document.getElementById(this.state.mentorId).checked = false;
                                 this.setState({mentorId: e.target.id})
                                 this.setState({
                                     discon: false,
                                     mentorRef: "",
-                                    lnkstudid: "",
                                     didup: false,
-                                    sectble: this.renderSecondTable(e.target.id)
-                                });
+
+                                }, this.setState({sectble: this.renderSecondTable(e.target.id)}, this.setState({ret:""})));
                             }
-                            if (this.state.lnkstudid !== "") {
-                                if (document.getElementById(this.state.lnkstudid) !== null) {
-                                    document.getElementById(this.state.lnkstudid).checked = false;
-                                }
-                                this.setState({lnkstudid: "", discon: false, mentorRef: "", didup: false})
-                            }
+
                             if (this.state.studentId !== "") {
                                 if (document.getElementById(this.state.lnkstudid) !== null) {
                                     document.getElementById(this.state.studentId).checked = false;
                                 }
-                                this.setState({
-                                    studentId: "",
-                                    discon: false,
-                                    mentorRef: "",
-                                    lnkstudid: "",
-                                    didup: false,
-                                })
                             }
                         }
                         }/>
@@ -496,7 +480,11 @@ class LinkUsers extends Component {
         }
     }
     renderSecondTable (mentid){
+        this.setState({lnkstudid: "", studentId: ""})
         this.state.mentorId = mentid
+        if (mentid === "") {
+            return (<tr></tr>)
+        }
         this.state.mentorRef = this.getPeopleByid(mentid).ref
         // console.log("guid")
         // console.log(this.state.mentorId)
@@ -520,6 +508,7 @@ class LinkUsers extends Component {
                 .filter(person => person.data.type === "חניך"
                     && person.data.first !== "true"
                      && this.gtscor(person.data.first , person.data.birthDate) <= this.state.numofpri
+                     && this.gtscor(person.data.first , person.data.birthDate) !== -1
                      && (person.data.link_user === undefined || person.data.link_user === "" || ((person.data.link_user === this.state.mentorRef)
                          && (this.state.discon === false)
                          && (this.state.lnkstudid = person.data.id)
@@ -527,67 +516,23 @@ class LinkUsers extends Component {
                         || ((person.link_user !== "")
                         && (person.data.link_user === this.state.mentorRef)
                         && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate)
-                             && (this.state.numofpri = this.gtscor(person.data.first , person.data.birthDate) + 1)))
+                             && (this.state.numofpri = this.gtscor(person.data.first , person.data.birthDate))))
                 )
         filter.map((person, index) =>
                 {
 
                     if ((person.data.link_user === this.state.mentorRef) && (this.state.discon === false)) {
                         this.setState({lnkstudid: person.data.id , studentId: person.data.id})
-                        console.log(this.state.lnkstudid)
                     }
-                    if ((person.data.link_user !== "") && (person.data.link_user === this.state.mentorRef) && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate))) {
-                        this.setState({numofpri: this.gtscor(person.data.first , person.data.birthDate) + 1})
-                    }
-                    //ijpYSM7cKibH47RTeocnXkNx96Y2
-                    //wYGh1qi4vYXd9tcfKb3IRZJYP9y2
-                //     return(
-                //     <tr key={index+"t"}>
-                //         <td>{person.data.id}</td>
-                //         <td>{person.data.fName + " " + person.data.lName}</td>
-                //         <td>{person.data.email}</td>
-                //         <td person_id={person.data.id}>
-                //             <input id={person.data.id} type='checkbox' className='people_check' checked={(person.data.link_user==this.state.mentorRef && this.state.discon == false) || (person.data.id == this.state.studentId)}
-                //                                          onChange={(e) => {
-                //                                              if (this.state.studentId === "") {
-                //                                                  this.setState({studentId: e.target.id});
-                //                                              } else if (e.target.id !== this.state.studentId) {
-                //                                                  document.getElementById(this.state.studentId).checked = false;
-                //                                                  this.setState({studentId: e.target.id, discon: !this.state.discon});
-                //                                              } else {
-                //                                                  this.setState({studentId: "", discon: true});
-                //                                              }
-                //                                             }
-                //                                          }
-                //             />
-                //         </td>
-                //     </tr>
-                // )
+
                 })
 
-            // if (nwlst > 0) {
-            //     this.state.mins = i+1
-            //     nwlst = 0;
-            // }
-
-            // let chk = lists.pop();
-            // if (chk == "") {
-            //     lists.push(<tr key={i+"tr"}>
-            //         <td>  </td>
-            //         <td>  </td>
-            //         <td> {"אין"} </td>
-            //         <td>  </td>
-            //     </tr>)
-            //
-            // }
-            // else {
-            //     lists.push(chk)
-            // }
-            // chk = null;
-        // }
         lists=this.showLines(this.state.mentorRef,filter)
         this.state.mins=lists.length
-        // lists=lists.slice(0,lists.length-((i*2) - (this.state.mins*2)))
+        lists.forEach(row => {if(row.props.children[5].props.person_id === this.state.lnkstudid) {
+
+        }});
+
         return (lists)
     }
 
@@ -609,7 +554,6 @@ class LinkUsers extends Component {
     showLines(guide,lists) {
         var table = []
         var sorted = []
-        // console.log(lists)
         lists.map((person) => {
                 let score = this.gtscor(person.data.first, person.data.birthDate)
                 sorted.push({score: score, person: person})
@@ -628,23 +572,16 @@ class LinkUsers extends Component {
                     <td>{line.score}</td>
                     <td person_id={person.data.id}>
                         <input id={person.data.id} type='checkbox' className='people_check'
-                               checked={(person.data.link_user == guide && this.state.discon == false)}
                                onChange={(e) => {
+
                                    if (this.state.studentId === "") {
                                        this.setState({studentId: e.target.id});
-
-                                       //document.getElementById(e.target.id).checked = true;
                                    } else if (e.target.id !== this.state.studentId) {
                                        document.getElementById(this.state.studentId).checked = false;
-                                       //document.getElementById(e.target.id).checked = true;
                                        this.setState({studentId: e.target.id, discon: true});
-
                                    } else {
-                                       //document.getElementById(e.target.id).checked = false;
                                        this.setState({studentId: "", discon: true});
-
                                    }
-
 
                                }
                                }/></td>
@@ -681,7 +618,7 @@ class LinkUsers extends Component {
 
         var ind  = 0
         var ind2 = 0
-        for (var ln  = 0 ; ln < 12 ; ) {
+        for (var ln = 0 ; ln < 12 ; ) {
             if (studscr[ind] === "/") {
                 ln++;
                 ind++;
@@ -754,3 +691,4 @@ class LinkUsers extends Component {
 }
 
 export default LinkUsers;
+

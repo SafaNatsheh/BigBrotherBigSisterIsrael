@@ -5,7 +5,6 @@ import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Meetings from "./Meetings";
 import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,6 +16,9 @@ import RakazUser from "./RakazUser";
 import Chat from "../Chat/Chat";
 import CreateNewChat from "../adminComponents/partial/CreateNewChat";
 import UsersTable from "../adminComponents/partial/UsersTable";
+import ReportTable from "../mainPageComponents/ReportTable";
+import '../mainPageComponents/ReportTable.css';
+import LinkUsers from "../../src/adminComponents/partial/LinkUsers";
 
 class RakazPage extends Component {
     constructor(props) {
@@ -107,7 +109,7 @@ class RakazPage extends Component {
                             { <Route path="/RakazUser">
                                 <RakazUser />
                             </Route> }
-                            <Route path="/UpdateUser">
+                            <Route path="/UpdateUser/:personId">
                                 <UpdateUser />
                             </Route>
                             <Route path="/Home">
@@ -115,6 +117,9 @@ class RakazPage extends Component {
                             </Route>
                             <Route path="/UsersTable">
                                 <UsersTable />
+                            </Route>{" "}
+                            <Route path="/LinkUsers">
+                                <LinkUsers />
                             </Route>{" "}
                             <Route path="/Meetings">
                                 <Meetings />
@@ -126,6 +131,12 @@ class RakazPage extends Component {
                                 <CreateNewChat />
                             </Route>{" "}
                             <Route exact path={"/zoom"} component={Zoom}/>
+                            <Route path="/ReportTable">
+                                <ReportTable />
+                            </Route>{" "}
+                            <Route path="/ReportTable/:personId">
+                                <ReportTable />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -147,20 +158,21 @@ class RakazPage extends Component {
                         to="/Home"
                         activeStyle={activeTabStyle}
                     >
-                        <div className= "bait">
+                      <div className= "bait">
                      דף הבית 
                       </div>
                     </NavLink>
                 </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/RakazUser"
                         activeStyle={activeTabStyle}
-                    >
-                        הוספת משתמש חדש
+                    >הוספת משתמש חדש
                     </NavLink>
                 </li>
+
                 {/*<li className="nav-item text-center">*/}
                 {/*    <NavLink*/}
                 {/*        className="tab"*/}
@@ -170,52 +182,73 @@ class RakazPage extends Component {
                 {/*        עדכון פרטי משתמש*/}
                 {/*    </NavLink>*/}
                 {/*</li>*/}
+
+                <li className="nav-item text-center">
+                    <NavLink
+                        className="tab"
+                        to="/LinkUsers"
+                        activeStyle={activeTabStyle}
+                    >קישור חונך לחניך
+                    </NavLink>
+                </li>
+
                 <li className="nav-item text-center">
                 <NavLink
                     className="tab"
                     to="/UsersTable"
                     activeStyle={activeTabStyle}
-                >
-                    רשימת משתמשים
+                >רשימת משתמשים
                 </NavLink>
                 </li>
+
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
+                        style ={{marginRight:"10px"}}
                         activeStyle={activeTabStyle}
-                    >
-                        קביעת פגישה
+                    >קביעת פגישות
                     </NavLink>
                 </li>
-                <li className="nav-item">
-                    <NavLink
-                        className="tab"
-                        to="/Chat"
-                        activeStyle={activeTabStyle}
 
-                    >
-                        שיחות{" "}
-                    </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item">
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/CreateChat"
+                        style ={{marginRight:"20px"}}
                         activeStyle={activeTabStyle}
-
-                    >
-                        יצירת קבוצה{" "}
+                    > יצירת קבוצה{" "}
                     </NavLink>{" "}
-                </li>{" "}
-                <li className="nav-item ">
+                </li>
+
+                <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Zoom"
-                    >
-                        שיחת וידאו{" "}
+                        to="/Chat"
+                        style ={{marginRight:"55px"}}
+                        activeStyle={activeTabStyle}
+                    > שיחות{" "}
                     </NavLink>{" "}
-                </li>{" "}
+                </li>
+
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/ReportTable"*/}
+                {/*    >*/}
+                {/*        הצג דוח שעות*/}
+                {/*    </NavLink>*/}
+                {/*</li>{" "}*/}
+
+
+                {/*<li className="nav-item ">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/Zoom"*/}
+                {/*    >שיחת וידאו{" "}*/}
+                {/*    </NavLink>{" "}*/}
+                {/*</li>{" "}*/}
+
             </ul>
         )
     }

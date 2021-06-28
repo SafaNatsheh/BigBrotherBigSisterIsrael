@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import "./Meetings.css";
 import firebase from "../config/Firebase"
 //import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
-
+import '../mainPageComponents/addMeeting.css'
 class addMeetings extends Component {
 
     constructor(props) {
@@ -102,7 +102,7 @@ componentDidMount() {
 
      return (
          <div className="main-background" >
-             <form className="meeting-form" onSubmit={this.handleSubmit}>
+             <form className="meeting-form add_new_Meeting" onSubmit={this.handleSubmit}>
                  <br />
                  <div className="form-group">
                      <h1 className="meeting-title"><u>הוספת פגישה</u></h1>

@@ -1,14 +1,11 @@
 import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
-
 import UpdateUser from "../adminComponents/partial/UpdateUser"
 import Home from "../rakazComponents/Home"
 import Meetings from "../rakazComponents/Meetings";
 import firebase, {auth} from "../config/Firebase";
 import logo from '../static_pictures/big_brothers_big_sisters.png';
-//import AddMeeting from "../mainPageComponents/addMeeting"
-
-
+import AddMeeting from "../mainPageComponents/addMeeting"
 import {
     BrowserRouter as Router,
     Switch,
@@ -124,6 +121,9 @@ class InstructorPage extends Component {
                                 <CreateNewChat />
                             </Route>{" "}
                             <Route exact path={"/zoom"} component={Zoom}/>
+                            <Route path="/AddMeeting">
+                                <AddMeeting />
+                            </Route>{" "}
                             <Route path="/">
                                 <Home />
                             </Route>
@@ -152,19 +152,20 @@ class InstructorPage extends Component {
                    </NavLink>
                 </li>
 
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
-                        to="/UpdateUser"
-                        activeStyle={activeTabStyle}
-                    >עדכון פרטי משתמש
-                    </NavLink>
-                </li>
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/UpdateUser"*/}
+                {/*        activeStyle={activeTabStyle}*/}
+                {/*    >עדכון פרטי משתמש*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
 
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/Meetings"
+                        style ={{marginRight:"10px"}}
                         activeStyle={activeTabStyle}
                     >קביעת פגישות
                     </NavLink>
@@ -173,16 +174,8 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Chat"
-                        activeStyle={activeTabStyle}
-                    >שיחות
-                    </NavLink>
-                </li>
-
-                <li className="nav-item text-center">
-                    <NavLink
-                        className="tab"
                         to="/CreateChat"
+                        style ={{marginRight:"20px"}}
                         activeStyle={activeTabStyle}
                     >יצירת קבוצה
                     </NavLink>
@@ -191,16 +184,28 @@ class InstructorPage extends Component {
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
-                        to="/Zoom"
-
-                    >שיחות וידאו
+                        to="/Chat"
+                        style ={{marginRight:"55px"}}
+                        activeStyle={activeTabStyle}
+                    >שיחות
                     </NavLink>
                 </li>
+
+
+
+                {/*<li className="nav-item text-center">*/}
+                {/*    <NavLink*/}
+                {/*        className="tab"*/}
+                {/*        to="/Zoom"*/}
+
+                {/*    >שיחות וידאו*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
                 <li className="nav-item text-center">
                     <NavLink
                         className="tab"
                         to="/AddMeeting"
-                        activeStyle={activeTabStyle}
+                        style ={{marginRight:"10px"}}
                     >
                         הוספת פגישה
                     </NavLink>
