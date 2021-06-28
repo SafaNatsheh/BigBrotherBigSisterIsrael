@@ -34,9 +34,63 @@ class ReportTable extends Component {
 
 		// const newArr = this.state.meetingsArr.
 		// 	filter(meeting =>( meeting.userId.indexOf(this.state.searchTerm)>-1) &&(meeting.date>=this.state.fromDate)&&(meeting.date<=this.state.toDate));
+	}
 
+	printCsv() {
+
+		let csvRow =[];
+		const headers = ["Date", "StartTime","EndTime","TravelTime" ,"Description","TotalMeetingTime"];
+
+		const dataStorage =this.state.meetingsArr.map(meeting => ({
+			Date: meeting.date,
+			StartTime: meeting.startTime,
+			EndTime:meeting.endTime,
+			TravelTime: meeting.travelTime,
+			Description: meeting.description,
+			TotalMeetingTime:this.calculateMeetingDuration(meeting)}
+			)
+		)
+
+		for(let i = 0 ; i < dataStorage.length; i++){
+			headers.push(dataStorage[i].Date,dataStorage[i].StartTime,dataStorage[i].EndTime
+				,dataStorage[i].TravelTime,dataStorage[i].Description,dataStorage[i].TotalMeetingTime);
+
+		}
+		// console.log(headers);
+		for(let i = 0 ; i < dataStorage.length ; ++i){
+		   csvRow.push(() => this.headers[i].join(","));
+		}
+
+		let cvsString = csvRow.join("%0A");
+
+		let a = document.createElement("a");
+		a.href = 'data:attachment/csv,'+cvsString;
+		a.target = "_Blank";
+		a.download = "testfile.csv";
+		document.body.appendChild(a);
+		a.click();
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// componentDidMount() {
 	// 	//get all the meetings and put them on an array
@@ -77,6 +131,7 @@ class ReportTable extends Component {
 
 		//this.search()
 		var arrayMeeting=[]
+
 		console.log(this.MeetingsListRef)
 		var queryShot = await this.MeetingsListRef
 			.where("userId","==",this.state.searchTerm)
@@ -100,9 +155,7 @@ class ReportTable extends Component {
 	}
 
 	render() {
-
 		return (
-
 			<div className="MAIN-background" >
 				{/*<form className="report-form" onSubmit={this.handleSubmit}>*/}
 				<br />
@@ -113,43 +166,38 @@ class ReportTable extends Component {
 						className="FLabels"
 						style={{ float: "right" }}
 						htmlFor="date"
-					>
-						חיפוש לפי מס' תעודת זהות
+					>חיפוש לפי מס' תעודת זהות
 					<input type="text"
 						   className="new-design-to-input form-control"
 						   placeholder="תעודת זהות "
 						   value={this.state.searchTerm}
 						   onChange={(e) => this.setState({ searchTerm: e.target.value })}
 						  />
-
 					</label>
 					<label
 						className="FLabels "
 						style={{ float: "right" }}
 						htmlFor="date"
-					>
-						בחר טווח תארכים  מתאריך:
-
+					>בחר טווח תארכים  מתאריך:
 					<input
+						required
 						onChange={(e) => {
 							let t=new Date(e.target.value)
 							console.log(t)
-							this.setState({searchTerm:"56789876", fromDate: new Date(e.target.value) })}}
+							this.setState({fromDate: new Date(e.target.value) })}}
 						type="date"
 						className="new-design-to-input form-control"
 						id="fromDate"
 						placeholder="מתאריך"
 						//value={this.state.fromDate}
-						required
 					/>
 					</label>
 					<label
+						required
 						className="right-input3"
 						style={{ float: "right" }}
 						htmlFor="date"
-					>
-						עד תאריך:
-
+					>עד תאריך:
 					<input
 						onChange={(e) => this.setState({ toDate:new Date(e.target.value) })}
 						type="date"
@@ -157,18 +205,16 @@ class ReportTable extends Component {
 						id="toDate"
 						placeholder="עד תאריך"
 						//	value={this.state.toDate}
-						required
 					/>
 				    </label>
-
-
 					<button
 						className="btn btn-success setup-meeting-btn"
 						style={{ float: "right", marginRight: "1230px", marginTop:"-46px", width:"230px" }}
-						onClick={()=>{
-							this.handleSubmit()}}
-					>
-						הצג דוח שעות
+						onClick={() => {
+							this.handleSubmit()
+						    }
+						}
+					>הצג דוח שעות
 					</button>
 				</div>
 				</div>
@@ -179,9 +225,7 @@ class ReportTable extends Component {
 					&&this.renderHeader()
 					}
 				</div>
-
 			</div>
-
 		)
 	}
 
@@ -223,7 +267,8 @@ class ReportTable extends Component {
 			<br />
 			<button
 				className="button-print"
-				onClick={this.handleSubmit}
+				// onClick={this.handleSubmit}
+				onClick={()=> {this.printCsv()}}
 			>
 				<div className="button-text-New">
 					הדפס דוח שעות
@@ -245,30 +290,26 @@ class ReportTable extends Component {
 
 
 	renderTable() {
-		let d = this.state.meetingsArr[0].date
-
-
-		//
+		// let d = this.state.meetingsArr[0].date;
 		// var f= t.format("dd.mm.yyyy hh:MM:ss")
 		// var g= t.format("dd-mm-yyyy")
 		// console.log(f)
 		// console.log(g)
+			return (
+				this.state.meetingsArr
+					.map((meeting, index) => (
 
-		return (
-			this.state.meetingsArr
-				.map((meeting,index) => (
+						<tr className="new-color2" key={index}>
+							<td>{this.test(meeting)}
+							</td>
+							<td>{meeting.startTime}</td>
+							<td>{meeting.endTime}</td>
+							<td>{meeting.travelTime}</td>
+							<td>{meeting.description}</td>
+							<td>{this.calculateMeetingDuration(meeting)}</td>
+						</tr>
+					)))
 
-					<tr className="new-color2" key={index}>
-						<td>{this.test(meeting)}
-						</td>
-						<td>{meeting.startTime}</td>
-						<td>{meeting.endTime}</td>
-						<td>{meeting.travelTime}</td>
-						<td>{meeting.description}</td>
-						<td>{this.calculateMeetingDuration(meeting)}</td>
-
-					</tr>
-				)           ))
 	}
 
 	calculateMeetingDuration(meeting){
