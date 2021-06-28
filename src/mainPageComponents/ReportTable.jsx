@@ -197,7 +197,7 @@ class ReportTable extends Component {
 
                     <table className="table table-bordered">
                         <thead>
-                        <tr className="new-color">
+                        <tr className="new-color new-fix-table">
                             <th className="table-lay">תאריך</th>
                             <th className="table-lay">זמן התחלה </th>
                             <th className="table-lay">זמן סיום </th>
