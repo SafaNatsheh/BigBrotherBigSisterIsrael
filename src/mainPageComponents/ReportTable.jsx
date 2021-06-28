@@ -33,9 +33,9 @@ class ReportTable extends Component {
 		console.log("in1")
 		console.log(this.MeetingsListRef)
 		//get all the meetings and put them on an array
-
 		// const newArr = this.state.meetingsArr.
 		// 	filter(meeting =>( meeting.userId.indexOf(this.state.searchTerm)>-1) &&(meeting.date>=this.state.fromDate)&&(meeting.date<=this.state.toDate));
+
 	}
 
 	printCsv() {
@@ -78,11 +78,11 @@ class ReportTable extends Component {
 		var csvContent = BOM + cvsString;
 		a.href = 'data:attachment/csv,'+csvContent;
 		a.target = "_Blank";
-		a.download = "testfile.csv";
+		a.download = this.state.searchTerm + ".csv";
 		document.body.appendChild(a);
 		a.click();
-		this.state.sumOfHours=0
-		this.state.sumOfMinutes=0
+		this.state.sumOfHours=0;
+		this.state.sumOfMinutes=0;
 
 	}
 
@@ -172,7 +172,7 @@ class ReportTable extends Component {
 							className="btn btn-success setup-meeting-btn"
 							style={{ float: "right", marginRight: "1230px", marginTop:"-46px", width:"230px" }}
 							onClick={() => {
-								this.handleSubmit()
+								this.handleSubmit();
 							}
 							}
 						>הצג דוח שעות
@@ -197,7 +197,7 @@ class ReportTable extends Component {
 
 					<table className="table table-bordered">
 						<thead>
-						<tr className="new-color">
+						<tr className="new-color new-fix-table" >
 							<th className="table-lay">תאריך</th>
 							<th className="table-lay">זמן התחלה </th>
 							<th className="table-lay">זמן סיום </th>
