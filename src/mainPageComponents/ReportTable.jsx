@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import firebase from "../config/Firebase"
 
+var csvRow = []
+
 class ReportTable extends Component {
 	constructor(props) {
 		super(props);
@@ -38,93 +40,52 @@ class ReportTable extends Component {
 
 	printCsv() {
 
-		let csvRow =[];
-		const headers = ["Date", "StartTime","EndTime","TravelTime" ,"Description","TotalMeetingTime"];
+		csvRow=[
+			[
+				("תאריך").replaceAll(" ","%20"),
+				("זמן התחלה").replaceAll(" ","%20"),
+				("זמן סיום").replaceAll(" ","%20"),
+				("זמן נסיעה").replaceAll(" ","%20") ,
+				("תיאור פגישה").replaceAll(" ","%20"),
+				("זמן סופי").replaceAll(" ","%20")
+			],
+		];
+		// const headers = ["Date", "StartTime","EndTime","TravelTime" ,"Description","TotalMeetingTime"];
 
-		const dataStorage =this.state.meetingsArr.map(meeting => ({
-			Date: meeting.date,
-			StartTime: meeting.startTime,
-			EndTime:meeting.endTime,
-			TravelTime: meeting.travelTime,
-			Description: meeting.description,
-			TotalMeetingTime:this.calculateMeetingDuration(meeting)}
-			)
-		)
+		this.state.meetingsArr.map(meeting => {
+			csvRow.push([
 
-		for(let i = 0 ; i < dataStorage.length; i++){
-			headers.push(dataStorage[i].Date,dataStorage[i].StartTime,dataStorage[i].EndTime
-				,dataStorage[i].TravelTime,dataStorage[i].Description,dataStorage[i].TotalMeetingTime);
+				this.test(meeting),
+				meeting.startTime,
+				meeting.endTime,
+				meeting.travelTime,
+				(meeting.description).replaceAll(" ","%20"),
+				(this.calculateMeetingDuration(meeting)).replaceAll(" ","%20"),
 
-		}
-		// console.log(headers);
-		for(let i = 0 ; i < dataStorage.length ; ++i){
-		   csvRow.push(() => this.headers[i].join(","));
-		}
+			],)
+		})
 
+
+		csvRow.push([
+			("זמן סופי").replaceAll(" ","%20"),
+			(this.calculateTotalTime()).replaceAll(" ","%20")
+		])
+		console.log(csvRow)
 		let cvsString = csvRow.join("%0A");
 
 		let a = document.createElement("a");
-		a.href = 'data:attachment/csv,'+cvsString;
+		var BOM = "\uFEFF";
+		var csvContent = BOM + cvsString;
+		a.href = 'data:attachment/csv,'+csvContent;
 		a.target = "_Blank";
 		a.download = "testfile.csv";
 		document.body.appendChild(a);
 		a.click();
+		this.state.sumOfHours=0
+		this.state.sumOfMinutes=0
 
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// componentDidMount() {
-	// 	//get all the meetings and put them on an array
-	// 	this.MeetingsListRef.orderByChild("date").where("userId", "==", this.state.searchTerm)
-	// 		.get()
-	// 		.then(queryShot => {
-	// 			queryShot.forEach(
-	// 				(doc) => {
-	// 					this.setState({  meetingsArr: [...this.state.meetingsArr, doc.data()] })
-	// 				}
-	// 			)
-	// 		})
-	// 		.catch((e) => console.log(e.name));
-	//
-	// }
-
-	// search()
-	// {
-	// 	console.log("in")
-	// 	 this.MeetingsListRef
-	// 	.where("test",">",1)
-	// 	this.MeetingsListRef.where("userId","==",this.state.searchTerm)
-	//
-	// 		.get()
-	// 		.then((res)=>{
-	// 			console.log(res)
-	// 		res.forEach(data=>{
-	// 			console.log(data.data())
-	// 		})
-	// 			// console.log(res.docs[0].data().date >= this.state.fromDate)
-	//
-	// 		})
-	//
-	// }
 
 
 	async handleSubmit() {
@@ -162,61 +123,61 @@ class ReportTable extends Component {
 				<div className="forms-groups title-design">
 					<h1><u className="title-design2">הצג דוח פגישות </u></h1>
 					<div className="right-all-div">
-					<label
-						className="FLabels"
-						style={{ float: "right" }}
-						htmlFor="date"
-					>חיפוש לפי מס' תעודת זהות
-					<input type="text"
-						   className="new-design-to-input form-control"
-						   placeholder="תעודת זהות "
-						   value={this.state.searchTerm}
-						   onChange={(e) => this.setState({ searchTerm: e.target.value })}
-						  />
-					</label>
-					<label
-						className="FLabels "
-						style={{ float: "right" }}
-						htmlFor="date"
-					>בחר טווח תארכים  מתאריך:
-					<input
-						required
-						onChange={(e) => {
-							let t=new Date(e.target.value)
-							console.log(t)
-							this.setState({fromDate: new Date(e.target.value) })}}
-						type="date"
-						className="new-design-to-input form-control"
-						id="fromDate"
-						placeholder="מתאריך"
-						//value={this.state.fromDate}
-					/>
-					</label>
-					<label
-						required
-						className="right-input3"
-						style={{ float: "right" }}
-						htmlFor="date"
-					>עד תאריך:
-					<input
-						onChange={(e) => this.setState({ toDate:new Date(e.target.value) })}
-						type="date"
-						className="new-design-to-input form-control"
-						id="toDate"
-						placeholder="עד תאריך"
-						//	value={this.state.toDate}
-					/>
-				    </label>
-					<button
-						className="btn btn-success setup-meeting-btn"
-						style={{ float: "right", marginRight: "1230px", marginTop:"-46px", width:"230px" }}
-						onClick={() => {
-							this.handleSubmit()
-						    }
-						}
-					>הצג דוח שעות
-					</button>
-				</div>
+						<label
+							className="FLabels"
+							style={{ float: "right" }}
+							htmlFor="date"
+						>חיפוש לפי מס' תעודת זהות
+							<input type="text"
+								   className="new-design-to-input form-control"
+								   placeholder="תעודת זהות "
+								   value={this.state.searchTerm}
+								   onChange={(e) => this.setState({ searchTerm: e.target.value })}
+							/>
+						</label>
+						<label
+							className="FLabels "
+							style={{ float: "right" }}
+							htmlFor="date"
+						>בחר טווח תארכים  מתאריך:
+							<input
+								required
+								onChange={(e) => {
+									let t=new Date(e.target.value)
+									console.log(t)
+									this.setState({fromDate: new Date(e.target.value) })}}
+								type="date"
+								className="new-design-to-input form-control"
+								id="fromDate"
+								placeholder="מתאריך"
+								//value={this.state.fromDate}
+							/>
+						</label>
+						<label
+							required
+							className="right-input3"
+							style={{ float: "right" }}
+							htmlFor="date"
+						>עד תאריך:
+							<input
+								onChange={(e) => this.setState({ toDate:new Date(e.target.value) })}
+								type="date"
+								className="new-design-to-input form-control"
+								id="toDate"
+								placeholder="עד תאריך"
+								//	value={this.state.toDate}
+							/>
+						</label>
+						<button
+							className="btn btn-success setup-meeting-btn"
+							style={{ float: "right", marginRight: "1230px", marginTop:"-46px", width:"230px" }}
+							onClick={() => {
+								this.handleSubmit()
+							}
+							}
+						>הצג דוח שעות
+						</button>
+					</div>
 				</div>
 				{/*</form>*/}
 				<div>
@@ -232,49 +193,49 @@ class ReportTable extends Component {
 	renderHeader(){
 		return(
 			<div className="form-group">
-			<div className="now-table">
+				<div className="now-table">
 
-				<table className="table table-bordered">
-					<thead>
-					<tr className="new-color">
-						<th className="table-lay">תאריך</th>
-						<th className="table-lay">זמן התחלה </th>
-						<th className="table-lay">זמן סיום </th>
-						<th className="table-lay">זמן נסיעה </th>
-						<th className="table-lay">תיאור פגישה </th>
-						<th className="table-lay">אורך פגישה כולל זמן נסיעה </th>
-					</tr>
-					</thead>
+					<table className="table table-bordered">
+						<thead>
+						<tr className="new-color">
+							<th className="table-lay">תאריך</th>
+							<th className="table-lay">זמן התחלה </th>
+							<th className="table-lay">זמן סיום </th>
+							<th className="table-lay">זמן נסיעה </th>
+							<th className="table-lay">תיאור פגישה </th>
+							<th className="table-lay">אורך פגישה כולל זמן נסיעה </th>
+						</tr>
+						</thead>
 
-					<tbody>
-					{ this.renderTable()}
-					</tbody>
-					<tfoot className="background-footer">
-					<tr >
-						<td>ס"ה שעות</td>
-						<td>
-							{
-								this.state.meetingsArr.length >0 ?
-									this.calculateTotalTime():""
-							}
-						</td>
-					</tr>
-					</tfoot>
-				</table>
+						<tbody>
+						{ this.renderTable()}
+						</tbody>
+						<tfoot className="background-footer">
+						<tr >
+							<td>ס"ה שעות</td>
+							<td>
+								{
+									this.state.meetingsArr.length >0 ?
+										this.calculateTotalTime():""
+								}
+							</td>
+						</tr>
+						</tfoot>
+					</table>
 
-			</div>
-		    <div className="Button-Print">
-			<br />
-			<button
-				className="button-print"
-				// onClick={this.handleSubmit}
-				onClick={()=> {this.printCsv()}}
-			>
-				<div className="button-text-New">
-					הדפס דוח שעות
 				</div>
-			</button>
-		</div>
+				<div className="Button-Print">
+					<br />
+					<button
+						className="button-print"
+						// onClick={this.handleSubmit}
+						onClick={()=> {this.printCsv()}}
+					>
+						<div className="button-text-New">
+							הדפס דוח שעות
+						</div>
+					</button>
+				</div>
 			</div>
 		);
 	}
@@ -295,20 +256,20 @@ class ReportTable extends Component {
 		// var g= t.format("dd-mm-yyyy")
 		// console.log(f)
 		// console.log(g)
-			return (
-				this.state.meetingsArr
-					.map((meeting, index) => (
+		return (
+			this.state.meetingsArr
+				.map((meeting, index) => (
 
-						<tr className="new-color2" key={index}>
-							<td>{this.test(meeting)}
-							</td>
-							<td>{meeting.startTime}</td>
-							<td>{meeting.endTime}</td>
-							<td>{meeting.travelTime}</td>
-							<td>{meeting.description}</td>
-							<td>{this.calculateMeetingDuration(meeting)}</td>
-						</tr>
-					)))
+					<tr className="new-color2" key={index}>
+						<td>{this.test(meeting)}
+						</td>
+						<td>{meeting.startTime}</td>
+						<td>{meeting.endTime}</td>
+						<td>{meeting.travelTime}</td>
+						<td>{meeting.description}</td>
+						<td>{this.calculateMeetingDuration(meeting)}</td>
+					</tr>
+				)))
 
 	}
 
@@ -348,9 +309,11 @@ class ReportTable extends Component {
 		console.log(this.state.sumOfHours  )
 		console.log(this.state.sumOfMinutes )
 
-		return totalHours +" שעות ו- "+ totalMinutes+" דקות"
+		return totalHours +" שעות ו " + totalMinutes+" דקות "
 	}
-	calculateTotalTime= () =>{
+
+	calculateTotalTime()
+	{
 		let addHours
 		addHours =parseInt((this.state.sumOfMinutes / 60),10)
 		let addMinutes
@@ -358,7 +321,7 @@ class ReportTable extends Component {
 		this.state.sumOfHours += addHours
 
 		this.state.sumOfMinutes = addMinutes
-		return this.state.sumOfHours +" שעות " + this.state.sumOfMinutes +" דקות "
+		return this.state.sumOfHours +" שעות ו " + this.state.sumOfMinutes+" דקות "
 	}
 
 }
