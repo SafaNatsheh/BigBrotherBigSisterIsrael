@@ -85,7 +85,6 @@ componentDidMount() {
          }).then(() => {
              console.log("Document successfully written!");
          });
-
          this.setState({ userId:"" });
          this.setState({  date: "" });
          this.setState({  startTime:"" });
@@ -93,7 +92,12 @@ componentDidMount() {
          this.setState({  travelTime:60 });
          this.setState({  description: "" });
 
+         alert(
+             "הוספת הפגישה התעדכנה בהצלחה לדוח הפגישות שלך"
+         );
+
      }
+
 
 
  }
