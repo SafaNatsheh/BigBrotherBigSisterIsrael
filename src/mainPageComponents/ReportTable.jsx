@@ -78,7 +78,7 @@ class ReportTable extends Component {
         var csvContent = BOM + cvsString;
         a.href = 'data:attachment/csv,'+csvContent;
         a.target = "_Blank";
-        a.download = "testfile.csv";
+        a.download = this.state.searchTerm + ".csv";
         document.body.appendChild(a);
         a.click();
         this.state.sumOfHours=0
