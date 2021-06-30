@@ -18,38 +18,60 @@ class ReportTable extends Component {
             sumOfHours:0,
             sumOfMinutes:0,
             searchTerm: "",
-            isClicked:false
+            isClicked:false,
+            userName:""
         }
 
         this.MeetingsListRef =firebase.firestore().collection('MeetingsList');
         console.log(this.MeetingsListRef)
     }
 
-    componentDidMount() {
-        if(window.location.href.split("ReportTable/")[1] !== undefined)
-        {
-            this.setState({ searchTerm: window.location.href.split("ReportTable/")[1] })
+    async componentDidMount() {
+        if (window.location.href.split("ReportTable/")[1] !== undefined) {
+            this.setState({searchTerm: window.location.href.split("ReportTable/")[1]})
         }
         console.log("in1")
         console.log(this.MeetingsListRef)
-        //get all the meetings and put them on an array
+        //
+        // this.usersRef = firebase.firestore().collection('Users');
+        // var queryShot = await this.usersRef
+        //     .where("userId","==",this.state.searchTerm)
+        //     .get()
+        // if(queryShot ) {
+        //     console.log(queryShot)
+        //
+        // }
+        //
+        // this.setState({userName: queryShot.fName + " " + queryShot.lName})
+        // console.log("user name " +this.state.userName)
 
-        // const newArr = this.state.meetingsArr.
-        // 	filter(meeting =>( meeting.userId.indexOf(this.state.searchTerm)>-1) &&(meeting.date>=this.state.fromDate)&&(meeting.date<=this.state.toDate));
     }
 
     printCsv() {
+        this.state.userName=this.state.meetingsArr[0].userName
+        csvRow =[]
+        csvRow.push( [
+            ("שם משתמש : ").replaceAll(" ","%20"),
+            (this.state.userName).replaceAll(" ","%20"),
+            ("תעודת זהות : ").replaceAll(" ","%20"),
+            (this.state.searchTerm)
 
-        csvRow=[
-            [
+        ])
+        csvRow.push([
+            (" ").replaceAll(" ","%20"),
+            (" ").replaceAll(" ","%20")
+        ])
+
+        csvRow.push([
+
                 ("תאריך").replaceAll(" ","%20"),
                 ("זמן התחלה").replaceAll(" ","%20"),
                 ("זמן סיום").replaceAll(" ","%20"),
                 ("זמן נסיעה").replaceAll(" ","%20") ,
                 ("תיאור פגישה").replaceAll(" ","%20"),
-                ("זמן סופי").replaceAll(" ","%20")
-            ],
-        ];
+                ("אורך פגישה").replaceAll(" ","%20")
+            ],)
+
         // const headers = ["Date", "StartTime","EndTime","TravelTime" ,"Description","TotalMeetingTime"];
 
         this.state.meetingsArr.map(meeting => {
@@ -67,9 +89,10 @@ class ReportTable extends Component {
 
 
         csvRow.push([
-            ("זמן סופי").replaceAll(" ","%20"),
+            ('סכ"ה שעות').replaceAll(" ","%20"),
             (this.calculateTotalTime()).replaceAll(" ","%20")
         ])
+
         console.log(csvRow)
         let cvsString = csvRow.join("%0A");
 
@@ -78,9 +101,10 @@ class ReportTable extends Component {
         var csvContent = BOM + cvsString;
         a.href = 'data:attachment/csv,'+csvContent;
         a.target = "_Blank";
-        a.download = this.state.searchTerm + ".csv";
+        a.download = this.state.userName+"-"+this.state.searchTerm + ".csv";
         document.body.appendChild(a);
         a.click();
+
         this.state.sumOfHours=0
         this.state.sumOfMinutes=0
 
