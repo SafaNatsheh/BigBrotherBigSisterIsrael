@@ -1,4 +1,3 @@
-import Zoom from "../Zoom/Zoom";
 import React, { Component } from "react";
 import Home from "./Home"
 import UpdateUser from "../adminComponents/partial/UpdateUser"
@@ -130,7 +129,7 @@ class RakazPage extends Component {
                             <Route path="/CreateChat">
                                 <CreateNewChat />
                             </Route>{" "}
-                            <Route exact path={"/zoom"} component={Zoom}/>
+                            {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
                             <Route path="/ReportTable">
                                 <ReportTable />
                             </Route>{" "}
