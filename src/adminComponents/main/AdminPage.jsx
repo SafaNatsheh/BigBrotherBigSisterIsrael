@@ -1,4 +1,3 @@
-import Zoom from "../../Zoom/Zoom";
 import React, { Component } from "react";
 import Chat from "../../Chat/Chat";
 import AdminUser from "../partial/AdminUser";
@@ -154,7 +153,7 @@ class AdminPage extends Component {
                     {/*<addMeeting />*/}
                 </Route>{" "}
 
-                <Route exact path={"/zoom"} component={Zoom}/>
+                {/*<Route exact path={"/zoom"} component={Zoom}/>*/}
 
               <Route path="/">
               <Home />
