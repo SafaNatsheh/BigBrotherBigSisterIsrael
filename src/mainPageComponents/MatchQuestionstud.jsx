@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import "./MatchQuestionstud.css";
 import {Component} from 'react';
@@ -60,50 +61,113 @@ class matchQuestionstud extends Component {
         else {
             this.setState({firQues: "0/" , secQues: "0/"})
         }
-        firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
-            .get()
-            .then((doc) => {
-                this.setState({firQues : doc.data().firQues});
-                this.setState({secQues : doc.data().secQues});
-                this.setState({thiQues : doc.data().thiQues});
-                this.setState({forQues : doc.data().forQues});
-                this.setState({fifQues : doc.data().fifQues});
-                this.setState({sixQues : doc.data().sixQues});
-                this.setState({sevQues : doc.data().sevQues});
-                this.setState({eigQues : doc.data().eigQues});
-                this.setState({ninQues : doc.data().ninQues});
-                this.setState({tenQues : doc.data().tenQues});
-                this.setState({elevQues : doc.data().elevQues});
-                this.setState({twlvQues : doc.data().twlvQues});
-                this.setState({thrtQues : doc.data().thrtQues});
-                this.setState({fName: doc.data().fName});
-                this.setState({sName: doc.data().sName});
-                this.setState({numID: doc.data().numID});
-                this.setState({address: doc.data().address});
-                this.setState({country: doc.data().country});
-                this.setState({year: doc.data().year});
-                this.setState({school: doc.data().school});
-                this.setState({grade: doc.data().grade});
-                this.setState({problem: doc.data().problem});
-                this.setState({birthDate: doc.data().birthDate});
-                this.setState({religion1: doc.data().religion1});
-                this.setState({religion2: doc.data().religion2});
-                this.setState({MName: doc.data().MName});
-                this.setState({MID: doc.data().MID});
-                this.setState({numphon: doc.data().numphon});
-                this.setState({work1: doc.data().work1});
-                this.setState({DName: doc.data().DName});
-                this.setState({DID: doc.data().DID});
-                this.setState({numphon2: doc.data().numphon2});
-                this.setState({work2: doc.data().work2});
-                this.setState({stat: doc.data().stat});
-                this.setState({leve: doc.data().leve});
-                this.setState({numBro: doc.data().numBro});
+        if(this.props.refwin !== undefined)
+        {
+            firebase.firestore().collection('Users').get().then((querySnapshot)=>{
+                querySnapshot.docs.forEach((doc) => {
+                    if(doc.data().id === this.props.refwin.data().id){
+                        console.log(doc.data());
+
+                        firebase.firestore().collection('Users').doc(doc.id).collection("Answers").doc("Answers")
+                            .get()
+                            .then((doc) => {
+                                this.setState({firQues : doc.data().firQues});
+                                this.setState({secQues : doc.data().secQues});
+                                this.setState({thiQues : doc.data().thiQues});
+                                this.setState({forQues : doc.data().forQues});
+                                this.setState({fifQues : doc.data().fifQues});
+                                this.setState({sixQues : doc.data().sixQues});
+                                this.setState({sevQues : doc.data().sevQues});
+                                this.setState({eigQues : doc.data().eigQues});
+                                this.setState({ninQues : doc.data().ninQues});
+                                this.setState({tenQues : doc.data().tenQues});
+                                this.setState({elevQues : doc.data().elevQues});
+                                this.setState({twlvQues : doc.data().twlvQues});
+                                this.setState({thrtQues : doc.data().thrtQues});
+                                this.setState({fName: doc.data().fName});
+                                this.setState({sName: doc.data().sName});
+                                this.setState({numID: doc.data().numID});
+                                this.setState({address: doc.data().address});
+                                this.setState({country: doc.data().country});
+                                this.setState({year: doc.data().year});
+                                this.setState({school: doc.data().school});
+                                this.setState({grade: doc.data().grade});
+                                this.setState({problem: doc.data().problem});
+                                this.setState({birthDate: doc.data().birthDate});
+                                this.setState({religion1: doc.data().religion1});
+                                this.setState({religion2: doc.data().religion2});
+                                this.setState({MName: doc.data().MName});
+                                this.setState({MID: doc.data().MID});
+                                this.setState({numphon: doc.data().numphon});
+                                this.setState({work1: doc.data().work1});
+                                this.setState({DName: doc.data().DName});
+                                this.setState({DID: doc.data().DID});
+                                this.setState({numphon2: doc.data().numphon2});
+                                this.setState({work2: doc.data().work2});
+                                this.setState({stat: doc.data().stat});
+                                this.setState({leve: doc.data().leve});
+                                this.setState({numBro: doc.data().numBro});
 
 
 
-            })
-            .catch((e) => console.log(e.name));
+                            })
+                            .catch((e) => console.log(e.name));
+
+                    }
+
+                });
+            });
+        }
+        else{
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
+                .get()
+                .then((doc) => {
+                    this.setState({firQues : doc.data().firQues});
+                    this.setState({secQues : doc.data().secQues});
+                    this.setState({thiQues : doc.data().thiQues});
+                    this.setState({forQues : doc.data().forQues});
+                    this.setState({fifQues : doc.data().fifQues});
+                    this.setState({sixQues : doc.data().sixQues});
+                    this.setState({sevQues : doc.data().sevQues});
+                    this.setState({eigQues : doc.data().eigQues});
+                    this.setState({ninQues : doc.data().ninQues});
+                    this.setState({tenQues : doc.data().tenQues});
+                    this.setState({elevQues : doc.data().elevQues});
+                    this.setState({twlvQues : doc.data().twlvQues});
+                    this.setState({thrtQues : doc.data().thrtQues});
+                    this.setState({fName: doc.data().fName});
+                    this.setState({sName: doc.data().sName});
+                    this.setState({numID: doc.data().numID});
+                    this.setState({address: doc.data().address});
+                    this.setState({country: doc.data().country});
+                    this.setState({year: doc.data().year});
+                    this.setState({school: doc.data().school});
+                    this.setState({grade: doc.data().grade});
+                    this.setState({problem: doc.data().problem});
+                    this.setState({birthDate: doc.data().birthDate});
+                    this.setState({religion1: doc.data().religion1});
+                    this.setState({religion2: doc.data().religion2});
+                    this.setState({MName: doc.data().MName});
+                    this.setState({MID: doc.data().MID});
+                    this.setState({numphon: doc.data().numphon});
+                    this.setState({work1: doc.data().work1});
+                    this.setState({DName: doc.data().DName});
+                    this.setState({DID: doc.data().DID});
+                    this.setState({numphon2: doc.data().numphon2});
+                    this.setState({work2: doc.data().work2});
+                    this.setState({stat: doc.data().stat});
+                    this.setState({leve: doc.data().leve});
+                    this.setState({numBro: doc.data().numBro});
+
+
+
+                })
+                .catch((e) => console.log(e.name));
+        }
+        /*
+
+        */
+
 
     }
 
