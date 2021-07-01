@@ -67,53 +67,121 @@ class matchQuestion extends Component {
         else {
             this.setState({firQues: "0/"})
         }
-        firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
-            .get()
-            .then((doc) => {
+        if(this.props.refwin !== undefined)
+        {
+            firebase.firestore().collection('Users').get().then((querySnapshot)=>{
+                querySnapshot.docs.forEach((doc) => {
+                    if(doc.data().id === this.props.refwin.data().id){
+                        console.log(doc.data());
 
-                this.setState({firQues : doc.data().firQues});
-                this.setState({secQues : doc.data().secQues});
-                this.setState({thiQues : doc.data().thiQues});
-                this.setState({forQues : doc.data().forQues});
-                this.setState({fifQues : doc.data().fifQues});
-                this.setState({sixQues : doc.data().sixQues});
-                this.setState({sevQues : doc.data().sevQues});
-                this.setState({eigQues : doc.data().eigQues});
-                this.setState({ninQues : doc.data().ninQues});
-                this.setState({tenQues : doc.data().tenQues});
-                this.setState({elevQues : doc.data().elevQues});
-                this.setState({twlvQues : doc.data().twlvQues});
-                this.setState({thrtQues : doc.data().thrtQues});
-                this.setState({fName: doc.data().fName});
-                this.setState({sName: doc.data().sName});
-                this.setState({machine: doc.data().machine});
-                this.setState({numPhone1: doc.data().numPhone1});
-                this.setState({numPhone2: doc.data().numPhone2});
-                this.setState({email: doc.data().email});
-                this.setState({area: doc.data().area});
-                this.setState({address: doc.data().address});
-                this.setState({info1: doc.data().info1});
-                this.setState({info2: doc.data().info2});
-                this.setState({info3: doc.data().info3});
-                this.setState({info4: doc.data().info4});
-                this.setState({info5: doc.data().info5});
-                this.setState({info6: doc.data().info6});
-                this.setState({info7: doc.data().info7});
-                this.setState({info8: doc.data().info8});
-                this.setState({info9: doc.data().info9});
-                this.setState({info10: doc.data().info10});
-                this.setState({info11: doc.data().info11});
-                this.setState({info12: doc.data().info12});
-                this.setState({info13: doc.data().info13});
-                this.setState({info14: doc.data().info14});
-                this.setState({info15: doc.data().info15});
-                this.setState({info16: doc.data().info16});
-                this.setState({info17: doc.data().info17});
-                this.setState({info18: doc.data().info18});
-                this.setState({info19: doc.data().info19});
-                this.setState({gend: doc.data().gend});
-            })
-            .catch((e) => console.log(e.name));
+                        firebase.firestore().collection('Users').doc(doc.id).collection("Answers").doc("Answers")
+                            .get()
+                            .then((doc) => {
+                                this.setState({firQues : doc.data().firQues});
+                                this.setState({secQues : doc.data().secQues});
+                                this.setState({thiQues : doc.data().thiQues});
+                                this.setState({forQues : doc.data().forQues});
+                                this.setState({fifQues : doc.data().fifQues});
+                                this.setState({sixQues : doc.data().sixQues});
+                                this.setState({sevQues : doc.data().sevQues});
+                                this.setState({eigQues : doc.data().eigQues});
+                                this.setState({ninQues : doc.data().ninQues});
+                                this.setState({tenQues : doc.data().tenQues});
+                                this.setState({elevQues : doc.data().elevQues});
+                                this.setState({twlvQues : doc.data().twlvQues});
+                                this.setState({thrtQues : doc.data().thrtQues});
+                                this.setState({fName: doc.data().fName});
+                                this.setState({sName: doc.data().sName});
+                                this.setState({machine: doc.data().machine});
+                                this.setState({numPhone1: doc.data().numPhone1});
+                                this.setState({numPhone2: doc.data().numPhone2});
+                                this.setState({email: doc.data().email});
+                                this.setState({area: doc.data().area});
+                                this.setState({address: doc.data().address});
+                                this.setState({info1: doc.data().info1});
+                                this.setState({info2: doc.data().info2});
+                                this.setState({info3: doc.data().info3});
+                                this.setState({info4: doc.data().info4});
+                                this.setState({info5: doc.data().info5});
+                                this.setState({info6: doc.data().info6});
+                                this.setState({info7: doc.data().info7});
+                                this.setState({info8: doc.data().info8});
+                                this.setState({info9: doc.data().info9});
+                                this.setState({info10: doc.data().info10});
+                                this.setState({info11: doc.data().info11});
+                                this.setState({info12: doc.data().info12});
+                                this.setState({info13: doc.data().info13});
+                                this.setState({info14: doc.data().info14});
+                                this.setState({info15: doc.data().info15});
+                                this.setState({info16: doc.data().info16});
+                                this.setState({info17: doc.data().info17});
+                                this.setState({info18: doc.data().info18});
+                                this.setState({info19: doc.data().info19});
+                                this.setState({gend: doc.data().gend});
+
+
+
+                            })
+                            .catch((e) => console.log(e.name));
+
+                    }
+
+                });
+            });
+        }
+        else{
+            firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
+                .get()
+                .then((doc) => {
+                    this.setState({firQues : doc.data().firQues});
+                    this.setState({secQues : doc.data().secQues});
+                    this.setState({thiQues : doc.data().thiQues});
+                    this.setState({forQues : doc.data().forQues});
+                    this.setState({fifQues : doc.data().fifQues});
+                    this.setState({sixQues : doc.data().sixQues});
+                    this.setState({sevQues : doc.data().sevQues});
+                    this.setState({eigQues : doc.data().eigQues});
+                    this.setState({ninQues : doc.data().ninQues});
+                    this.setState({tenQues : doc.data().tenQues});
+                    this.setState({elevQues : doc.data().elevQues});
+                    this.setState({twlvQues : doc.data().twlvQues});
+                    this.setState({thrtQues : doc.data().thrtQues});
+                    this.setState({fName: doc.data().fName});
+                    this.setState({sName: doc.data().sName});
+                    this.setState({machine: doc.data().machine});
+                    this.setState({numPhone1: doc.data().numPhone1});
+                    this.setState({numPhone2: doc.data().numPhone2});
+                    this.setState({email: doc.data().email});
+                    this.setState({area: doc.data().area});
+                    this.setState({address: doc.data().address});
+                    this.setState({info1: doc.data().info1});
+                    this.setState({info2: doc.data().info2});
+                    this.setState({info3: doc.data().info3});
+                    this.setState({info4: doc.data().info4});
+                    this.setState({info5: doc.data().info5});
+                    this.setState({info6: doc.data().info6});
+                    this.setState({info7: doc.data().info7});
+                    this.setState({info8: doc.data().info8});
+                    this.setState({info9: doc.data().info9});
+                    this.setState({info10: doc.data().info10});
+                    this.setState({info11: doc.data().info11});
+                    this.setState({info12: doc.data().info12});
+                    this.setState({info13: doc.data().info13});
+                    this.setState({info14: doc.data().info14});
+                    this.setState({info15: doc.data().info15});
+                    this.setState({info16: doc.data().info16});
+                    this.setState({info17: doc.data().info17});
+                    this.setState({info18: doc.data().info18});
+                    this.setState({info19: doc.data().info19});
+                    this.setState({gend: doc.data().gend});
+
+
+
+                })
+                .catch((e) => console.log(e.name));
+        }
+
+
 
         console.log(document.getElementById("age"))
 
