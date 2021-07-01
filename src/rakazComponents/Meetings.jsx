@@ -173,8 +173,10 @@ class Meetings extends Component {
                 this.state.place
             );
         if (isSure) {
+
             var amount_of_meetings = this.state.scheduled ? 13 : 1;
             var dates = [], newMeetings = [], newMeetingObj = [];
+            console.log(this.state.scheduled)
             for (let i = 0; i < amount_of_meetings; i++) {
                 var nextDate = (new Date(Date.parse(this.state.date) + (7 * 24 * 60 * 60 * 1000) * i));
                 dates.push(nextDate.getFullYear() + "-" + (nextDate.getMonth() + 1) + "-" + nextDate.getDate());
@@ -189,9 +191,11 @@ class Meetings extends Component {
                     linkZoom: this.state.linkZoom,
                     description: this.state.description
                 })
+                await this.myMeetingsRef.add(newMeetings[i])
+                console.log(newMeetings[i])
                 newMeetingObj.push({});
-                let docRef=  this.myMeetingsRef.add(newMeetings[i])
-                this.newDocId = docRef.id;
+                // let docRef= ;
+                this.newDocId = this.myMeetingsRef.id;
                 // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
 
