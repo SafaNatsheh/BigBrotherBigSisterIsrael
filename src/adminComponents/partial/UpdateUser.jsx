@@ -353,8 +353,8 @@ class UpdateUser extends Component {
         </button>
             </form>
 
-                {(this.state.loaded && (this.state.type === "חניך")) ? <QuestStud   refwin={this.state.prsn} complt={null} />: <div></div>}
-                {(this.state.loaded && (this.state.type === "חונך")) ? <QuestTeach   refwin={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חניך")) ? <QuestStud   idrf={this.state.prsn} complt={null} />: <div></div>}
+                {(this.state.loaded && (this.state.type === "חונך")) ? <QuestTeach   idrf={this.state.prsn} complt={null} />: <div></div>}
 
             </div>
         );

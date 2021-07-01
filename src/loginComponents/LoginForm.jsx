@@ -31,6 +31,7 @@ class LoginForm extends React.Component {
       .catch(() => alert("שגיאה בהזנת הנתונים"));
   };
 
+
   onLoginSuccess() {
     console.log("Successful login");
   }

@@ -106,7 +106,7 @@ export class HomePage extends React.Component {
   }
 
   setProfilePicture = (pictures, url) => {
-    this.props.changeProfilePictue(url);
+    this.props.changeProfilePicture(url);
     this.myProfilePicturesRef.put(pictures[0]);
   };
 
