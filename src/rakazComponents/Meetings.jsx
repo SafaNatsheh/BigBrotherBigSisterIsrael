@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Meetings.css";
-import firebase, {auth} from "../config/Firebase"
+import firebase, {db,auth} from "../config/Firebase"
 import MeetingList from "../navBarComponents/meetingComponents/MeetingList"
 
 class Meetings extends Component {
@@ -53,7 +53,7 @@ class Meetings extends Component {
                     email: doc.data().email,
                     name: doc.data().fName + " " + doc.data().lName,
                     type:  doc.data().type,
-                    link_user: doc.data().link_user
+                    // link_user: doc.data().link_user
                 });
                 return null;
             });
@@ -94,7 +94,7 @@ class Meetings extends Component {
                 window.location.href = "/"
                 return
             }
-
+            this.user = user
             this.getMeetings();
         })
     }
@@ -177,29 +177,46 @@ class Meetings extends Component {
             var amount_of_meetings = this.state.scheduled ? 13 : 1;
             var dates = [], newMeetings = [], newMeetingObj = [];
             console.log(this.state.scheduled)
-            for (let i = 0; i < amount_of_meetings; i++) {
+            for (let i = 0; i < amount_of_meetings; i++)
+            {
                 var nextDate = (new Date(Date.parse(this.state.date) + (7 * 24 * 60 * 60 * 1000) * i));
                 dates.push(nextDate.getFullYear() + "-" + (nextDate.getMonth() + 1) + "-" + nextDate.getDate());
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
 
-                newMeetings.push({
-                    date: dates[i],
-                    send_list: this.state.checkList,
-                    timeStamp: time_stamp,
-                    time: this.state.time,
-                    place: this.state.place,
-                    linkZoom: this.state.linkZoom,
-                    description: this.state.description
+                // newMeetings.push({
+                    // date: dates[i],
+                    // send_list: this.state.checkList,
+                    // timeStamp: time_stamp,
+                    // time: this.state.time,
+                    // place: this.state.place,
+                    // linkZoom: this.state.linkZoom,
+                    // description: this.state.description
+                // })
+                // console.log(newMeetings[i])
+                console.log("in1")
+
+                var newDoc = await db.collection('Users').doc(this.user.uid).collection('Meetings').add({
+                    "date": dates[i],
+                    "send_list": this.state.checkList,
+                    "timeStamp": time_stamp,
+                    "time": this.state.time,
+                    "place": this.state.place,
+                    "linkZoom": this.state.linkZoom,
+                    "description": this.state.description
                 })
-                await this.myMeetingsRef.add(newMeetings[i])
-                console.log(newMeetings[i])
+                console.log("in2")
+                console.log(newDoc)
+
+
                 newMeetingObj.push({});
+                console.log("in3")
                 // let docRef= ;
-                this.newDocId = this.myMeetingsRef.id;
+                this.newDocId =newDoc.id;
+                console.log("in4")
                 // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
-
                 if (!this.state.scheduled && this.state.date !== "") {
+                    console.log("in5")
                     alert(
                         "נקבעה פגישה בתאריך: " +
                         this.state.date +
@@ -210,13 +227,23 @@ class Meetings extends Component {
                     );
                 }
                 else if (i === 0)
+                {
                     alert(
                         "נקבעו 13 פגישות קבועות לשלושת החודשים הקרובים."
                     );
+                }
                 Object.assign(newMeetingObj[i], newMeetings[i]);
                 newMeetingObj[i].doc_id = this.newDocId;
                 this.state.checkList.forEach(async user=>{
-                    await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set(newMeetings[i]);
+                    await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set({
+                        "date": dates[i],
+                        "send_list": this.state.checkList,
+                        "timeStamp": time_stamp,
+                        "time": this.state.time,
+                        "place": this.state.place,
+                        "linkZoom": this.state.linkZoom,
+                        "description": this.state.description
+                    });
 
                 })
                 newMeetingObj[i].doc_id = this.newDocId;
@@ -225,7 +252,7 @@ class Meetings extends Component {
                     meetings: [...d],
                     date: "", time: "", place: "", description: "", scheduled: false
                 });
-
+            window.location.reload();
             }
         }
     }
@@ -354,7 +381,7 @@ class Meetings extends Component {
                 <form className="meeting-form" onSubmit={this.handleSubmit}>
                     <br />
                     <div className="form-1">
-                        
+
 
                         <label
                             className="fLabels"
@@ -371,7 +398,7 @@ class Meetings extends Component {
                             value={this.state.date}
                             required
                         />
-                    
+
                     </div>
                     <div className = 'time'>
                         <label
@@ -389,7 +416,7 @@ class Meetings extends Component {
                             value={this.state.time}
                             required
                         />
-                       
+
                        </div>
                     <div className="place">
                         <label
