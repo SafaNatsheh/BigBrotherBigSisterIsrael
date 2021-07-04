@@ -767,8 +767,8 @@ class matchQuestionstud extends Component {
                 {this.props.idrf === undefined && <button type="submit" className="btn btn-success add-new-user-btn bot1">
                     שלח
                 </button>}
-                {this.props.idrf !== undefined && <button type="submit" className="btn btn-success add-new-user-btn bot1">
-                    שלח שוב להחניך למלאות
+                {this.props.idrf !== undefined && <button type="submit" className="btn btn-success add-new-user-btn bot3">
+                    איפוס השאלון ושליחה מחדש למלא אותו
                 </button>}
 
 
