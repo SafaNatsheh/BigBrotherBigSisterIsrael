@@ -1,5 +1,5 @@
-import Zoom from "../Zoom/Zoom"
-import Video from "../Video/Video";
+//import Zoom from "../Zoom/Zoom"
+//import Video from "../Video/Video";
 import React, { Component } from "react";
 import Meetings from "../rakazComponents/Meetings";
 import Chat from "../Chat/Chat"
@@ -13,7 +13,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import firebase, {auth} from "../config/Firebase"
 import Loader from 'react-loader-spinner'
 import logo from '../static_pictures/big_brothers_big_sisters.png'
-//import AddMeeting from "./addMeeting"
 import AddMeeting from "../mainPageComponents/addMeeting"
 
 import {

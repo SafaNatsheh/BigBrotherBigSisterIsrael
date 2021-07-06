@@ -16,7 +16,8 @@ class addMeetings extends Component {
             travelTime:0,
             description: "",
             MeetingsListRef:"",
-            userRef:""
+            userRef:"",
+            userName:""
         };
 
     }
@@ -27,7 +28,9 @@ componentDidMount() {
     this.uid = firebase.auth().currentUser.uid;//*******//user unique id
     this.usersRef.doc(this.uid).get()
          .then((doc) => {
-             this.setState({ userId: doc.data().id });
+             this.setState({ userId: doc.data().id })
+             var x =this.setState({ userName: doc.data().fName+" "+doc.data().lName })
+           console.log( x)
 
          })
          .catch((e) => console.log(e.name));
@@ -76,6 +79,7 @@ componentDidMount() {
 
          firebase.firestore().collection("MeetingsList").add({
              userId:this.state.userId,
+             userName: this.state.userName,
              date: this.state.date,
              startTime:this.state.startTime,
              endTime:this.state.endTime,
@@ -85,15 +89,19 @@ componentDidMount() {
          }).then(() => {
              console.log("Document successfully written!");
          });
-
-         this.setState({ userId:"" });
+        // this.setState({ userId:"" });
          this.setState({  date: "" });
          this.setState({  startTime:"" });
          this.setState({ endTime:"" });
          this.setState({  travelTime:60 });
          this.setState({  description: "" });
 
+         alert(
+             "הוספת הפגישה התעדכנה בהצלחה לדוח הפגישות שלך"
+         );
+
      }
+
 
 
  }
