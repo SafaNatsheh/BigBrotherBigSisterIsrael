@@ -176,7 +176,7 @@ class LinkUsers extends Component {
                     }).then(async () => {
 
                     if (this.state.ret !== "err" && this.state.ret !== "dn") {
-                        var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
+                        var con =  window.confirm("האם אתה בטוח שברצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                         if (con) {
                             this.linkUser(studentId);
                             this.linkUser(mentorId);
