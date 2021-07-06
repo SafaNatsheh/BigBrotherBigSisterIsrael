@@ -51,6 +51,7 @@ function Conversation(){
                     {message.Sender_Name}
                 </span>
                         {message.message}
+                        <br/>
                         <span className="timestamp">
                             {
                                 new Date(message.timestamp && message.timestamp.toDate()).toUTCString()}
