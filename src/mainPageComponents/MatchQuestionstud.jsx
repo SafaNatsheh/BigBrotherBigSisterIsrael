@@ -181,7 +181,9 @@ class matchQuestionstud extends Component {
         var ml = emailjs.send("service_22zqeku","template_f5b4ph8",{
             from_name: "bbbs",
             to_name: this.state.plc,
-            message: " והוא מוכן לקישור" + this.state.fName + "התרשם חניך חדש בשם ",
+            message1: "התרשם חניך חדש בשם ",
+            message2: this.props.refwin.data().fName +" "+ this.props.refwin.data().lName,
+            message3: " והוא מוכן לקישור ",
             to_mail: "wadieturtle@hotmail.com"
         });
         if (ml != 200) {
@@ -202,23 +204,23 @@ class matchQuestionstud extends Component {
 
                 if (this.state.thiQues === "1/" || this.state.thiQues === "2/" || this.state.thiQues === "3/") {
                     this.state.mals = "ori@bbbs.org.il"
-                    this.state.plc = "ori"
+                    this.state.plc = "למנהל אורי אח.ות בוגר.ת ישראל"
                 }
                 else if (this.state.thiQues === "4/" || this.state.thiQues === "5/" || this.state.thiQues === "6/" || this.state.thiQues === "7/" || this.state.thiQues === "8/" || this.state.thiQues === "10/" || this.state.thiQues === "11/") {
                     this.state.mals = "vera@bbbs.org.il"
-                    this.state.plc = "vera"
+                    this.state.plc = "למנהלת וירה אח.ות בוגר.ת ישראל"
                 }
                 else if (this.state.thiQues === "9/") {
                     this.state.mals = "liran@bbbs.org.il"
-                    this.state.plc = "liran"
+                    this.state.plc = "למנהל ליראן אח.ות בוגר.ת ישראל"
                 }
                 else if (this.state.thiQues === "13/" || this.state.thiQues === "14/" || this.state.thiQues === "15/" || this.state.thiQues === "16/" || this.state.thiQues === "17/") {
                     this.state.mals = "shira@bbbs.org.il"
-                    this.state.plc = "shira"
+                    this.state.plc = "למנהלת שירה אח.ות בוגר.ת ישראל"
                 }
                 else if (this.state.thiQues === "12/") {
                     this.state.mals = "libby@bbbs.org.il"
-                    this.state.plc = "libby"
+                    this.state.plc = "למנהל ליבי אח.ות בוגר.ת ישראל"
                 }
 
 
