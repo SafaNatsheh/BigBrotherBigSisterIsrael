@@ -32,7 +32,7 @@
     border-radius: 5px;
     font-weight: normal;
     margin-top: 320px;
-    margin-right: 90px;
+    margin-right: 110px;
     color: #fff;
     background-color: #4caf50;
     border-color: #4caf50;
@@ -42,6 +42,7 @@
 
 .new_design_Table{
     margin-right: 40px;
+    width: 550px
 }
 
 .link-users-btn{
@@ -68,7 +69,7 @@
 .container__table1{
     position: absolute;
     overflow-y:auto;
-margin-top: 6px;
+    margin-top: 6px;
 }
 #inputLinkFirstName,#inputLinkLastName{
     width: 150px;
