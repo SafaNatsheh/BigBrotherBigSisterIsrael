@@ -304,7 +304,7 @@ class LinkUsers extends Component {
                                 <th>שם</th>
                                 <th>דוא"ל</th>
                                 <th>בחר</th>
-                                <th> הצג ההתאמה</th>
+
                             </tr>
                             </thead>
                             <tbody>{this.renderFirstTable()}</tbody>
@@ -336,6 +336,7 @@ class LinkUsers extends Component {
                                    <th>דוא"ל</th>
                                    <th>עדיפות</th>
                                    <th>בחר</th>
+                                   <th> הצג ההתאמה</th>
                                </tr>
                                 :this.state.mentorId.length>0?
                                 <tr>
@@ -420,7 +421,7 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
-                        <td><input type='button'/></td>
+
                     </tr>
                 )))
         }
@@ -477,7 +478,6 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
-                        <td className='buttDetails'><input className='detailsButt' value="הצג התאמה" type ='button' /></td>
                     </tr>
                 )))
         }
@@ -588,6 +588,7 @@ class LinkUsers extends Component {
 
                                }
                                }/></td>
+                    <td className='buttDetails'><input className='detailsButt' value="הצג התאמה" type ='button' /></td>
                 </tr>
             )
         })
