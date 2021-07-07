@@ -176,7 +176,7 @@ class LinkUsers extends Component {
                     }).then(async () => {
 
                     if (this.state.ret !== "err" && this.state.ret !== "dn") {
-                        var con =  window.confirm("האם אתה בטוח לבצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
+                        var con =  window.confirm("האם אתה בטוח שברצונך לקשר את החונך " + this.state.mentorName + " לחניך " + this.state.studentName + "?")
                         if (con) {
                             this.linkUser(studentId);
                             this.linkUser(mentorId);
@@ -304,6 +304,7 @@ class LinkUsers extends Component {
                                 <th>שם</th>
                                 <th>דוא"ל</th>
                                 <th>בחר</th>
+                                <th> הצג ההתאמה</th>
                             </tr>
                             </thead>
                             <tbody>{this.renderFirstTable()}</tbody>
@@ -419,6 +420,7 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
+                        <td><input type='button'/></td>
                     </tr>
                 )))
         }
@@ -475,6 +477,7 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
+                        <td className='buttDetails'><input className='detailsButt' value="הצג התאמה" type ='button' /></td>
                     </tr>
                 )))
         }
