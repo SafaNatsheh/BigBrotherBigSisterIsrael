@@ -304,7 +304,7 @@ class LinkUsers extends Component {
                                 <th>שם</th>
                                 <th>דוא"ל</th>
                                 <th>בחר</th>
-                                <th>התאמה</th>
+                                <th> הצג ההתאמה</th>
                             </tr>
                             </thead>
                             <tbody>{this.renderFirstTable()}</tbody>
@@ -420,7 +420,7 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
-                        <td><input type='checkbox' className='people_check' /></td>
+                        <td><input type='button'/></td>
                     </tr>
                 )))
         }
@@ -477,7 +477,7 @@ class LinkUsers extends Component {
                         }
                         }/>
                         </td>
-                        <td><input type='checkbox' className='people_check' /></td>
+                        <td className='buttDetails'><input className='detailsButt' value="הצג התאמה" type ='button' /></td>
                     </tr>
                 )))
         }
