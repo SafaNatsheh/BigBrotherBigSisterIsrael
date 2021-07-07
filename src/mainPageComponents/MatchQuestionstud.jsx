@@ -3,6 +3,9 @@ import "./MatchQuestionstud.css";
 import {Component} from 'react';
 import logo from '../static_pictures/big_brothers_big_sisters.png'
 import firebase from "../config/Firebase";
+import emailjs from "emailjs-com"
+import{ init } from 'emailjs-com';
+init("user_fbndUbsd9qBrswCAzy6eM");
 
 class matchQuestionstud extends Component {
 
@@ -45,7 +48,8 @@ class matchQuestionstud extends Component {
             stat: "",
             leve: "",
             numBro: "",
-
+            mals:"",
+            plc:""
         };
         this.uid = firebase.auth().currentUser.uid;
 
@@ -54,17 +58,11 @@ class matchQuestionstud extends Component {
     componentDidMount() {
 
 
-        if (this.props.refwin.data().gender === "זכר") {
-            this.setState({firQues: "1/" , secQues: "1/"})
-        }
-        else {
-            this.setState({firQues: "0/" , secQues: "0/"})
-        }
-        if(this.props.refwin !== undefined)
-        {
+
+        if(this.props.idrf !== undefined) {
             firebase.firestore().collection('Users').get().then((querySnapshot)=>{
                 querySnapshot.docs.forEach((doc) => {
-                    if(doc.data().id === this.props.refwin.data().id){
+                    if(doc.data().id === this.props.idrf.data().id){
                         console.log(doc.data());
 
                         firebase.firestore().collection('Users').doc(doc.id).collection("Answers").doc("Answers")
@@ -117,7 +115,15 @@ class matchQuestionstud extends Component {
                 });
             });
         }
-        else{
+        else {
+
+            if (this.props.refwin.data().gender === "זכר") {
+                this.setState({firQues: "1/" , secQues: "1/"})
+            }
+            else {
+                 this.setState({firQues: "0/" , secQues: "0/"})
+            }
+
             firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers")
                 .get()
                 .then((doc) => {
@@ -170,13 +176,54 @@ class matchQuestionstud extends Component {
 
     }
 
+    sendemail() {
+        var ml = emailjs.send("service_22zqeku","template_f5b4ph8",{
+            from_name: "bbbs",
+            to_name: this.state.plc,
+            message1: "התרשם חניך חדש בשם ",
+            message2: this.props.refwin.data().fName +" "+ this.props.refwin.data().lName,
+            message3: " והוא מוכן לקישור ",
+            to_mail: "wadieturtle@hotmail.com"
+        });
+        if (ml != 200) {
+
+        }
+    }
+
 
     submit = (event) => {
         event.preventDefault();
-        if (document.getElementById("myCheck").checked === true) {
+        if (this.props.idrf !== undefined) {
+            this.props.idrf.ref.update({first: "true"})
+        }
+        else if (document.getElementById("myCheck").checked === true) {
             var all = this.state.firQues + this.state.secQues + this.state.thiQues + this.state.forQues + this.state.fifQues + this.state.sixQues + this.state.sevQues + this.state.eigQues + this.state.ninQues + this.state.tenQues + this.state.elevQues + this.state.twlvQues + this.state.thrtQues;
             this.props.refwin.ref.update({first: all})
             this.props.complt();
+
+                if (this.state.thiQues === "1/" || this.state.thiQues === "2/" || this.state.thiQues === "3/") {
+                    this.state.mals = "ori@bbbs.org.il"
+                    this.state.plc = "למנהל אורי אח.ות בוגר.ת ישראל"
+                }
+                else if (this.state.thiQues === "4/" || this.state.thiQues === "5/" || this.state.thiQues === "6/" || this.state.thiQues === "7/" || this.state.thiQues === "8/" || this.state.thiQues === "10/" || this.state.thiQues === "11/") {
+                    this.state.mals = "vera@bbbs.org.il"
+                    this.state.plc = "למנהלת וירה אח.ות בוגר.ת ישראל"
+                }
+                else if (this.state.thiQues === "9/") {
+                    this.state.mals = "liran@bbbs.org.il"
+                    this.state.plc = "למנהל ליראן אח.ות בוגר.ת ישראל"
+                }
+                else if (this.state.thiQues === "13/" || this.state.thiQues === "14/" || this.state.thiQues === "15/" || this.state.thiQues === "16/" || this.state.thiQues === "17/") {
+                    this.state.mals = "shira@bbbs.org.il"
+                    this.state.plc = "למנהלת שירה אח.ות בוגר.ת ישראל"
+                }
+                else if (this.state.thiQues === "12/") {
+                    this.state.mals = "libby@bbbs.org.il"
+                    this.state.plc = "למנהל ליבי אח.ות בוגר.ת ישראל"
+                }
+
+
+            this.sendemail()
             firebase.firestore().collection('Users').doc(this.uid).collection("Answers").doc("Answers").set(
                 {
                     firQues: this.state.firQues,
@@ -244,20 +291,21 @@ class matchQuestionstud extends Component {
                         <option id="ff" disabled value="">בחר תשובה</option>
                         <option value="1/">עכו</option>
                         <option value="2/">כרמיאל</option>
-                        <option value="3/">הרצליה</option>
-                        <option value="4/">רעננה</option>
-                        <option value="5/">כפר יונה</option>
-                        <option value="6/">כפר סבא</option>
-                        <option value="7/">תל אביב</option>
-                        <option value="8/">בת ים</option>
-                        <option value="9/">חולון</option>
-                        <option value="10/">אור יהודה</option>
-                        <option value="11/">ירושלים</option>
-                        <option value="12/">אשדוד</option>
-                        <option value="13/">דימונה</option>
-                        <option value="14/">שדרות</option>
-                        <option value="15/">באר שבע</option>
-                        <option value="16/">אחר</option>
+                        <option value="3/">עכו</option>
+                        <option value="4/">הרצליה</option>
+                        <option value="5/">רעננה</option>
+                        <option value="6/">כפר יונה</option>
+                        <option value="7/">כפר סבא</option>
+                        <option value="8/">תל אביב</option>
+                        <option value="9/">בת ים</option>
+                        <option value="10/">חולון</option>
+                        <option value="11/">אור יהודה</option>
+                        <option value="12/">ירושלים</option>
+                        <option value="13/">אשדוד</option>
+                        <option value="14/">דימונה</option>
+                        <option value="15/">שדרות</option>
+                        <option value="16/">באר שבע</option>
+                        <option value="17/">אחר</option>
                     </select>
                 </div>
                 <div  className="form-group col-md-3">
@@ -711,13 +759,18 @@ class matchQuestionstud extends Component {
 
 
                 <div>
-                    <input type="checkbox" id="myCheck" className='check' required />
-                    <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות.</h6>
+                    {this.props.idrf === undefined && <input type="checkbox" id="myCheck" className='check' required/>
+                    }
+                    {this.props.idrf === undefined && <h6 style={{display:"inline"}}>אני מצהיר על שמירת שפה נאותה, חינוכית ונכונה. יש לשמור על לבוש הולם. לרשות העמותה להקליט, לבקר ולדגום שיחות.</h6>
+                    }
                 </div>
 
-                <button type="submit" className="btn btn-success add-new-user-btn bot1">
+                {this.props.idrf === undefined && <button type="submit" className="btn btn-success add-new-user-btn bot1">
                     שלח
-                </button>
+                </button>}
+                {this.props.idrf !== undefined && <button type="submit" className="btn btn-success add-new-user-btn bot3">
+                    איפוס השאלון ושליחה מחדש למלא אותו
+                </button>}
 
 
 

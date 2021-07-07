@@ -129,7 +129,8 @@ class UsersTable extends Component {
                             }
                             doc.ref.delete();
                             var desertRef = firebase.storage().ref(str+doc.id);
-                            desertRef.delete()//delete the users's profile picture from the storage
+                            desertRef.delete().catch((e) => console.log(e.name))
+
 
                         }
 
