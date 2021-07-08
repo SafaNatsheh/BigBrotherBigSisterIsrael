@@ -53,7 +53,7 @@ class Meetings extends Component {
                     email: doc.data().email,
                     name: doc.data().fName + " " + doc.data().lName,
                     type:  doc.data().type,
-                    // link_user: doc.data().link_user
+                    link_user: doc.data().link_user
                 });
                 return null;
             });
@@ -184,13 +184,13 @@ class Meetings extends Component {
                 var time_stamp = (((Date.parse(dates[i] + " " + this.state.time)) / 1000));
 
                 // newMeetings.push({
-                    // date: dates[i],
-                    // send_list: this.state.checkList,
-                    // timeStamp: time_stamp,
-                    // time: this.state.time,
-                    // place: this.state.place,
-                    // linkZoom: this.state.linkZoom,
-                    // description: this.state.description
+                //     date: dates[i],
+                //     send_list: this.state.checkList,
+                //     timeStamp: time_stamp,
+                //     time: this.state.time,
+                //     place: this.state.place,
+                //     linkZoom: this.state.linkZoom,
+                //     description: this.state.description
                 // })
                 // console.log(newMeetings[i])
                 console.log("in1")
