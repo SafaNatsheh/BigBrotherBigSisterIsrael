@@ -528,14 +528,7 @@ class Meetings extends Component {
                             onChange={(e) => this.setState({ search: e.target.value })}
                         />
                         </div>
-                        <input type="checkbox"
-                               className="form-check-input w-25"
-                               value="בחירת הכל"
-                               style={{float: "right", top: "725px", marginRight: "110px",height:"20px",borderBlock:"black"}}
-
-                        />
                         <table className="table table-bordered"  >
-
                             <div className ='container__table'>
                                 <thead>
 
@@ -543,8 +536,7 @@ class Meetings extends Component {
                                     <th>שם</th>
                                     <th>ת.ז</th>
                                     <th>סוג משתמש</th>
-                                    <th>בחר</th>
-
+                                    <th>בחר הכל<input type="checkbox" style={{marginRight:"3px"}}/></th>
                                 </tr>
                                 </thead>
                                 <tbody >
@@ -559,31 +551,23 @@ class Meetings extends Component {
 
 
 
-                    <div className="form-group">
-                        {/*{this.renderCheckBox()}*/}
-                        {/*<div className = "meeting-thi">*/}
-                        {/*<label*/}
-                        {/*    className="form-check-label check-meeting-lbl w-75"*/}
-                        {/*    style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}*/}
-                        {/*    htmlFor="description"*/}
-                        {/*>*/}
-                        {/*    פגישות קבועות - לשלושת החודשים הקרובים*/}
-                        {/*</label>*/}
-                        {/*</div>*/}
-
-                        <div className = "meeting-thi">
-                        <label
-                            className="form-check-label check-meeting-lbl w-75"
-                            style={{ float: "right" ,  marginRight:"90px" , position:"absolute" }}
-                        >
-                            בחירת הכל
-                        </label>
-                        </div>
-                    </div>
+                    {/*<div className="form-group">*/}
+                    {/*    /!*{this.renderCheckBox()}*!/*/}
+                    {/*    /!*<div className = "meeting-thi">*!/*/}
+                    {/*    /!*<label*!/*/}
+                    {/*    /!*    className="form-check-label check-meeting-lbl w-75"*!/*/}
+                    {/*    /!*    style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}*!/*/}
+                    {/*    /!*    htmlFor="description"*!/*/}
+                    {/*    /!*>*!/*/}
+                    {/*    /!*    פגישות קבועות - לשלושת החודשים הקרובים*!/*/}
+                    {/*    /!*</label>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    */}
+                    {/*</div>*/}
                     <br />
                     <button
                         className="btn btn-success setup-meeting-btn"
-                        style={{ float: "right", marginRight: "700px" }}
+                        style={{ float: "right", marginRight: "690px" , bottom:"-240px"}}
                     >
                         קבע פגישה!{" "}
                     </button>
