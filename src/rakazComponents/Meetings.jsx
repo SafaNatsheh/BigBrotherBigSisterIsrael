@@ -528,6 +528,12 @@ class Meetings extends Component {
                             onChange={(e) => this.setState({ search: e.target.value })}
                         />
                         </div>
+                        <input type="checkbox"
+                               className="form-check-input w-25"
+                               value="בחירת הכל"
+                               style={{float: "right", top: "725px", marginRight: "110px",height:"20px",borderBlock:"black"}}
+
+                        />
                         <table className="table table-bordered"  >
 
                             <div className ='container__table'>
@@ -554,14 +560,23 @@ class Meetings extends Component {
 
 
                     <div className="form-group">
-                        {this.renderCheckBox()}
+                        {/*{this.renderCheckBox()}*/}
+                        {/*<div className = "meeting-thi">*/}
+                        {/*<label*/}
+                        {/*    className="form-check-label check-meeting-lbl w-75"*/}
+                        {/*    style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}*/}
+                        {/*    htmlFor="description"*/}
+                        {/*>*/}
+                        {/*    פגישות קבועות - לשלושת החודשים הקרובים*/}
+                        {/*</label>*/}
+                        {/*</div>*/}
+
                         <div className = "meeting-thi">
                         <label
                             className="form-check-label check-meeting-lbl w-75"
-                            style={{ float: "right" ,  marginRight:"17px" , position:"absloute" }}
-                            htmlFor="description"
+                            style={{ float: "right" ,  marginRight:"90px" , position:"absolute" }}
                         >
-                            פגישות קבועות - לשלושת החודשים הקרובים
+                            בחירת הכל
                         </label>
                         </div>
                     </div>
