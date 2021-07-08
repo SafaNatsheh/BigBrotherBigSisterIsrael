@@ -499,6 +499,7 @@ class LinkUsers extends Component {
 
         var lists = [];
         var nwlst = 0;
+        var thscr = 0;
         this.state.mins = 0;
         // for (var i = 0 ; i < this.state.numofpri ; i++) {
 
@@ -512,20 +513,20 @@ class LinkUsers extends Component {
             let filter = this.state.people
                 .filter(person => person.data.type === "חניך"
                     && person.data.first !== "true"
-                     && this.gtscor(person.data.first , person.data.birthDate) <= this.state.numofpri
-                     && this.gtscor(person.data.first , person.data.birthDate) !== -1
+                    && (thscr = this.gtscor(person.data.first , person.data.birthDate))
+                     && thscr <= this.state.numofpri
+                     && thscr !== -1
                      && (person.data.link_user === undefined || person.data.link_user === "" || ((person.data.link_user === this.state.mentorRef)
                          && (this.state.discon === false)
                          && (this.state.lnkstudid = person.data.id)
                          && (this.state.studentId = person.data.id)) || (person.data.link_user === this.state.mentorRef))
                         || ((person.link_user !== "")
                         && (person.data.link_user === this.state.mentorRef)
-                        && (this.state.numofpri < this.gtscor(person.data.first , person.data.birthDate)
-                             && (this.state.numofpri = this.gtscor(person.data.first , person.data.birthDate))))
+                        && (this.state.numofpri < thscr
+                             && (this.state.numofpri = thscr)))
                 )
         filter.map((person, index) =>
                 {
-
                     if ((person.data.link_user === this.state.mentorRef) && (this.state.discon === false)) {
                         this.setState({lnkstudid: person.data.id , studentId: person.data.id})
                     }
@@ -537,7 +538,7 @@ class LinkUsers extends Component {
         lists.forEach(row => {if(row.props.children[5].props.person_id === this.state.lnkstudid) {
 
         }});
-
+        console.log(this.state.lstpri)
         return (lists)
     }
 
@@ -557,11 +558,12 @@ class LinkUsers extends Component {
 
 
     showLines(guide,lists) {
+        this.state.lstpri = [];
         var table = []
         var sorted = []
-        lists.map((person) => {
+        lists.map((person, index) => {
                 let score = this.gtscor(person.data.first, person.data.birthDate)
-                sorted.push({score: score, person: person})
+                sorted.push({score: score, person: person , indexorg:index})
             }
         )
 
@@ -590,7 +592,7 @@ class LinkUsers extends Component {
 
                                }
                                }/></td>
-                    <td className='buttDetails'><input className='detailsButt' id={index} onClick={(event => {window.alert("העדפה לפי: "+this.state.lstpri[event.target.id])})} value="הצג התאמה" type ='button' /></td>
+                    <td className='buttDetails'><input className='detailsButt' id={line.indexorg} onClick={(event => {window.alert(event.target.id+"העדפה לפי: "+this.state.lstpri[event.target.id])})} value="הצג התאמה" type ='button' /></td>
                 </tr>
             )
         })
@@ -609,12 +611,11 @@ class LinkUsers extends Component {
         }
 
         var scr = 0;
-        this.state.people.forEach(person =>
-            {
-                if(person.data.id === this.state.mentorId && person.data.first !== "true" && person.data.type === "חונך"){
-                    menscr = person.data.first
-                }
-            })
+        this.state.people.forEach(person => {
+            if (person.data.id === this.state.mentorId && person.data.first !== "true" && person.data.type === "חונך") {
+                menscr = person.data.first
+            }
+        })
 
 
         if (menscr === "") {
@@ -623,9 +624,9 @@ class LinkUsers extends Component {
             return -1;
         }
 
-        var ind  = 0
+        var ind = 0
         var ind2 = 0
-        for (var ln = 0 ; ln < 12 ; ) {
+        for (var ln = 0; ln < 12;) {
             if (studscr[ind] === "/") {
                 ln++;
                 ind++;
@@ -634,9 +635,7 @@ class LinkUsers extends Component {
                 }
                 ind2++;
                 continue;
-            }
-
-            else if (menscr[ind2] === "/") {
+            } else if (menscr[ind2] === "/") {
                 ln++;
                 ind2++;
                 while (studscr[ind] !== "/") {
@@ -645,72 +644,59 @@ class LinkUsers extends Component {
                 ind++;
                 continue;
             }
-            if (studscr[ind] === menscr[ind2] && studscr[ind+1] === "/" && menscr[ind2+1] === "/") {
-                if (ln === 1 && menscr[ind2+1] === "/") {
+            if (studscr[ind] === menscr[ind2]) {
+
+                if (ln === 1 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n עדיפות המין";
-                }
-                else if (ln === 2 && menscr[ind2+1] === "/") {
+                } else if (ln === 2 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n סניף";
-                }
-                else if (ln === 3 && menscr[ind2+1] === "/") {
+                } else if (ln === 3 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n אזור";
-                }
-                else if (ln === 4 && menscr[ind2+1] === "/") {
+                } else if (ln === 4 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n שפה";
-                }
-                else if (ln === 5 && menscr[ind2+1] === "/") {
+                } else if (ln === 5 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n תחום ענין";
-                }
-                else if (ln === 6 && menscr[ind2+1] === "/") {
+                } else if (ln === 6 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n ימי חונכות";
-                }
-                else if (ln === 7 && menscr[ind2+1] === "/") {
+                } else if (ln === 7 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n שעות חונכות";
-                }
-                else if (ln === 8 && menscr[ind2+1] === "/") {
-                    pris += "\n גיל";
-                }
-                else if (ln === 9 && menscr[ind2+1] === "/") {
+                } else if (ln === 9 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n מצב רגשי";
-                }
-                else if (ln === 10 && menscr[ind2+1] === "/") {
+                } else if (ln === 10 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n מצב לימודי";
-                }
-                else if (ln === 11 && menscr[ind2+1] === "/") {
+                } else if (ln === 11 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n מוגבלות פיזית";
-                }
-                else if (ln === 12 && menscr[ind2+1] === "/") {
+                } else if (ln === 12 && studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") {
                     pris += "\n על רצף";
                 }
-
+                //console.log(studscr+ln +" mat " + menscr[ind2] + studscr[ind])
                 ind++;
                 ind2++;
 
-            }
-            else {
+            } else {
 
                 if (ln === 0 && menscr[ind2] === "1") {
                     return -1;
                 }
 
                 if (ln !== 8) {
-                    if ((ln !== 0) && (ln !== 3) || (ln === 3 && (menscr[ind2] !== "6" && studscr[ind] !== "6"))) {
+                    if ((ln !== 0) && (ln !== 3) && (studscr[ind + 1] === "/" && menscr[ind2 + 1] === "/") || (ln === 3 && (menscr[ind2] !== "6" && studscr[ind] !== "6"))) {
                         scr++;
+
                     }
 
-                }
-                else {
+                } else {
                     let newDate = new Date();
                     let year = newDate.getFullYear();
-                    let number = parseInt(date.substring(0,4) , 10 );
+                    let number = parseInt(date.substring(0, 4), 10);
                     if (menscr[ind2] === "1" && ((year - number) < 5 || (year - number) > 12)) {
                         scr++;
-                    }
-                    else if (menscr[ind2] === "2" && ((year - number) < 12 || (year - number) > 18)) {
+                    } else if (menscr[ind2] === "2" && ((year - number) < 12 || (year - number) > 18)) {
                         scr++;
-                    }
-                    else if (menscr[ind2] === "3" && (year - number) < 18) {
+                    } else if (menscr[ind2] === "3" && (year - number) < 18) {
                         scr++;
+                    } else {
+                        pris += "\n גיל";
                     }
                 }
 
@@ -724,10 +710,12 @@ class LinkUsers extends Component {
             }
 
         }
-        this.state.lstpri.push(pris)
+        if (scr <= this.state.numofpri) {
+            this.state.lstpri.push(pris)
+        }
         // console.log("scr")
-        // console.log(scr)
-        return scr;
+         //console.log(pris)
+        return scr+1;
     }
 
 
