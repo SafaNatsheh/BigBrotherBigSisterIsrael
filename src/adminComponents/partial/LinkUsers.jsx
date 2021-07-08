@@ -592,7 +592,7 @@ class LinkUsers extends Component {
 
                                }
                                }/></td>
-                    <td className='buttDetails'><input className='detailsButt' id={line.indexorg} onClick={(event => {window.alert(event.target.id+"העדפה לפי: "+this.state.lstpri[event.target.id])})} value="הצג התאמה" type ='button' /></td>
+                    <td className='buttDetails'><input className='detailsButt' id={line.indexorg} onClick={(event => {window.alert("העדפה לפי: "+this.state.lstpri[event.target.id])})} value="הצג התאמה" type ='button' /></td>
                 </tr>
             )
         })
