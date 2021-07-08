@@ -21,7 +21,8 @@ class LinkUsers extends Component {
             numofpri:3,
             didup:false,
             ret: "",
-            sectble:""
+            sectble:"",
+            lstpri: []
         }
         this.usersRef = firebase.firestore().collection('Users');
     }
@@ -484,6 +485,7 @@ class LinkUsers extends Component {
     }
     renderSecondTable (mentid){
         this.setState({lnkstudid: "", studentId: ""})
+        this.state.lstpri = [];
         this.state.mentorId = mentid
         if (mentid === "") {
             return (<tr></tr>)
@@ -588,7 +590,7 @@ class LinkUsers extends Component {
 
                                }
                                }/></td>
-                    <td className='buttDetails'><input className='detailsButt' value="הצג התאמה" type ='button' /></td>
+                    <td className='buttDetails'><input className='detailsButt' id={index} onClick={(event => {window.alert("העדפה לפי: "+this.state.lstpri[event.target.id])})} value="הצג התאמה" type ='button' /></td>
                 </tr>
             )
         })
@@ -600,6 +602,7 @@ class LinkUsers extends Component {
 
     gtscor(studscr , date) {
         var menscr = "";
+        var pris = "";
 
         if (studscr === undefined) {
             return 0;
@@ -643,7 +646,43 @@ class LinkUsers extends Component {
                 continue;
             }
             if (studscr[ind] === menscr[ind2] && studscr[ind+1] === "/" && menscr[ind2+1] === "/") {
-                //console.log(studscr[ind] +" "+ ind +" "+ ind2+"match"+" "+ln)
+                if (ln === 1 && menscr[ind2+1] === "/") {
+                    pris += "\n עדיפות המין";
+                }
+                else if (ln === 2 && menscr[ind2+1] === "/") {
+                    pris += "\n סניף";
+                }
+                else if (ln === 3 && menscr[ind2+1] === "/") {
+                    pris += "\n אזור";
+                }
+                else if (ln === 4 && menscr[ind2+1] === "/") {
+                    pris += "\n שפה";
+                }
+                else if (ln === 5 && menscr[ind2+1] === "/") {
+                    pris += "\n תחום ענין";
+                }
+                else if (ln === 6 && menscr[ind2+1] === "/") {
+                    pris += "\n ימי חונכות";
+                }
+                else if (ln === 7 && menscr[ind2+1] === "/") {
+                    pris += "\n שעות חונכות";
+                }
+                else if (ln === 8 && menscr[ind2+1] === "/") {
+                    pris += "\n גיל";
+                }
+                else if (ln === 9 && menscr[ind2+1] === "/") {
+                    pris += "\n מצב רגשי";
+                }
+                else if (ln === 10 && menscr[ind2+1] === "/") {
+                    pris += "\n מצב לימודי";
+                }
+                else if (ln === 11 && menscr[ind2+1] === "/") {
+                    pris += "\n מוגבלות פיזית";
+                }
+                else if (ln === 12 && menscr[ind2+1] === "/") {
+                    pris += "\n על רצף";
+                }
+
                 ind++;
                 ind2++;
 
@@ -685,7 +724,7 @@ class LinkUsers extends Component {
             }
 
         }
-
+        this.state.lstpri.push(pris)
         // console.log("scr")
         // console.log(scr)
         return scr;
