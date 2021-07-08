@@ -238,7 +238,19 @@ class UsersTable extends Component {
                 <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                     <td className='buttDetails'><input className='detailsButt' value="הצג פרטים" type ='button' onClick={(event)=>this.getDetails(person)}/></td>
                     <td className='buttDetails'><input className='detailsButt' value="הצג דוח" type ='button' onClick={(event)=>this.getTable(person)}/></td>
-                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(event) =>{
+                        if (event.target.checked === true) {
+                            this.state.checkedList.push(person.id)
+                            console.log(this.state.checkedList)
+                        }
+                        else {
+                            this.state.checkedList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                this.state.checkedList.splice(index,1);
+                                console.log(this.state.checkedList)
+                            }})
+                        }
+
+                    }}/></td></tr>
             )
         }
         else{
@@ -246,7 +258,19 @@ class UsersTable extends Component {
                 <tr><td>{person.fName +" "+ person.lName}</td><td>{person.id}</td><td>{person.email}</td><td>{person.type}</td>
                     <td className='buttDetails'><input className='detailsButt' value="הצג פרטים" type ='button' onClick={(event)=>this.getDetails(person)}/></td>
                     <td className='buttDetails'><input className='detailsButt' value="הצג דוח" type ='button' disabled onClick={(event)=>this.getTable(person)}/></td>
-                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={() => this.state.checkedList.push(person.id)}/></td></tr>
+                    <td person_id={person.id}><input type='checkbox' id = {person.id} className='people_check' onChange={(event) =>{
+                        if (event.target.checked === true) {
+                            this.state.checkedList.push(person.id)
+                            console.log(this.state.checkedList)
+                        }
+                        else {
+                            this.state.checkedList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                this.state.checkedList.splice(index,1);
+                                console.log(this.state.checkedList)
+                            }})
+                        }
+
+                    }}/></td></tr>
             )
         }
 

@@ -193,7 +193,6 @@ class Meetings extends Component {
                 //     description: this.state.description
                 // })
                 // console.log(newMeetings[i])
-                console.log("in1")
 
                 var newDoc = await db.collection('Users').doc(this.user.uid).collection('Meetings').add({
                     "date": dates[i],
@@ -204,19 +203,13 @@ class Meetings extends Component {
                     "linkZoom": this.state.linkZoom,
                     "description": this.state.description
                 })
-                console.log("in2")
-                console.log(newDoc)
-
 
                 newMeetingObj.push({});
-                console.log("in3")
                 // let docRef= ;
                 this.newDocId =newDoc.id;
-                console.log("in4")
                 // await this.myMeetingsRef.docs(docRef.id).set(newMeetings[i]);
 
                 if (!this.state.scheduled && this.state.date !== "") {
-                    console.log("in5")
                     alert(
                         "נקבעה פגישה בתאריך: " +
                         this.state.date +
@@ -273,7 +266,6 @@ class Meetings extends Component {
                     id="scheduledMeeting"
                     style={{ float: "right" , marginTop:"258px" , marginRight:"40px" }}
 
-                    checked={this.state.scheduled}
                     onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
                 />
             )
@@ -286,7 +278,6 @@ class Meetings extends Component {
                     id="scheduledMeeting"
                     style={{ float: "right" , marginTop:"258px" , marginRight:"-100px" }}
 
-                    checked={this.state.scheduled}
                     onChange={(e) => this.setState({ scheduled: !this.state.scheduled })}
                 />
             )
@@ -304,8 +295,16 @@ class Meetings extends Component {
                         <td>{person.name}</td>
                         <td>{person.id}</td>
                         <td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={() => {
-                            this.state.checkList.push(person)
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(event) =>{
+                            if (event.target.checked === true) {
+                                this.state.checkList.push(person.id)
+                            }
+                            else {
+                                this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                    this.state.checkList.splice(index,1);
+                                }})
+                            }
+
                         }}/></td>
                     </tr>
                 )))
@@ -320,7 +319,19 @@ class Meetings extends Component {
                         <td>{person.id}</td>
                         <td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'
-                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                                                         onChange={(event) =>{
+                                                             if (event.target.checked === true) {
+                                                                 this.state.checkList.push(person.id)
+                                                                 console.log(this.state.checkList)
+                                                             }
+                                                             else {
+                                                                 this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                                                     this.state.checkList.splice(index,1);
+                                                                     console.log(this.state.checkList)
+                                                                 }})
+                                                             }
+
+                                                         }}/></td>
                     </tr>
                 )))
         } else if (this.type === "חונך") {
@@ -334,7 +345,19 @@ class Meetings extends Component {
                         <td>{person.id}</td>
                         <td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'
-                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                                                         onChange={(event) =>{
+                                                             if (event.target.checked === true) {
+                                                                 this.state.checkList.push(person.id)
+                                                                 console.log(this.state.checkList)
+                                                             }
+                                                             else {
+                                                                 this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                                                     this.state.checkList.splice(index,1);
+                                                                     console.log(this.state.checkList)
+                                                                 }})
+                                                             }
+
+                                                         }}/></td>
                     </tr>
                 )))
         } else if (this.type === "חניך")
@@ -349,7 +372,19 @@ class Meetings extends Component {
                         <td>{person.id}</td>
                         <td>{person.type}</td>
                         <td person_id={person.id}><input type='checkbox' className='people_check'
-                                                         onChange={() => this.state.checkList.push(person)}/></td>
+                                                         onChange={(event) =>{
+                                                             if (event.target.checked === true) {
+                                                                 this.state.checkList.push(person.id)
+                                                                 console.log(this.state.checkList)
+                                                             }
+                                                             else {
+                                                                 this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                                                     this.state.checkList.splice(index,1);
+                                                                     console.log(this.state.checkList)
+                                                                 }})
+                                                             }
+
+                                                         }}/></td>
                     </tr>
                 )))
         }
@@ -360,13 +395,19 @@ class Meetings extends Component {
                 .map((person,key) => (
                     <tr key={key}>
                         <td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'  onChange={()=>
-                        {
-                            this.state.checkList.push(person)
+                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(event) =>{
+                            if (event.target.checked === true) {
+                                this.state.checkList.push(person.id)
+                                console.log(this.state.checkList)
+                            }
+                            else {
+                                this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
+                                    this.state.checkList.splice(index,1);
+                                    console.log(this.state.checkList)
+                                }})
+                            }
 
-                        }
-
-                        }/></td></tr>
+                        }}/></td></tr>
                 )))
     }
 
