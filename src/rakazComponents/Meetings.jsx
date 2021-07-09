@@ -24,8 +24,8 @@ class Meetings extends Component {
             loadedAll: false,
             futureLength: 0,
             loadingPastMeetings: false,
-            scheduled: false
-
+            scheduled: false,
+            allppl:[]
         };
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid
@@ -97,6 +97,7 @@ class Meetings extends Component {
             this.user = user
             this.getMeetings();
         })
+
     }
 
     updateTableAfterDelete = (meetingsArr) => {
@@ -287,6 +288,7 @@ class Meetings extends Component {
     maketable() {
 
         if (this.type === "רכז") {
+            this.state.allppl.push(this.state.people.filter(person => person.type !== "אדמין"))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type !== "אדמין")
@@ -295,7 +297,7 @@ class Meetings extends Component {
                         <td>{person.name}</td>
                         <td>{person.id}</td>
                         <td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(event) =>{
+                        <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check' onChange={(event) =>{
                             if (event.target.checked === true) {
                                 this.state.checkList.push(person.id)
                             }
@@ -309,6 +311,7 @@ class Meetings extends Component {
                     </tr>
                 )))
         } else if (this.type === "מדריך") {
+            this.state.allppl.push(this.state.people.filter(person => person.type !== "אדמין").filter(person => person.type !== "רכז"))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type !== "אדמין")
@@ -318,7 +321,7 @@ class Meetings extends Component {
                         <td>{person.name}</td>
                         <td>{person.id}</td>
                         <td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                        <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check'
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
@@ -335,6 +338,7 @@ class Meetings extends Component {
                     </tr>
                 )))
         } else if (this.type === "חונך") {
+            this.state.allppl.push(this.state.people.filter(person => person.type === "חניך").filter(person => person.link_user === this.uid ))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type === "חניך")
@@ -344,7 +348,7 @@ class Meetings extends Component {
                         <td>{person.name}</td>
                         <td>{person.id}</td>
                         <td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                        <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check'
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
@@ -360,8 +364,8 @@ class Meetings extends Component {
                                                          }}/></td>
                     </tr>
                 )))
-        } else if (this.type === "חניך")
-        {
+        } else if (this.type === "חניך") {
+            this.state.allppl.push(this.state.people.filter(person => person.type === "חונך"))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type === "חונך")
@@ -371,7 +375,7 @@ class Meetings extends Component {
                         <td>{person.name}</td>
                         <td>{person.id}</td>
                         <td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check'
+                        <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check'
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
@@ -388,27 +392,35 @@ class Meetings extends Component {
                     </tr>
                 )))
         }
-        else
+        else {
 
+            this.state.allppl.push(this.state.people)
+            //this.state.allppl.foreach(elem => console.log(""))
+           // console.log(this.state.allppl[0])
             return (this.state.people
-                .filter(person => person.name.indexOf(this.state.search)>-1)
-                .map((person,key) => (
+                .filter(person => person.name.indexOf(this.state.search) > -1)
+                .map((person, key) => (
                     <tr key={key}>
-                        <td>{person.name}</td><td>{person.id}</td><td>{person.type}</td>
-                        <td person_id={person.id}><input type='checkbox' className='people_check' onChange={(event) =>{
+                        <td>{person.name}</td>
+                        <td>{person.id}</td>
+                        <td>{person.type}</td>
+                        <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check' onChange={(event) => {
                             if (event.target.checked === true) {
                                 this.state.checkList.push(person.id)
                                 console.log(this.state.checkList)
-                            }
-                            else {
-                                this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
-                                    this.state.checkList.splice(index,1);
-                                    console.log(this.state.checkList)
-                                }})
+                            } else {
+                                this.state.checkList.forEach((elmnt, index) => {
+                                    if (elmnt === person.id) {
+                                        this.state.checkList.splice(index, 1);
+                                        console.log(this.state.checkList)
+                                    }
+                                })
                             }
 
-                        }}/></td></tr>
+                        }}/></td>
+                    </tr>
                 )))
+        }
     }
 
 
@@ -536,7 +548,18 @@ class Meetings extends Component {
                                     <th>שם</th>
                                     <th>ת.ז</th>
                                     <th>סוג משתמש</th>
-                                    <th>בחר הכל<input type="checkbox" style={{marginRight:"3px"}}/></th>
+                                    <th>בחר הכל<input type="checkbox" style={{marginRight:"3px"}} onChange={event => {
+                                        if (event.target.checked === true) {
+                                            this.state.allppl[0].forEach(pers => {document.getElementById(pers.id).checked = true;
+                                            this.state.checkList.push(pers.id)
+                                            });
+                                        }
+                                        else {
+                                            this.state.checkList.forEach(pers => {document.getElementById(pers).checked = false;
+                                            });
+                                            this.state.checkList = [];
+                                        }
+                                    }}/></th>
                                 </tr>
                                 </thead>
                                 <tbody >
