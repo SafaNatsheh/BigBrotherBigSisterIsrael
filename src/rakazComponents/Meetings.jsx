@@ -237,6 +237,7 @@ class Meetings extends Component {
                 Object.assign(newMeetingObj[i], newMeetings[i]);
                 newMeetingObj[i].doc_id = this.newDocId;
                 this.state.pplref.forEach(async user => {
+                    console.log(user)
                     await firebase.firestore().collection('Users').doc(user).collection('Meetings').doc(this.newDocId).set({
                         "date": dates[i],
                         "send_list": this.state.checkList,
@@ -254,8 +255,11 @@ class Meetings extends Component {
                     meetings: [...d],
                     date: "", time: "", place: "", description: "", scheduled: false
                 });
-            window.location.reload();
+
             }
+            setTimeout(function(){
+                window.location.reload(1);
+            }, 1500);
         }
     }
 
@@ -296,6 +300,7 @@ class Meetings extends Component {
     maketable() {
 
         if (this.type === "רכז") {
+            this.state.allppl = [];
             this.state.allppl.push(this.state.people.filter(person => person.type !== "אדמין"))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
@@ -319,6 +324,7 @@ class Meetings extends Component {
                     </tr>
                 )))
         } else if (this.type === "מדריך") {
+            this.state.allppl = [];
             this.state.allppl.push(this.state.people.filter(person => person.type !== "אדמין").filter(person => person.type !== "רכז"))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
@@ -333,12 +339,10 @@ class Meetings extends Component {
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
-                                                                 console.log(this.state.checkList)
                                                              }
                                                              else {
                                                                  this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
                                                                      this.state.checkList.splice(index,1);
-                                                                     console.log(this.state.checkList)
                                                                  }})
                                                              }
 
@@ -346,7 +350,8 @@ class Meetings extends Component {
                     </tr>
                 )))
         } else if (this.type === "חונך") {
-            this.state.allppl.push(this.state.people.filter(person => person.type === "חניך").filter(person => person.link_user === this.uid ))
+            this.state.allppl = [];
+            this.state.allppl.push(this.state.people.filter(person => person.type === "חניך" && person.link_user === this.uid))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type === "חניך")
@@ -360,12 +365,10 @@ class Meetings extends Component {
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
-                                                                 console.log(this.state.checkList)
                                                              }
                                                              else {
                                                                  this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
                                                                      this.state.checkList.splice(index,1);
-                                                                     console.log(this.state.checkList)
                                                                  }})
                                                              }
 
@@ -373,7 +376,8 @@ class Meetings extends Component {
                     </tr>
                 )))
         } else if (this.type === "חניך") {
-            this.state.allppl.push(this.state.people.filter(person => person.type === "חונך"))
+            this.state.allppl = [];
+            this.state.allppl.push(this.state.people.filter(person => person.type === "חונך" && person.link_user === this.uid))
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .filter(person => person.type === "חונך")
@@ -387,12 +391,10 @@ class Meetings extends Component {
                                                          onChange={(event) =>{
                                                              if (event.target.checked === true) {
                                                                  this.state.checkList.push(person.id)
-                                                                 console.log(this.state.checkList)
                                                              }
                                                              else {
                                                                  this.state.checkList.forEach((elmnt, index) => {if (elmnt === person.id) {
                                                                      this.state.checkList.splice(index,1);
-                                                                     console.log(this.state.checkList)
                                                                  }})
                                                              }
 
@@ -401,10 +403,8 @@ class Meetings extends Component {
                 )))
         }
         else {
-
+            this.state.allppl = [];
             this.state.allppl.push(this.state.people)
-            //this.state.allppl.foreach(elem => console.log(""))
-           // console.log(this.state.allppl[0])
             return (this.state.people
                 .filter(person => person.name.indexOf(this.state.search) > -1)
                 .map((person, key) => (
@@ -415,12 +415,10 @@ class Meetings extends Component {
                         <td person_id={person.id}><input type='checkbox' id={person.id} className='people_check' onChange={(event) => {
                             if (event.target.checked === true) {
                                 this.state.checkList.push(person.id)
-                                console.log(this.state.checkList)
                             } else {
                                 this.state.checkList.forEach((elmnt, index) => {
                                     if (elmnt === person.id) {
                                         this.state.checkList.splice(index, 1);
-                                        console.log(this.state.checkList)
                                     }
                                 })
                             }
