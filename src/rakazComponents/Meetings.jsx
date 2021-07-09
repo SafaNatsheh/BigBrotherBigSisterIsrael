@@ -25,7 +25,8 @@ class Meetings extends Component {
             futureLength: 0,
             loadingPastMeetings: false,
             scheduled: false,
-            allppl:[]
+            allppl:[],
+            pplref:[]
         };
         this.usersRef = firebase.firestore().collection('Users');
         this.uid = firebase.auth().currentUser.uid
@@ -175,6 +176,13 @@ class Meetings extends Component {
             );
         if (isSure) {
 
+            this.state.checkList.forEach(elem => {
+                this.state.people.forEach(elem2 => {
+                if (elem === elem2.id) {
+                    this.state.pplref.push(elem2.uid)
+                }
+            })})
+
             var amount_of_meetings = this.state.scheduled ? 13 : 1;
             var dates = [], newMeetings = [], newMeetingObj = [];
             console.log(this.state.scheduled)
@@ -228,8 +236,8 @@ class Meetings extends Component {
                 }
                 Object.assign(newMeetingObj[i], newMeetings[i]);
                 newMeetingObj[i].doc_id = this.newDocId;
-                this.state.checkList.forEach(async user=>{
-                    await firebase.firestore().collection('Users').doc(user.uid).collection('Meetings').doc(this.newDocId).set({
+                this.state.pplref.forEach(async user => {
+                    await firebase.firestore().collection('Users').doc(user).collection('Meetings').doc(this.newDocId).set({
                         "date": dates[i],
                         "send_list": this.state.checkList,
                         "timeStamp": time_stamp,
