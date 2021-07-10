@@ -158,7 +158,7 @@ class UpdateUser extends Component {
             phone: this.state.phone,
             area: this.state.area,
             gender: this.state.gender,
-            type: this.state.type,
+            //type: this.state.type,
             birthDate: this.state.birthDate
         }
         if (this.state.address !== "")
@@ -316,7 +316,7 @@ class UpdateUser extends Component {
                             onChange={(e) => this.setState({ birthDate: e.target.value })}
                         />
                     </div>
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-md-6">
                         <label htmlFor="inputState">סוג המשתמש</label>
                         <select
                             required
