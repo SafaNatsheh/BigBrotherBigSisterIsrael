@@ -120,7 +120,7 @@ class MeetingList extends Component {
                                     disabled={this.props.loadedAll}
                                     className="btn btn-primary load-past-meetings"
                                     onClick={this.props.loadPrev}>
-                                    טען 5 פגישות נוספות מהעבר
+                                    טען פגישות נוספות
                                         </button>
                                 <Loader className="loader-past-meeting" type="TailSpin" height="30px" width="30px" color="royalblue" visible={this.props.loadingPastMeetings}></Loader>
                             </td>
