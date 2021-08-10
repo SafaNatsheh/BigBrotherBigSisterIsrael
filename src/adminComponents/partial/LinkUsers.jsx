@@ -35,20 +35,7 @@ class LinkUsers extends Component {
             }
 
         var people = [];
-
-           // this.usersRef.where('id', '==', this.state.mentorId)
-           //     .limit(1)
-           //     .get()
-           //     .then((querySnapshot) => {
-           //         querySnapshot.forEach((doc) => {
-           //                 if (this.state.mentorId === doc.data().id && this.state.discon === false && this.state.mentorRef !== doc.id) {
-           //                     this.setState({mentorRef: doc.id})
-           //                 }
-           //             }
-           //         );
-           //     })
-           //
-           //
+            
         this.usersRef
             .get()
             .then(queryShot => {
@@ -501,14 +488,6 @@ class LinkUsers extends Component {
         var nwlst = 0;
         var thscr = 0;
         this.state.mins = 0;
-        // for (var i = 0 ; i < this.state.numofpri ; i++) {
-
-                // lists.push(<tr key={i+"r"}>
-                //     <td>  </td>
-                //     <td>  </td>
-                //     <td> {"עדיפות "+(i+1)} </td>
-                //     <td>  </td>
-                // </tr>)
 
             let filter = this.state.people
                 .filter(person => person.data.type === "חניך"

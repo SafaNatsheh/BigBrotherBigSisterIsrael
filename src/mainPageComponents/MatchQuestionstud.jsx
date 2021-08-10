@@ -5,7 +5,7 @@ import logo from '../static_pictures/big_brothers_big_sisters.png'
 import firebase from "../config/Firebase";
 import emailjs from "emailjs-com"
 import{ init } from 'emailjs-com';
-init("user_fbndUbsd9qBrswCAzy6eM");
+init("user_vKLkPQx2rhtuF7YhTO5ZH");
 
 class matchQuestionstud extends Component {
 
@@ -177,13 +177,13 @@ class matchQuestionstud extends Component {
     }
 
     sendemail() {
-        var ml = emailjs.send("service_22zqeku","template_f5b4ph8",{
+        var ml = emailjs.send("service_7zqd9gr","template_ive419i",{
             from_name: "bbbs",
             to_name: this.state.plc,
-            message1: "התרשם חניך חדש בשם ",
+            message1: "נרשם חניך חדש בשם ",
             message2: this.props.refwin.data().fName +" "+ this.props.refwin.data().lName,
             message3: " והוא מוכן לקישור ",
-            to_mail: "wadieturtle@hotmail.com"
+            to_mail: this.state.mals
         });
         if (ml != 200) {
 
